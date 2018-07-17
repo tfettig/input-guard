@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace InVal;
 
+use InVal\Vals\FloatVal;
 use InVal\Vals\IntVal;
 
 class Configuration implements Configurable
@@ -13,7 +14,8 @@ class Configuration implements Configurable
      * @var array
      */
     protected $defaults = [
-        'int' => null,
+        'int'   => null,
+        'float' => null,
     ];
 
     /**
@@ -26,7 +28,8 @@ class Configuration implements Configurable
         switch ($className) {
             case IntVal::class:
                 return $this->defaults['int'] ?? null;
-
+            case FloatVal::class:
+                return $this->defaults['float'] ?? null;
             default:
                 return null;
         }

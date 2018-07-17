@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit colors="true" bootstrap="./vendor/autoload.php">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/7.2/phpunit.xsd"
+         bootstrap="./vendor/autoload.php"
+         colors="true"
+>
     <testsuites>
         <testsuite name="Test Suite">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">./src</directory>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="coverage-clover" target="build/phpunit/logs/clover.xml"/>
+        <log type="coverage-html" target="build/phpunit/coverage"/>
+    </logging>
 </phpunit>

@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace InValTest;
 
-use InVal\Configuration;
 use InVal\InVal;
+use InVal\Vals\FloatVal;
 use InVal\Vals\IntVal;
 use PHPUnit\Framework\TestCase;
 
@@ -17,7 +17,7 @@ class InValTest extends TestCase
 
     public function setUp(): void
     {
-        $this->inVal = new InVal(new Configuration());
+        $this->inVal = new InVal();
     }
 
     /**
@@ -33,8 +33,54 @@ class InValTest extends TestCase
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    public function testIntValidateCreation(): void
+    public function testValue(): void
     {
-        self::assertInstanceOf(IntVal::class, $this->inVal->valInt(''));
+        self::assertSame($this->inVal, $this->inVal->value());
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testClone(): void
+    {
+        self::assertEquals($this->inVal, clone $this->inVal);
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testSuccessSuccess(): void
+    {
+        self::assertTrue($this->inVal->success());
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testSuccessFailure(): void
+    {
+        $this->inVal->intVal('fail');
+        self::assertFalse($this->inVal->success());
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testIntValCreation(): void
+    {
+        self::assertInstanceOf(IntVal::class, $this->inVal->intVal(''));
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testFloatValCreation(): void
+    {
+        self::assertInstanceOf(FloatVal::class, $this->inVal->floatVal(''));
     }
 }
