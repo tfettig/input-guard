@@ -3,24 +3,11 @@ declare(strict_types=1);
 
 namespace InValTest\Vals;
 
-use Faker\Factory;
-use InVal\Configuration;
 use InVal\Vals\FloatVal;
-use InVal\Vals\IntVal;
 use PHPUnit\Framework\TestCase;
 
 class FloatValTest extends TestCase
 {
-    /**
-     * @var Configuration
-     */
-    private static $configuration;
-
-    public static function setUpBeforeClass()
-    {
-        self::$configuration = new Configuration();
-    }
-
     /**
      * @dataProvider successProvider
      *
@@ -31,7 +18,7 @@ class FloatValTest extends TestCase
      */
     public function testSuccess($input): void
     {
-        $val = new FloatVal($input, self::$configuration);
+        $val = new FloatVal($input);
         self::assertTrue($val->success());
         self::assertSame((float)$input, $val->value());
     }
@@ -42,19 +29,22 @@ class FloatValTest extends TestCase
      */
     public function testFailure(): void
     {
-        $val = new FloatVal('one.point.one', self::$configuration);
+        $val = new FloatVal('one.point.one');
         self::assertFalse($val->success());
-        self::assertSame($val->value(), self::$configuration->defaultValue(IntVal::class));
+        self::assertNull($val->value());
     }
 
+    /**
+     * @return array
+     *
+     * @throws \Exception
+     */
     public function successProvider(): array
     {
-        $generator = Factory::create();
-
         return [
-            [$generator->numberBetween(PHP_INT_MIN, PHP_INT_MAX)],
+            [random_int(PHP_INT_MIN, PHP_INT_MAX)],
             [342343.233417],
-            [(string)$generator->numberBetween(PHP_INT_MIN, PHP_INT_MAX)],
+            [(string)random_int(PHP_INT_MIN, PHP_INT_MAX)],
             ['342343.233417'],
         ];
     }

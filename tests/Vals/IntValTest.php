@@ -3,30 +3,11 @@ declare(strict_types=1);
 
 namespace InValTest\Vals;
 
-use Faker\Factory;
-use Faker\Generator;
-use InVal\Configuration;
 use InVal\Vals\IntVal;
 use PHPUnit\Framework\TestCase;
 
 class IntValTest extends TestCase
 {
-    /**
-     * @var Generator
-     */
-    private static $generator;
-
-    /**
-     * @var Configuration
-     */
-    private static $configuration;
-
-    public static function setUpBeforeClass()
-    {
-        self::$generator     = Factory::create();
-        self::$configuration = new Configuration();
-    }
-
     /**
      * @dataProvider successProvider
      *
@@ -37,7 +18,7 @@ class IntValTest extends TestCase
      */
     public function testSuccess($input): void
     {
-        $val = new IntVal($input, self::$configuration);
+        $val = new IntVal($input);
         self::assertTrue($val->success());
         self::assertSame((int)$input, $val->value());
     }
@@ -48,9 +29,9 @@ class IntValTest extends TestCase
      */
     public function testFailure(): void
     {
-        $val = new IntVal('one', self::$configuration);
+        $val = new IntVal('one');
         self::assertFalse($val->success());
-        self::assertSame($val->value(), self::$configuration->defaultValue(IntVal::class));
+        self::assertNull($val->value());
     }
 
     /**

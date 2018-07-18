@@ -76,7 +76,7 @@ class InVal implements Valadatable
 
     public function intVal($input): IntVal
     {
-        $val = new IntVal($input, $this->configuration);
+        $val = new IntVal($input, $this->configuration->defaultValue(IntVal::class));
         $this->addVal($val);
 
         return $val;
@@ -84,7 +84,7 @@ class InVal implements Valadatable
 
     public function floatVal($input): FloatVal
     {
-        $val = new FloatVal($input, $this->configuration);
+        $val = new FloatVal($input, $this->configuration->defaultValue(FloatVal::class));
         $this->addVal($val);
 
         return $val;
@@ -92,7 +92,7 @@ class InVal implements Valadatable
 
     public function instanceOfVal($input, string $className): InstanceOfVal
     {
-        $val = new InstanceOfVal($input, $className, $this->configuration);
+        $val = new InstanceOfVal($input, $className);
         $this->addVal($val);
 
         return $val;

@@ -4,10 +4,8 @@ declare(strict_types=1);
 namespace InValTest;
 
 use InVal\InVal;
-use InVal\Vals\FloatVal;
-use InVal\Vals\InstanceOfVal;
-use InVal\Vals\IntVal;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 class InValTest extends TestCase
 {
@@ -71,26 +69,29 @@ class InValTest extends TestCase
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    public function testIntValCreation(): void
+    public function testIntValBuilder(): void
     {
-        self::assertInstanceOf(IntVal::class, $this->inVal->intVal(''));
+        $input = 1;
+        self::assertSame($input, $this->inVal->intVal($input)->value());
     }
 
     /**
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    public function testFloatValCreation(): void
+    public function testFloatValBuilder(): void
     {
-        self::assertInstanceOf(FloatVal::class, $this->inVal->floatVal(''));
+        $input = 1.1;
+        self::assertSame($input, $this->inVal->floatVal($input)->value());
     }
 
     /**
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    public function testInstanceOfValCreation(): void
+    public function testInstanceOfValBuilder(): void
     {
-        self::assertInstanceOf(InstanceOfVal::class, $this->inVal->instanceOfVal('', ''));
+        $input = new stdClass();
+        self::assertSame($input, $this->inVal->instanceOfVal($input, stdClass::class)->value());
     }
 }

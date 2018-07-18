@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace InVal\Vals;
 
-use InVal\Configurable;
-
 class InstanceOfVal implements Valadatable
 {
     /**
@@ -13,7 +11,7 @@ class InstanceOfVal implements Valadatable
     private $input;
 
     /**
-     * @var int|null
+     * @var object|null
      */
     private $value;
 
@@ -27,11 +25,10 @@ class InstanceOfVal implements Valadatable
      */
     private $className;
 
-    public function __construct($input, string $className, Configurable $configuration)
+    public function __construct($input, string $className)
     {
         $this->className = $className;
         $this->input     = $input;
-        $this->value     = $configuration->defaultValue(self::class);
     }
 
     public function success(): bool

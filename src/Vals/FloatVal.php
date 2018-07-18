@@ -3,8 +3,6 @@ declare(strict_types=1);
 
 namespace InVal\Vals;
 
-use InVal\Configurable;
-
 class FloatVal implements Valadatable
 {
     /**
@@ -22,10 +20,10 @@ class FloatVal implements Valadatable
      */
     private $validated;
 
-    public function __construct($input, Configurable $configuration)
+    public function __construct($input, ?float $default = null)
     {
         $this->input = $input;
-        $this->value = $configuration->defaultValue(self::class);
+        $this->value = $default;
     }
 
     public function success(): bool
