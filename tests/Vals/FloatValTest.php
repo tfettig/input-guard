@@ -49,16 +49,13 @@ class FloatValTest extends TestCase
 
     public function successProvider(): array
     {
-        static $generator;
-        if (!$generator) {
-            $generator = Factory::create();
-        }
+        $generator = Factory::create();
 
         return [
             [$generator->numberBetween(PHP_INT_MIN, PHP_INT_MAX)],
-            [$generator->randomFloat()],
+            [342343.233417],
             [(string)$generator->numberBetween(PHP_INT_MIN, PHP_INT_MAX)],
-            [(string)$generator->randomFloat()],
+            ['342343.233417'],
         ];
     }
 }

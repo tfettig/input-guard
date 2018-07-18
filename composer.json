@@ -26,5 +26,9 @@
       "InValTest\\": "tests/"
     }
   },
-  "prefer-stable": true
+  "prefer-stable": true,
+  "scripts": {
+    "phpunit": "./vendor/bin/phpunit",
+    "infection": "./vendor/bin/infection"
+  }
 }
