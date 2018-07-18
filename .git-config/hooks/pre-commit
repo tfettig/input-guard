@@ -1,0 +1,6 @@
+#!/bin/sh
+
+composer phpcs
+composer phpmd
+composer phpunit
+composer infection

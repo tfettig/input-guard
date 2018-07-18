@@ -15,7 +15,9 @@
         </whitelist>
     </filter>
     <logging>
-        <log type="coverage-clover" target="build/phpunit-clover.xml"/>
-        <log type="coverage-html" target="build/phpunit/"/>
+        <log type="coverage-clover" target="build/phpunit/phpunit-clover.xml"/>
+        <log type="coverage-html" target="build/phpunit/coverage-html"/>
+        <log type="coverage-xml" target="build/phpunit/coverage-xml"/>
+        <log type="junit" target="build/phpunit/phpunit.junit.xml"/>
     </logging>
 </phpunit>
