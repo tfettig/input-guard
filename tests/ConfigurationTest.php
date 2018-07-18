@@ -5,6 +5,7 @@ namespace InValTest;
 
 use InVal\Configuration;
 use InVal\Vals\FloatVal;
+use InVal\Vals\InstanceOfVal;
 use InVal\Vals\IntVal;
 use PHPUnit\Framework\TestCase;
 
@@ -34,20 +35,13 @@ class ConfigurationTest extends TestCase
         self::assertSame($default, self::$configuration->defaultValue($class));
     }
 
-    /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     */
-    public function testDefaultValueUnknownClass(): void
-    {
-        self::assertNull(self::$configuration->defaultValue(''));
-    }
-
     public function defaultValueProvider(): array
     {
         return [
+            ['', null],
             [IntVal::class, null],
             [FloatVal::class, null],
+            [InstanceOfVal::class, null],
         ];
     }
 }

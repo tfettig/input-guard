@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace InVal\Vals;
 
-class InstanceOfVal implements Valadatable
+class InstanceOfVal implements CompleteVal
 {
+    use ErrorMessageTrait;
+
     /**
      * @var mixed
      */
