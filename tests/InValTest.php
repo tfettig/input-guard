@@ -5,6 +5,7 @@ namespace InValTest;
 
 use InVal\InVal;
 use InVal\Vals\FloatVal;
+use InVal\Vals\InstanceOfVal;
 use InVal\Vals\IntVal;
 use PHPUnit\Framework\TestCase;
 
@@ -82,5 +83,14 @@ class InValTest extends TestCase
     public function testFloatValCreation(): void
     {
         self::assertInstanceOf(FloatVal::class, $this->inVal->floatVal(''));
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testInstanceOfValCreation(): void
+    {
+        self::assertInstanceOf(InstanceOfVal::class, $this->inVal->instanceOfVal('', ''));
     }
 }

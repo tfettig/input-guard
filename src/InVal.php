@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace InVal;
 
 use InVal\Vals\FloatVal;
+use InVal\Vals\InstanceOfVal;
 use InVal\Vals\IntVal;
 use InVal\Vals\Valadatable;
 
@@ -84,6 +85,14 @@ class InVal implements Valadatable
     public function floatVal($input): FloatVal
     {
         $val = new FloatVal($input, $this->configuration);
+        $this->addVal($val);
+
+        return $val;
+    }
+
+    public function instanceOfVal($input, string $className): InstanceOfVal
+    {
+        $val = new InstanceOfVal($input, $className, $this->configuration);
         $this->addVal($val);
 
         return $val;
