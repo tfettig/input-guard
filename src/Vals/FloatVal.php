@@ -36,13 +36,9 @@ class FloatVal implements Valadatable
                 ],
             ];
 
-            $value = filter_var($this->input, FILTER_VALIDATE_FLOAT, $options);
-            if ($value === false) {
-                $this->validated = false;
-            } /** @noinspection InvertedIfElseConstructsInspection */ else {
-                $this->validated = true;
-                $this->value     = $value;
-            }
+            $value           = filter_var($this->input, FILTER_VALIDATE_FLOAT, $options);
+            $this->validated = $value !== false;
+            $this->value     = $this->validated ? $value : $this->value;
         }
 
         return $this->validated;
