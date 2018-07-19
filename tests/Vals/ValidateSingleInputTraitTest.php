@@ -27,14 +27,17 @@ class ValidateSingleInputTraitTest extends TestCase
             {
                 return $this->validated;
             }
+
+            protected function validation(): bool
+            {
+                return false;
+            }
+
         };
 
         $object->allowNull();
-        $object->validate(function () {
-            return false;
-        });
 
-        self::assertTrue($object->getValidated());
+        self::assertTrue($object->success() && $object->getValidated());
     }
 
     /**
@@ -56,13 +59,15 @@ class ValidateSingleInputTraitTest extends TestCase
             {
                 return $this->validated;
             }
+
+            protected function validation(): bool
+            {
+                return false;
+            }
         };
 
         $object->allowEmptyString();
-        $object->validate(function () {
-            return false;
-        });
 
-        self::assertTrue($object->getValidated());
+        self::assertTrue($object->success() && $object->getValidated());
     }
 }

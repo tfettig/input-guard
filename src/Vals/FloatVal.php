@@ -14,25 +14,23 @@ class FloatVal implements CompleteVal
         $this->value = $default;
     }
 
-    public function success(): bool
+    protected function validation(): bool
     {
-        return $this->validate(function () {
-            $options = [
-                'options' => [
-                    'min_range' => PHP_FLOAT_MIN,
-                    'max_range' => PHP_FLOAT_MAX,
-                ],
-            ];
+        $options = [
+            'options' => [
+                'min_range' => PHP_FLOAT_MIN,
+                'max_range' => PHP_FLOAT_MAX,
+            ],
+        ];
 
-            $value = filter_var($this->input, FILTER_VALIDATE_FLOAT, $options);
-            if ($value === false) {
-                return false;
-            }
+        $value = filter_var($this->input, FILTER_VALIDATE_FLOAT, $options);
+        if ($value === false) {
+            return false;
+        }
 
-            $this->value = $value;
+        $this->value = $value;
 
-            return true;
-        });
+        return true;
     }
 
     public function value(): ?float
