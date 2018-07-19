@@ -35,6 +35,30 @@ class FloatValTest extends TestCase
     }
 
     /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testAllowNull(): void
+    {
+        $val = new FloatVal(null);
+        $val->allowNull();
+
+        self::assertTrue($val->success());
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testAllowEmptyString(): void
+    {
+        $val = new FloatVal('');
+        $val->allowEmptyString();
+
+        self::assertTrue($val->success());
+    }
+
+    /**
      * @return array
      *
      * @throws \Exception
