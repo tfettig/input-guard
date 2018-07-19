@@ -9,6 +9,9 @@ use InVal\Vals\ErrorMessageTrait;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
+/**
+ * This is a unit test to show off the basic usages of the package.
+ */
 class BasicUsageTest extends TestCase
 {
     /**
@@ -22,30 +25,35 @@ class BasicUsageTest extends TestCase
 
         // An integer validation that will be successful.
         $validation->intVal(1)
-                   ->errorMessage('First int is invalid.');
+                   ->errorMessage('This message will not be present on validation.');
+
+        // An integer validation that will also be successful.
+        $validation->intVal('1')
+                   ->errorMessage('This message will not be present on validation.');
 
         // An integer validation that will not be successful.
         $validation->intVal('error')
-                   ->errorMessage('Second int is invalid.')
-                   ->errorMessage('Second int is invalid with more then one error message.');
+                   ->errorMessage('Third int is invalid.')
+                   ->errorMessage('Third int is invalid, and there is another error message with it.');
 
-        // A float validation that will be successful.
-        $validation->floatVal(1.1)
-                   ->errorMessage('First float is invalid.');
+        // A validation that will be successful even if a null is used.
+        $validation->intVal(null)
+                   ->allowNull()
+                   ->errorMessage('This message will not be present on validation.');
 
-        // A float validation that will not be successful.
-        $validation->floatVal('error')
-                   ->errorMessage('Second float is invalid.');
+        // A validation that will be successful even if an empty string is used.
+        $validation->intVal('')
+                   ->allowEmptyString()
+                   ->errorMessage('This message will not be present on validation.');
 
-        // A instanceof validation that will be successful.
-        $validation->instanceOfVal(new stdClass(), stdClass::class)
-                   ->errorMessage('First instanceof is invalid.');
+        // A validation that returns success immediately but will still show up when everything is validated.
+        $success = $validation->intVal(null)
+                              ->errorMessage('This error message will come after the others before it.')
+                              ->success();
 
-        // A instanceof validation that will not be successful.
-        $validation->instanceOfVal('error', stdClass::class)
-                   ->errorMessage('Second instanceof is invalid.');
+        self::assertFalse($success);
 
-        // A user defined validation class created by implementing the required interface.
+        // A user defined validation class that can be injected into the validation object.
         $validation->addVal(
             new class() implements CompleteVal
             {
@@ -63,16 +71,23 @@ class BasicUsageTest extends TestCase
 
             }
         )
-                   ->errorMessage('error');
+                   ->errorMessage('This message will not be present on validation.');
+
+        // A float validation
+        $validation->floatVal(1.1)
+                   ->errorMessage('This message will not be present on validation.');
+
+        // An instanceof validation
+        $validation->instanceOfVal(new stdClass(), stdClass::class)
+                   ->errorMessage('This message will not be present on validation.');
 
 
         self::assertFalse($validation->success());
         self::assertSame(
             [
-                'Second int is invalid.',
-                'Second int is invalid with more then one error message.',
-                'Second float is invalid.',
-                'Second instanceof is invalid.',
+                'Third int is invalid.',
+                'Third int is invalid, and there is another error message with it.',
+                'This error message will come after the others before it.',
             ],
             $validation->pullErrorMessages()
         );

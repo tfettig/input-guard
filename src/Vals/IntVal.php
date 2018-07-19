@@ -6,21 +6,7 @@ namespace InVal\Vals;
 class IntVal implements CompleteVal
 {
     use ErrorMessageTrait;
-
-    /**
-     * @var mixed
-     */
-    private $input;
-
-    /**
-     * @var int|null
-     */
-    private $value;
-
-    /**
-     * @var bool|null
-     */
-    private $validated;
+    use ValidateSingleInputTrait;
 
     public function __construct($input, ?int $default = null)
     {
@@ -30,7 +16,7 @@ class IntVal implements CompleteVal
 
     public function success(): bool
     {
-        if ($this->validated === null) {
+        return $this->validate(function () {
             $options = [
                 'options' => [
                     'min_range' => PHP_INT_MIN,
@@ -38,12 +24,15 @@ class IntVal implements CompleteVal
                 ],
             ];
 
-            $value           = filter_var($this->input, FILTER_VALIDATE_INT, $options);
-            $this->validated = $value !== false;
-            $this->value     = $this->validated ? $value : $this->value;
-        }
+            $value = filter_var($this->input, FILTER_VALIDATE_INT, $options);
+            if ($value === false) {
+                return false;
+            }
 
-        return $this->validated;
+            $this->value = $value;
+
+            return true;
+        });
     }
 
     public function value(): ?int

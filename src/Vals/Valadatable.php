@@ -11,11 +11,4 @@ interface Valadatable
      * @return bool
      */
     public function success(): bool;
-
-    /**
-     * Return either the validated value or the default value.
-     *
-     * @return mixed
-     */
-    public function value();
 }

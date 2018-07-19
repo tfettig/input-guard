@@ -6,21 +6,7 @@ namespace InVal\Vals;
 class InstanceOfVal implements CompleteVal
 {
     use ErrorMessageTrait;
-
-    /**
-     * @var mixed
-     */
-    private $input;
-
-    /**
-     * @var object|null
-     */
-    private $value;
-
-    /**
-     * @var bool|null
-     */
-    private $validated;
+    use ValidateSingleInputTrait;
 
     /**
      * @var string
@@ -35,12 +21,12 @@ class InstanceOfVal implements CompleteVal
 
     public function success(): bool
     {
-        if ($this->validated === null) {
-            $this->validated = $this->input instanceof $this->className;
-            $this->value     = $this->validated ? $this->input : $this->value;
-        }
+        return $this->validate(function () {
+            $success     = $this->input instanceof $this->className;
+            $this->value = $success ? $this->input : $this->value;
 
-        return $this->validated;
+            return $success;
+        });
     }
 
     public function value(): ?object
