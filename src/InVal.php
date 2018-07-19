@@ -8,7 +8,6 @@ use InVal\Vals\ErrorMessageTrait;
 use InVal\Vals\FloatVal;
 use InVal\Vals\InstanceOfVal;
 use InVal\Vals\IntVal;
-use InVal\Vals\Valadatable;
 
 class InVal implements CompleteVal
 {
@@ -63,7 +62,7 @@ class InVal implements CompleteVal
             return $success;
         }, true);
 
-        // Deduplicate the error messages.
+        // Merge and remove duplicated error messages.
         $this->errorMessages = array_unique(array_merge($this->errorMessages, ...$error_messages));
 
         return $success;
@@ -84,11 +83,15 @@ class InVal implements CompleteVal
     /**
      * Allow for the injection of any Valadatable object.
      *
-     * @param Valadatable $val
+     * @param CompleteVal $val
+     *
+     * @return CompleteVal
      */
-    public function addVal(Valadatable $val): void
+    public function addVal(CompleteVal $val): CompleteVal
     {
         $this->vals[] = $val;
+
+        return $val;
     }
 
     public function intVal($input): IntVal

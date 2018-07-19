@@ -94,4 +94,21 @@ class InValTest extends TestCase
         $input = new stdClass();
         self::assertSame($input, $this->inVal->instanceOfVal($input, stdClass::class)->value());
     }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testRemovingDuplicatedErrorMessages(): void
+    {
+        $this->inVal->intVal('error')
+                    ->errorMessage('The same message');
+        $this->inVal->floatVal('error')
+                    ->errorMessage('The same message')
+                    ->errorMessage('The same message');
+
+        $this->inVal->success();
+
+        self::assertCount(1, $this->inVal->pullErrorMessages());
+    }
 }

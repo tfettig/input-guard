@@ -10,9 +10,12 @@ trait ErrorMessageTrait
      */
     private $errorMessages = [];
 
-    public function errorMessage(string $message): void
+    public function errorMessage(string $message): CompleteVal
     {
         $this->errorMessages[] = $message;
+
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return $this;
     }
 
     public function pullErrorMessages(): array

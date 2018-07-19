@@ -5,7 +5,7 @@ namespace InVal\Vals;
 
 interface ErrorMessageInterface
 {
-    public function errorMessage(string $message): void;
+    public function errorMessage(string $message): CompleteVal;
 
     public function pullErrorMessages(): array;
 }
