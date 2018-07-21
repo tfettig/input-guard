@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace InValTest\Vals;
 
-use InVal\Vals\StringVal;
+use InVal\Vals\StringableVal;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class StringValTest extends TestCase
+class StringableValTest extends TestCase
 {
     /**
      * @dataProvider successProvider
@@ -20,24 +20,7 @@ class StringValTest extends TestCase
      */
     public function testSuccess($input, string $message): void
     {
-        self::assertSame((string)$input, (new StringVal($input))->value(), $message);
-    }
-
-    /**
-     * @dataProvider failureProvider
-     *
-     * @param mixed    $input
-     * @param int|null $max
-     * @param string   $message
-     *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     */
-    public function testFailure($input, ?int $max, string $message): void
-    {
-        $val = (new StringVal($input))->maxLen($max);
-
-        self::assertNull($val->value(), $message);
+        self::assertSame((string)$input, (new StringableVal($input))->value(), $message);
     }
 
     /**
@@ -52,6 +35,44 @@ class StringValTest extends TestCase
             [1.1, 'Float scalar'],
             [false, 'Boolean scalar'],
         ];
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testStringableObject(): void
+    {
+        $object = new class()
+        {
+            public function __toString()
+            {
+                return 'success';
+            }
+        };
+
+        $val = new StringableVal($object);
+
+        self::assertSame($object, $val->value());
+        self::assertSame('success', (string)$val->value());
+    }
+
+
+    /**
+     * @dataProvider failureProvider
+     *
+     * @param mixed    $input
+     * @param int|null $max
+     * @param string   $message
+     *
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testFailure($input, ?int $max, string $message): void
+    {
+        $val = (new StringableVal($input))->maxLen($max);
+
+        self::assertNull($val->value(), $message);
     }
 
     /**

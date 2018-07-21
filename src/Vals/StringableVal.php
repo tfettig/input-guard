@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace InVal\Vals;
 
-class StringVal implements CompleteVal, StringValidatable
+class StringableVal implements CompleteVal, StringValidatable
 {
     use ErrorMessageTrait;
     use StringTrait;
@@ -18,21 +18,24 @@ class StringVal implements CompleteVal, StringValidatable
     protected function validation(): bool
     {
         // Short circuit for anything not a integer, float, string or boolean.
-        if (\is_scalar($this->input) === false) {
+        if (\is_scalar($this->input) === false &&
+            \is_object($this->input) && method_exists($this->input, '__toString') === false) {
             return false;
         }
 
-        $input = (string)$this->input;
-        if ($this->stringValidation($input) === false) {
+        if ($this->stringValidation((string)$this->input) === false) {
             return false;
         }
 
-        $this->value = $input;
+        $this->value = \is_scalar($this->input) ? (string)$this->input : $this->input;
 
         return true;
     }
 
-    public function value(): ?string
+    /**
+     * @return null|string|object
+     */
+    public function value()
     {
         $this->success();
 

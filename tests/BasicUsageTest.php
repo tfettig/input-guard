@@ -58,7 +58,21 @@ class BasicUsageTest extends TestCase
                    ->errorMessage('This message will not be present on validation.')
                    ->betweenLen(1, null);
 
-        // A validation that returns success immediately but will still show up when everything is validated.
+        $validation->stringableVal('string')
+                   ->errorMessage('This message will not be present on validation.');
+
+        $validation->stringableVal(
+            new class()
+            {
+                public function __toString()
+                {
+                    return 'string';
+                }
+            }
+        )
+                   ->errorMessage('This message will not be present on validation.');
+
+        // A validation that captures failure immediately but will still show up when everything is validated.
         $success = $validation->stringVal(null)
                               ->errorMessage('This error message will come after the others before it.')
                               ->success();

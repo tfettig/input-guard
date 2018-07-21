@@ -109,6 +109,23 @@ class InValTest extends TestCase
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
+    public function testStringableValBuilder(): void
+    {
+        $input = new class()
+        {
+            public function __toString()
+            {
+                return 'string';
+            }
+        };
+
+        self::assertSame($input, $this->inVal->stringableVal($input)->value());
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
     public function testRemovingDuplicatedErrorMessages(): void
     {
         $this->inVal->intVal('error')

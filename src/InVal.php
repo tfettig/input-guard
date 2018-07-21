@@ -8,6 +8,7 @@ use InVal\Vals\ErrorMessageTrait;
 use InVal\Vals\FloatVal;
 use InVal\Vals\InstanceOfVal;
 use InVal\Vals\IntVal;
+use InVal\Vals\StringableVal;
 use InVal\Vals\StringVal;
 
 class InVal implements CompleteVal
@@ -122,6 +123,14 @@ class InVal implements CompleteVal
     public function stringVal($input): StringVal
     {
         $val = new StringVal($input, $this->configuration->defaultValue(StringVal::class));
+        $this->addVal($val);
+
+        return $val;
+    }
+
+    public function stringableVal($input): StringableVal
+    {
+        $val = new StringableVal($input, $this->configuration->defaultValue(StringableVal::class));
         $this->addVal($val);
 
         return $val;

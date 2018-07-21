@@ -6,6 +6,7 @@ namespace InVal;
 use InVal\Vals\FloatVal;
 use InVal\Vals\InstanceOfVal;
 use InVal\Vals\IntVal;
+use InVal\Vals\StringableVal;
 use InVal\Vals\StringVal;
 
 class Configuration implements Configurable
@@ -37,6 +38,8 @@ class Configuration implements Configurable
             case InstanceOfVal::class:
                 return $this->defaults[$className] ?? null;
             case StringVal::class:
+                return $this->defaults[$className] ?? null;
+            case StringableVal::class:
                 return $this->defaults[$className] ?? null;
             default:
                 return null;
