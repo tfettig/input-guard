@@ -10,7 +10,13 @@ trait ErrorMessageTrait
      */
     private $errorMessages = [];
 
-    public function errorMessage(string $message): CompleteVal
+    /** @noinspection ReturnTypeCanBeDeclaredInspection */
+    /**
+     * @param string $message
+     *
+     * @return $this
+     */
+    public function errorMessage(string $message)
     {
         $this->errorMessages[] = $message;
 

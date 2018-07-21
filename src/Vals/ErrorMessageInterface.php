@@ -5,7 +5,13 @@ namespace InVal\Vals;
 
 interface ErrorMessageInterface
 {
-    public function errorMessage(string $message): CompleteVal;
+    /** @noinspection ReturnTypeCanBeDeclaredInspection */
+    /**
+     * @param string $message
+     *
+     * @return $this
+     */
+    public function errorMessage(string $message);
 
     public function pullErrorMessages(): array;
 }

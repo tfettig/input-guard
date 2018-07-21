@@ -46,8 +46,20 @@ class BasicUsageTest extends TestCase
                    ->allowEmptyString()
                    ->errorMessage('This message will not be present on validation.');
 
+        // A string validation that will be successful.
+        $validation->stringVal('string')
+                   ->errorMessage('This message will not be present on validation.')
+                   ->regex('/\w+/')
+                   ->minLen(0)
+                   ->maxLen(500);
+
+        // A string validation that will be successful and return as a string
+        $validation->stringVal(1)
+                   ->errorMessage('This message will not be present on validation.')
+                   ->betweenLen(1, null);
+
         // A validation that returns success immediately but will still show up when everything is validated.
-        $success = $validation->intVal(null)
+        $success = $validation->stringVal(null)
                               ->errorMessage('This error message will come after the others before it.')
                               ->success();
 
