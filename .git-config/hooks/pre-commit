@@ -1,6 +1,29 @@
-#!/bin/sh
+#!/bin/bash
+
+EXIT=0
 
 composer phpcs
+CODE=$?
+if [[ ${CODE} ]]; then
+  EXIT=1
+fi
+
 composer phpmd
+CODE=$?
+if [[ ${CODE} ]]; then
+  EXIT=1
+fi
+
 composer phpunit
+CODE=$?
+if [[ ${CODE} ]]; then
+  EXIT=1
+fi
+
 composer infection
+CODE=$?
+if [[ ${CODE} ]]; then
+  EXIT=1
+fi
+
+exit ${EXIT}

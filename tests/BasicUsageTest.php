@@ -58,9 +58,7 @@ class BasicUsageTest extends TestCase
                    ->errorMessage('This message will not be present on validation.')
                    ->betweenLen(1, null);
 
-        $validation->stringableVal('string')
-                   ->errorMessage('This message will not be present on validation.');
-
+        // A validation that covers all StringVal and objects that implement __toString();
         $validation->stringableVal(
             new class()
             {
@@ -71,6 +69,38 @@ class BasicUsageTest extends TestCase
             }
         )
                    ->errorMessage('This message will not be present on validation.');
+
+        // A validation of booleans plus values that may be sent to PHP rather then a boolean.
+        $validation->boolVal('1')
+                   ->allowPseudoBools()
+                   ->errorMessage('This message will not be present on validation.');
+
+        // A float validation
+        $validation->floatVal(1.1)
+                   ->errorMessage('This message will not be present on validation.');
+
+        // An instanceof validation
+        $validation->instanceOfVal(new stdClass(), stdClass::class)
+                   ->errorMessage('This message will not be present on validation.');
+
+        self::assertFalse($validation->success());
+        self::assertSame(
+            [
+                'Third int is invalid.',
+                'Third int is invalid, and there is another error message with it.',
+            ],
+            $validation->pullErrorMessages()
+        );
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testAdvanceUsage(): void
+    {
+        // Instantiate a validation object.
+        $validation = new InVal();
 
         // A validation that captures failure immediately but will still show up when everything is validated.
         $success = $validation->stringVal(null)
@@ -99,20 +129,9 @@ class BasicUsageTest extends TestCase
         )
                    ->errorMessage('This message will not be present on validation.');
 
-        // A float validation
-        $validation->floatVal(1.1)
-                   ->errorMessage('This message will not be present on validation.');
-
-        // An instanceof validation
-        $validation->instanceOfVal(new stdClass(), stdClass::class)
-                   ->errorMessage('This message will not be present on validation.');
-
-
         self::assertFalse($validation->success());
         self::assertSame(
             [
-                'Third int is invalid.',
-                'Third int is invalid, and there is another error message with it.',
                 'This error message will come after the others before it.',
             ],
             $validation->pullErrorMessages()

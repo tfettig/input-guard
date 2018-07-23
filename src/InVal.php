@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace InVal;
 
+use InVal\Vals\BoolVal;
 use InVal\Vals\CompleteVal;
 use InVal\Vals\ErrorMessageTrait;
 use InVal\Vals\FloatVal;
@@ -92,6 +93,14 @@ class InVal implements CompleteVal
     public function addVal(CompleteVal $val): CompleteVal
     {
         $this->vals[] = $val;
+
+        return $val;
+    }
+
+    public function boolVal($input): BoolVal
+    {
+        $val = new BoolVal($input, $this->configuration->defaultValue(BoolVal::class));
+        $this->addVal($val);
 
         return $val;
     }

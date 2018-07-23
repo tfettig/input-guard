@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 
 class StringTraitTest extends TestCase
 {
-
     /**
      * @dataProvider successProvider
      *
@@ -27,7 +26,13 @@ class StringTraitTest extends TestCase
     {
         $val = (new class() implements StringValidatable
         {
-            use StringTrait;
+            use StringTrait {
+                StringTrait::minLen as minLenTraitA;
+                StringTrait::maxLen as maxLenTraitA;
+                StringTrait::betweenLen as betweenLenA;
+                StringTrait::regex as regexA;
+                StringTrait::stringValidation as stringValidationA;
+            }
 
             public function runValidation(string $input): bool
             {
@@ -49,7 +54,13 @@ class StringTraitTest extends TestCase
     {
         $val = (new class() implements StringValidatable
         {
-            use StringTrait;
+            use StringTrait {
+                StringTrait::minLen as minLenTraitB;
+                StringTrait::maxLen as maxLenTraitB;
+                StringTrait::betweenLen as betweenLenB;
+                StringTrait::regex as regexB;
+                StringTrait::stringValidation as stringValidationB;
+            }
 
             public function runValidation(string $input): bool
             {
@@ -76,7 +87,13 @@ class StringTraitTest extends TestCase
     {
         $val = (new class() implements StringValidatable
         {
-            use StringTrait;
+            use StringTrait {
+                StringTrait::minLen as minLenTraitC;
+                StringTrait::maxLen as maxLenTraitC;
+                StringTrait::betweenLen as betweenLenC;
+                StringTrait::regex as regexC;
+                StringTrait::stringValidation as stringValidationC;
+            }
 
             public function runValidation(string $input): bool
             {

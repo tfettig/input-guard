@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace InVal;
 
+use InVal\Vals\BoolVal;
 use InVal\Vals\FloatVal;
 use InVal\Vals\InstanceOfVal;
 use InVal\Vals\IntVal;
@@ -17,6 +18,7 @@ class Configuration implements Configurable
      * @var array
      */
     protected $defaults = [
+        BoolVal::class       => null,
         FloatVal::class      => null,
         InstanceOfVal::class => null,
         IntVal::class        => null,
@@ -31,6 +33,8 @@ class Configuration implements Configurable
     public function defaultValue(string $className)
     {
         switch ($className) {
+            case BoolVal::class:
+                return $this->defaults[$className] ?? null;
             case IntVal::class:
                 return $this->defaults[$className] ?? null;
             case FloatVal::class:

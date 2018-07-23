@@ -69,6 +69,16 @@ class InValTest extends TestCase
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
+    public function testBoolValBuilder(): void
+    {
+        $input = false;
+        self::assertSame($input, $this->inVal->boolVal($input)->value());
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
     public function testIntValBuilder(): void
     {
         $input = 1;
