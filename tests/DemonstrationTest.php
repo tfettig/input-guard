@@ -18,17 +18,17 @@ class DemonstrationTest extends TestCase
      * Integer demonstration:
      *
      * 1) Native type juggling for inputs will be respected.
-     * 2) Null values can be optional included in the validation set.
-     * 3) Empty strings can be optional included in the validation set.
-     * 4) Multiple error message can be set.
-     * 5) When duplicate error messages are configured only one is displayed.
+     * 2) Adding a range to the validation.
+     * 3) Null values can be optional included in the validation set.
+     * 4) Empty strings can be optional included in the validation set.
+     * 5) Multiple error message can be set.
+     * 6) When duplicate error messages are configured only one is displayed.
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
     public function testIntegerValidationDemonstration(): void
     {
-        // Instantiate a validation object.
         $validation = new InVal();
 
         // Success
@@ -37,6 +37,15 @@ class DemonstrationTest extends TestCase
 
         // Success
         $validation->intVal('1')
+                   ->errorMessage('This message will not be present on validation.');
+
+        // Success
+        $validation->intVal(5)
+                   ->min(PHP_INT_MIN)
+                   ->errorMessage('This message will not be present on validation.');
+
+        $validation->intVal(5)
+                   ->between(0, 10)
                    ->errorMessage('This message will not be present on validation.');
 
         // Success
@@ -69,25 +78,52 @@ class DemonstrationTest extends TestCase
         );
     }
 
+
     /**
+     * Float demonstration:
+     * 1) A float boolean input.
+     * 2) A flat as a string.
+     * 3) An integer.
+     *
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    public function testBasicUsage(): void
+    public function testFloatValidationDemonstration(): void
     {
-        // Instantiate a validation object.
         $validation = new InVal();
 
-        /* String demonstration:
-         * 1) Use of regex, and minimum and maximum string lengths.
-         * 2) Type juggling using a non-string.
-         * 3) An objects that implement __toString().
-         */
+        // Success
+        $validation->floatVal(1.1)
+                   ->errorMessage('This message will not be present on validation.');
+
+        $validation->floatVal('1.1')
+                   ->between(.5, 2)
+                   ->errorMessage('This message will not be present on validation.');
+
+        $validation->floatVal(1)
+                   ->min(.1)
+                   ->errorMessage('This message will not be present on validation.');
+
+        self::assertTrue($validation->success());
+    }
+
+    /**
+     * String demonstration:
+     * 1) Use of regex, and minimum and maximum string lengths.
+     * 2) Type juggling using a non-string.
+     * 3) An objects that implement __toString().
+     *
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testStringValidationDemonstration(): void
+    {
+        $validation = new InVal();
 
         // Success
-        $validation->stringVal('string')
+        $validation->stringVal('A string value that needs to be validated.')
                    ->errorMessage('This message will not be present on validation.')
-                   ->regex('/\w+/')
+                   ->regex('/^[\w .]+$/')
                    ->minLen(0)
                    ->maxLen(500);
 
@@ -108,10 +144,20 @@ class DemonstrationTest extends TestCase
         )
                    ->errorMessage('This message will not be present on validation.');
 
-        /* Boolean demonstration:
-         * 1) A regular boolean input.
-         * 2) A pseudo boolean input.
-         */
+        self::assertTrue($validation->success());
+    }
+
+    /**
+     * Boolean demonstration:
+     * 1) A regular boolean input.
+     * 2) A pseudo boolean input (0, '0', '', 1, '1').
+     *
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testBooleanValidationDemonstration(): void
+    {
+        $validation = new InVal();
 
         // Success
         $validation->boolVal(false)
@@ -122,17 +168,19 @@ class DemonstrationTest extends TestCase
                    ->allowPseudoBools()
                    ->errorMessage('This message will not be present on validation.');
 
-        /* Float demonstration:
-         * 1) A regular float input.
-         */
+        self::assertTrue($validation->success());
+    }
 
-        // Success
-        $validation->floatVal(1.1)
-                   ->errorMessage('This message will not be present on validation.');
-
-        /* InstanceOf demonstration:
-         * 1) An object instance input
-         */
+    /**
+     * InstanceOf demonstration:
+     * 1) An object instance input
+     *
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testOtherValidationDemonstration(): void
+    {
+        $validation = new InVal();
 
         // Success
         $validation->instanceOfVal(new stdClass(), stdClass::class)
@@ -143,22 +191,25 @@ class DemonstrationTest extends TestCase
     }
 
     /**
+     * Advance usage demonstration:
+     * 1) Capture validation state immediately.
+     * 2) User defined validation classes.
+     *
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    public function testAdvanceUsage(): void
+    public function testAdvanceUsageDemonstration(): void
     {
-        // Instantiate a validation object.
         $validation = new InVal();
 
-        // Demonstrating a validation that captures failure immediately but will still show up in the final results.
+        // Failure
         $success = $validation->stringVal(null)
                               ->errorMessage('This error message will come after the others before it.')
                               ->success();
 
         self::assertFalse($success);
 
-        // Demonstrating a user defined validation class that can be injected into the validation object.
+        // Success
         $validation->addVal(
             new class() implements CompleteVal
             {
