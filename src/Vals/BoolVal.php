@@ -5,7 +5,7 @@ namespace InVal\Vals;
 
 class BoolVal implements CompleteVal
 {
-    use ErrorMessageTrait;
+    use CompleteValTrait;
     use ValidateSingleInputTrait;
 
     /**

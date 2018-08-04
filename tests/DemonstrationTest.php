@@ -5,7 +5,7 @@ namespace InValTest;
 
 use InVal\InVal;
 use InVal\Vals\CompleteVal;
-use InVal\Vals\ErrorMessageTrait;
+use InVal\Vals\CompleteValTrait;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -59,7 +59,6 @@ class DemonstrationTest extends TestCase
                    ->errorMessage("A string of 'error' is invalid, and there is another error message with it.");
 
         // Assertions demonstrating the value of the entire validation class and the error messages returned.
-        // @todo There is a gap here for pulling error messages without calling the success method.
         self::assertFalse($validation->success());
         self::assertSame(
             [
@@ -163,7 +162,7 @@ class DemonstrationTest extends TestCase
         $validation->addVal(
             new class() implements CompleteVal
             {
-                use ErrorMessageTrait;
+                use CompleteValTrait;
 
                 public function success(): bool
                 {

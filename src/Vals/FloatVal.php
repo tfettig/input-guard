@@ -12,7 +12,7 @@ namespace InVal\Vals;
  */
 class FloatVal implements CompleteVal
 {
-    use ErrorMessageTrait;
+    use CompleteValTrait;
     use ValidateSingleInputTrait;
 
     /**

@@ -6,7 +6,7 @@ namespace InVal;
 use InVal\Vals\ArrayVal;
 use InVal\Vals\BoolVal;
 use InVal\Vals\CompleteVal;
-use InVal\Vals\ErrorMessageTrait;
+use InVal\Vals\CompleteValTrait;
 use InVal\Vals\FloatVal;
 use InVal\Vals\InstanceOfVal;
 use InVal\Vals\IntVal;
@@ -15,7 +15,7 @@ use InVal\Vals\StringVal;
 
 class InVal implements CompleteVal
 {
-    use ErrorMessageTrait;
+    use CompleteValTrait;
 
     /**
      * An array of objects that implement the Valadatable interface.

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace InVal\Vals;
 
-trait ErrorMessageTrait
+trait CompleteValTrait
 {
     /**
      * @var array
@@ -26,6 +26,12 @@ trait ErrorMessageTrait
 
     public function pullErrorMessages(): array
     {
+        $this->success();
+
         return $this->errorMessages;
     }
+
+    abstract public function success(): bool;
+
+    abstract public function value();
 }

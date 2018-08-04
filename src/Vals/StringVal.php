@@ -5,7 +5,7 @@ namespace InVal\Vals;
 
 class StringVal implements CompleteVal, StringValidatable
 {
-    use ErrorMessageTrait;
+    use CompleteValTrait;
     use StringTrait;
     use ValidateSingleInputTrait;
 

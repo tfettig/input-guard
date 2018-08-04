@@ -5,7 +5,7 @@ namespace InVal\Vals;
 
 class ArrayVal implements CompleteVal
 {
-    use ErrorMessageTrait;
+    use CompleteValTrait;
     use ValidateSingleInputTrait;
 
     /**
