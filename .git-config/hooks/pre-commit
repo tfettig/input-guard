@@ -3,27 +3,15 @@
 EXIT=0
 
 composer phpcs
-CODE=$?
-if [[ ${CODE} ]]; then
-  EXIT=1
-fi
+EXIT=$((EXIT + $?))
 
 composer phpmd
-CODE=$?
-if [[ ${CODE} ]]; then
-  EXIT=1
-fi
+EXIT=$((EXIT + $?))
 
 composer phpunit
-CODE=$?
-if [[ ${CODE} ]]; then
-  EXIT=1
-fi
+EXIT=$((EXIT + $?))
 
 composer infection
-CODE=$?
-if [[ ${CODE} ]]; then
-  EXIT=1
-fi
+EXIT=$((EXIT + $?))
 
 exit ${EXIT}
