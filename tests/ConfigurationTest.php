@@ -4,9 +4,12 @@ declare(strict_types=1);
 namespace InValTest;
 
 use InVal\Configuration;
+use InVal\Vals\ArrayVal;
+use InVal\Vals\BoolVal;
 use InVal\Vals\FloatVal;
 use InVal\Vals\InstanceOfVal;
 use InVal\Vals\IntVal;
+use InVal\Vals\StringVal;
 use PHPUnit\Framework\TestCase;
 
 class ConfigurationTest extends TestCase
@@ -25,23 +28,27 @@ class ConfigurationTest extends TestCase
      * @dataProvider defaultValueProvider
      *
      * @param string $class
-     * @param mixed  $default
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    public function testDefaultValue(string $class, $default): void
+    public function testDefaultValue(string $class): void
     {
-        self::assertSame($default, self::$configuration->defaultValue($class));
+        self::assertNull(self::$configuration->defaultValue($class));
     }
 
     public function defaultValueProvider(): array
     {
         return [
-            ['', null],
-            [IntVal::class, null],
-            [FloatVal::class, null],
-            [InstanceOfVal::class, null],
+            [''],
+            ['nonexistent'],
+            [ArrayVal::class],
+            [ArrayVal::class],
+            [BoolVal::class],
+            [FloatVal::class],
+            [InstanceOfVal::class],
+            [IntVal::class],
+            [StringVal::class],
         ];
     }
 }

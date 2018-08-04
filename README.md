@@ -12,6 +12,6 @@ Basic Usage: [Usage Unit Test](https://github.com/tfettig01/InVal/blob/master/te
 - [x] Add float validator
 - [x] Add string validator
 - [x] Add object that implement toString validator
-- [ ] Add array validator
+- [x] Add array validator
 - [x] Add object instance of validator
 - [ ] Add a list validator

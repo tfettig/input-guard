@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace InVal;
 
+use InVal\Vals\ArrayVal;
 use InVal\Vals\BoolVal;
 use InVal\Vals\CompleteVal;
 use InVal\Vals\ErrorMessageTrait;
@@ -65,8 +66,8 @@ class InVal implements CompleteVal
             return $success;
         }, true);
 
-        // Merge and remove duplicated error messages.
-        $this->errorMessages = array_unique(array_merge($this->errorMessages, ...$error_messages));
+        // Merge arrays, remove duplicates, and reset the keys.
+        $this->errorMessages = array_values(array_unique(array_merge($this->errorMessages, ...$error_messages)));
 
         return $success;
     }
@@ -140,6 +141,14 @@ class InVal implements CompleteVal
     public function stringableVal($input): StringableVal
     {
         $val = new StringableVal($input, $this->configuration->defaultValue(StringableVal::class));
+        $this->addVal($val);
+
+        return $val;
+    }
+
+    public function arrayVal($input): ArrayVal
+    {
+        $val = new ArrayVal($input, $this->configuration->defaultValue(ArrayVal::class));
         $this->addVal($val);
 
         return $val;

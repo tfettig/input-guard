@@ -59,6 +59,7 @@ class FloatValTest extends TestCase
         } elseif ($max !== null) {
             $val->max($max);
         }
+
         self::assertFalse($val->success(), $message);
         self::assertNull($val->value(), $message);
     }
