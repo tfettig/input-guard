@@ -37,13 +37,33 @@ class FloatValTest extends TestCase
         self::assertSame((float)$input, $val->value(), $message);
     }
 
+
+    /**
+     * @return array
+     *
+     * @throws \Exception
+     */
+    public function successProvider(): array
+    {
+        return [
+            [33545313590, null, null, "int between PHP's min and max"],
+            ['33545313590', null, null, "'int' between PHP's min and max"],
+            ['24332423.23423', null, null, "float between PHP's min and max"],
+            [1.5, 0, 2.5, 'Using between'],
+            [1.5, .9, null, 'Using min'],
+            [1.5, null, 2.5, 'Using max'],
+            [1, 1, 2, 'Input and min are equal'],
+            [2, 1, 2, 'Input and max are equal'],
+        ];
+    }
+
     /**
      * @dataProvider failureProvider
      *
-     * @param mixed  $input
-     * @param float  $min
-     * @param float  $max
-     * @param string $message
+     * @param mixed      $input
+     * @param float|null $min
+     * @param float|null $max
+     * @param string     $message
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
@@ -73,25 +93,6 @@ class FloatValTest extends TestCase
             [new stdClass(), 0, 2.5, 'Input as object'],
             [0, 1, 2, 'Input less then min'],
             [3, 1, 2, 'Input greater than max'],
-        ];
-    }
-
-    /**
-     * @return array
-     *
-     * @throws \Exception
-     */
-    public function successProvider(): array
-    {
-        return [
-            [33545313590, null, null, "int between PHP's min and max"],
-            ['33545313590', null, null, "'int' between PHP's min and max"],
-            ['24332423.23423', null, null, "float between PHP's min and max"],
-            [1.5, 0, 2.5, 'Using between'],
-            [1.5, .9, null, 'Using min'],
-            [1.5, null, 2.5, 'Using max'],
-            [1, 1, 2, 'Input and min are equal'],
-            [2, 1, 2, 'Input and max are equal'],
         ];
     }
 }
