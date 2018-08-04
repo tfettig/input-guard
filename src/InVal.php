@@ -8,6 +8,7 @@ use InVal\Vals\BoolVal;
 use InVal\Vals\CompleteVal;
 use InVal\Vals\CompleteValTrait;
 use InVal\Vals\FloatVal;
+use InVal\Vals\InListVal;
 use InVal\Vals\InstanceOfVal;
 use InVal\Vals\IntVal;
 use InVal\Vals\StringableVal;
@@ -149,6 +150,19 @@ class InVal implements CompleteVal
     public function arrayVal($input): ArrayVal
     {
         $val = new ArrayVal($input, $this->configuration->defaultValue(ArrayVal::class));
+        $this->addVal($val);
+
+        return $val;
+    }
+
+    public function inListVal($input, iterable $list): InListVal
+    {
+        $val = new InListVal(
+            $input,
+            $list,
+            $this->configuration->defaultValue(InListVal::class),
+            $this->configuration->defaultValue(InListVal::class . 'strict')
+        );
         $this->addVal($val);
 
         return $val;

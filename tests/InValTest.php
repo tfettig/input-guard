@@ -69,6 +69,23 @@ class InValTest extends TestCase
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
+    public function testRemovingDuplicatedErrorMessages(): void
+    {
+        $this->inVal->intVal('error')
+                    ->errorMessage('The same message');
+        $this->inVal->floatVal('error')
+                    ->errorMessage('The same message')
+                    ->errorMessage('The same message');
+
+        $this->inVal->success();
+
+        self::assertCount(1, $this->inVal->pullErrorMessages());
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
     public function testBoolValBuilder(): void
     {
         $input = false;
@@ -138,7 +155,7 @@ class InValTest extends TestCase
      */
     public function testArrayValBuilder(): void
     {
-        $input = [0,1,2];
+        $input = [0, 1, 2];
         self::assertSame($input, $this->inVal->arrayVal($input)->value());
     }
 
@@ -146,16 +163,9 @@ class InValTest extends TestCase
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    public function testRemovingDuplicatedErrorMessages(): void
+    public function testInListVal(): void
     {
-        $this->inVal->intVal('error')
-                    ->errorMessage('The same message');
-        $this->inVal->floatVal('error')
-                    ->errorMessage('The same message')
-                    ->errorMessage('The same message');
-
-        $this->inVal->success();
-
-        self::assertCount(1, $this->inVal->pullErrorMessages());
+        $input = 0;
+        self::assertSame($input, $this->inVal->inListVal($input, [0])->value());
     }
 }

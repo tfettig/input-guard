@@ -5,6 +5,8 @@ InvVal is a stand alone validation library using a builder interface to validate
 
 This project is currently an unstable pre-alpha. Tags will be added when stability is achieved.
 
+Demonstration Usage: [DemonstrationTest Usage](https://github.com/tfettig01/InVal/blob/master/tests/DemonstrationTest.php).
+
 ```php
 <?php
 declare(strict_types=1);
@@ -31,8 +33,6 @@ assert($validation->success());
 assert(count($validation->pullErrorMessages()) === 0);
 ```
 
-Demonstration Usage: [DemonstrationTest Usage](https://github.com/tfettig01/InVal/blob/master/tests/DemonstrationTest.php).
-
 Validator RoadMap:
 - [x] Add boolean validator
 - [x] Add integer validator
@@ -40,7 +40,7 @@ Validator RoadMap:
 - [x] Add string validator
 - [x] Add object that implement toString validator
 - [x] Add instance of validator
-- [ ] Add a list validator
+- [x] Add a list validator
 - [x] Add array validator
 - [ ] Add ArrayObject validator
 
