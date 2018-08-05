@@ -44,7 +44,7 @@ Validator plan:
 - [x] Add list validator
 
 Iterable validator plan:
-- [ ] Validation of values in an iterable of integers
+- [x] Validation of values in an iterable of integers
 - [ ] Validation of values in an iterable of strings
 - [ ] Validation of values in an iterable of floats
 
