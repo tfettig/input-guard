@@ -7,6 +7,7 @@ use InVal\Vals\BoolVal;
 use InVal\Vals\FloatVal;
 use InVal\Vals\InListVal;
 use InVal\Vals\InstanceOfVal;
+use InVal\Vals\IterableIntVal;
 use InVal\Vals\IntVal;
 use InVal\Vals\IterableVal;
 use InVal\Vals\StringableVal;
@@ -25,10 +26,11 @@ class Configuration implements Configurable
         InListVal::class            => null,
         InListVal::class . 'strict' => true,
         InstanceOfVal::class        => null,
+        IterableIntVal::class       => null,
         IntVal::class               => null,
         IterableVal::class          => null,
-        StringVal::class            => null,
         StringableVal::class        => null,
+        StringVal::class            => null,
     ];
 
     /**

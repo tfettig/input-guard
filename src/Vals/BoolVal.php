@@ -33,15 +33,15 @@ class BoolVal implements CompleteVal
         return $this->value;
     }
 
-    protected function validation(): bool
+    protected function validation($input, &$value): bool
     {
-        if ($this->input === true || ($this->pseudoBools && \in_array($this->input, [1, '1'], true))) {
-            $this->value = true;
+        if ($input === true || ($this->pseudoBools && \in_array($input, [1, '1'], true))) {
+            $value = true;
             return true;
         }
 
-        if ($this->input === false || ($this->pseudoBools && \in_array($this->input, [0, '0', ''], true))) {
-            $this->value = false;
+        if ($input === false || ($this->pseudoBools && \in_array($input, [0, '0', ''], true))) {
+            $value = false;
             return true;
         }
 

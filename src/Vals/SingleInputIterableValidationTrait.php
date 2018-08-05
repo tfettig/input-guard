@@ -12,38 +12,40 @@ trait SingleInputIterableValidationTrait
     /**
      * @var int
      */
-    private $minSize = 0;
+    private $minCount = 0;
 
     /**
      * @var int|null;
      */
-    private $maxSize;
+    private $maxCount;
 
     /**
      * A method to allow extra validation to be done for iterables.
      *
+     * @param iterable $input
+     *
      * @return bool
      */
-    abstract protected function extraIterableValidation(): bool;
+    abstract protected function extraIterableValidation(iterable $input): bool;
 
-    public function maxSize(int $max): self
+    public function maxCount(int $max): self
     {
-        $this->maxSize = $max;
+        $this->maxCount = $max;
 
         return $this;
     }
 
-    public function minSize(int $min): self
+    public function minCount(int $min): self
     {
-        $this->minSize = $min;
+        $this->minCount = $min;
 
         return $this;
     }
 
-    public function between(int $min, int $max): self
+    public function betweenCount(int $min, int $max): self
     {
-        $this->minSize = $min;
-        $this->maxSize = $max;
+        $this->minCount = $min;
+        $this->maxCount = $max;
 
         return $this;
     }
@@ -62,27 +64,27 @@ trait SingleInputIterableValidationTrait
         return $this->value instanceof Traversable ? iterator_to_array($this->value) : (array)$this->value;
     }
 
-    protected function validation(): bool
+    protected function validation($input, &$value): bool
     {
-        if (!\is_array($this->input) && !$this->input instanceof Traversable) {
+        if (!\is_array($input) && !$input instanceof Traversable) {
             return false;
         }
 
-        if (\is_array($this->input)) {
-            $iterableSize = count($this->input);
+        if (\is_array($input)) {
+            $iterableSize = count($input);
         } else {
-            $iterableSize = iterator_count($this->input);
+            $iterableSize = iterator_count($input);
         }
 
-        if ($iterableSize < $this->minSize || ($this->maxSize && $iterableSize > $this->maxSize)) {
+        if ($iterableSize < $this->minCount || ($this->maxCount && $iterableSize > $this->maxCount)) {
             return false;
         }
 
-        if ($this->extraIterableValidation() === false) {
+        if ($this->extraIterableValidation($this->input) === false) {
             return false;
         }
 
-        $this->value = $this->input;
+        $value = $input;
 
         return true;
     }

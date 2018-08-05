@@ -25,11 +25,11 @@ class IterableValTest extends TestCase
         $val = new IterableVal($input);
 
         if ($min !== null && $max !== null) {
-            $val->between($min, $max);
+            $val->betweenCount($min, $max);
         } elseif ($min !== null) {
-            $val->minSize($min);
+            $val->minCount($min);
         } elseif ($max !== null) {
-            $val->maxSize($max);
+            $val->maxCount($max);
         }
 
         self::assertTrue($val->success(), $message);
@@ -63,11 +63,11 @@ class IterableValTest extends TestCase
         $val = new IterableVal($input);
 
         if ($min !== null && $max !== null) {
-            $val->between($min, $max);
+            $val->betweenCount($min, $max);
         } elseif ($min !== null) {
-            $val->minSize($min);
+            $val->minCount($min);
         } elseif ($max !== null) {
-            $val->maxSize($max);
+            $val->maxCount($max);
         }
 
         self::assertFalse($val->success(), $message);

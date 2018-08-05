@@ -15,19 +15,19 @@ class StringVal implements CompleteVal, StringValidatable
         $this->value = $default;
     }
 
-    protected function validation(): bool
+    protected function validation($input, &$value): bool
     {
         // Short circuit for anything not a integer, float, string or boolean.
-        if (\is_scalar($this->input) === false) {
+        if (\is_scalar($input) === false) {
             return false;
         }
 
-        $input = (string)$this->input;
+        $input = (string)$input;
         if ($this->stringValidation($input) === false) {
             return false;
         }
 
-        $this->value = $input;
+        $value = $input;
 
         return true;
     }

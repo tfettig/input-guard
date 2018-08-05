@@ -53,22 +53,22 @@ class FloatVal implements CompleteVal
         return $this;
     }
 
-    protected function validation(): bool
+    protected function validation($input, &$value): bool
     {
-        if (\is_bool($this->input)) {
+        if (\is_bool($input)) {
             return false;
         }
 
-        $value = filter_var($this->input, FILTER_VALIDATE_FLOAT);
-        if ($value === false) {
+        $return = filter_var($input, FILTER_VALIDATE_FLOAT);
+        if ($return === false) {
             return false;
         }
 
-        if ($value < $this->min || $value > $this->max) {
+        if ($return < $this->min || $return > $this->max) {
             return false;
         }
 
-        $this->value = $value;
+        $value = $return;
 
         return true;
     }

@@ -9,6 +9,7 @@ use InVal\Vals\CompleteValTrait;
 use InVal\Vals\FloatVal;
 use InVal\Vals\InListVal;
 use InVal\Vals\InstanceOfVal;
+use InVal\Vals\IterableIntVal;
 use InVal\Vals\IntVal;
 use InVal\Vals\IterableVal;
 use InVal\Vals\StringableVal;
@@ -167,6 +168,14 @@ class InVal implements CompleteVal
     public function iterableVal($input): IterableVal
     {
         $val = new IterableVal($input, $this->configuration->defaultValue(IterableVal::class));
+        $this->addVal($val);
+
+        return $val;
+    }
+
+    public function iterableIntVal($input): IterableIntVal
+    {
+        $val = new IterableIntVal($input, $this->configuration->defaultValue(IterableIntVal::class));
         $this->addVal($val);
 
         return $val;

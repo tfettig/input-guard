@@ -174,6 +174,16 @@ class InValTest extends TestCase
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
+    public function testIterableIntVal(): void
+    {
+        $input = [1, 2, 3];
+        self::assertSame($input, $this->inVal->iterableIntVal($input)->value());
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
     public function testInListVal(): void
     {
         $input = 0;

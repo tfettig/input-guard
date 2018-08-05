@@ -14,7 +14,14 @@ class IterableVal implements CompleteVal
         $this->value = $default;
     }
 
-    protected function extraIterableValidation(): bool
+    /**
+     * @param iterable $input
+     *
+     * @return bool
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
+    protected function extraIterableValidation(iterable $input): bool
     {
         return true;
     }

@@ -19,12 +19,14 @@ class InstanceOfVal implements CompleteVal
         $this->input     = $input;
     }
 
-    protected function validation(): bool
+    protected function validation($input, &$value): bool
     {
-        $success     = $this->input instanceof $this->className;
-        $this->value = $success ? $this->input : $this->value;
+        if ($input instanceof $this->className) {
+            $value = $input;
+            return true;
+        }
 
-        return $success;
+        return false;
     }
 
     public function value(): ?object

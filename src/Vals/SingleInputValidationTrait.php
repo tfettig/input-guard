@@ -45,9 +45,12 @@ trait SingleInputValidationTrait
      *
      * If PHP allowed the behavior the method would be private.
      *
+     * @param mixed $input
+     * @param mixed &$value
+     *
      * @return bool
      */
-    abstract protected function validation(): bool;
+    abstract protected function validation($input, &$value): bool;
 
     /**
      * A switch to update the object state to allow nulls as a valid value for the input.
@@ -86,7 +89,7 @@ trait SingleInputValidationTrait
             } elseif ($this->allowEmptyString && $this->input === '') {
                 $this->validated = true;
             } else {
-                $this->validated = $this->validation();
+                $this->validated = $this->validation($this->input, $this->value);
             }
         }
 

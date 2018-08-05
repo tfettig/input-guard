@@ -172,6 +172,23 @@ class DemonstrationTest extends TestCase
     }
 
     /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testIterableDemonstration(): void
+    {
+        $validation = new InVal();
+
+        $validation->iterableVal([1, 'a', new stdClass()])
+                   ->errorMessage('This message will not be present on validation.');
+
+        $validation->iterableIntVal([1, 2, 3])
+                   ->errorMessage('This message will not be present on validation.');
+
+        self::assertTrue($validation->success());
+    }
+
+    /**
      * InstanceOf demonstration:
      * 1) An object instance input
      *
