@@ -33,21 +33,21 @@ assert($validation->success());
 assert(count($validation->pullErrorMessages()) === 0);
 ```
 
-Validator RoadMap:
+Validator plan:
 - [x] Add boolean validator
 - [x] Add integer validator
 - [x] Add float validator
+- [x] Add iterable validator
 - [x] Add string validator
 - [x] Add object that implement toString validator
 - [x] Add instance of validator
-- [x] Add a list validator
-- [x] Add array validator
-- [ ] Add ArrayObject validator
+- [x] Add list validator
 
-Array RoadMap
-- [ ] Validation for an 'array' of integers
-- [ ] Validation for an 'array' of strings
-- [ ] Validation for an 'array' of floats
-- [ ] Validation for an 'array' of booleans
-- [ ] Validation for an 'array' of objects
-- [ ] Validation for multi-dimensional array (recursion).
+Iterable validator plan:
+- [ ] Validation of values in an iterable of integers
+- [ ] Validation of values in an iterable of strings
+- [ ] Validation of values in an iterable of floats
+
+String validator plan
+- [ ] Country locales (using Locale)
+- [ ] State/Providence codes

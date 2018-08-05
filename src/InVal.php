@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace InVal;
 
-use InVal\Vals\ArrayVal;
 use InVal\Vals\BoolVal;
 use InVal\Vals\CompleteVal;
 use InVal\Vals\CompleteValTrait;
@@ -11,9 +10,15 @@ use InVal\Vals\FloatVal;
 use InVal\Vals\InListVal;
 use InVal\Vals\InstanceOfVal;
 use InVal\Vals\IntVal;
+use InVal\Vals\IterableVal;
 use InVal\Vals\StringableVal;
 use InVal\Vals\StringVal;
 
+/**
+ * Class InVal
+ *
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class InVal implements CompleteVal
 {
     use CompleteValTrait;
@@ -147,9 +152,21 @@ class InVal implements CompleteVal
         return $val;
     }
 
-    public function arrayVal($input): ArrayVal
+    /**
+     * Proxy to iterable value. The method exists since most people think of and use arrays over iterables.
+     *
+     * @param $input
+     *
+     * @return IterableVal
+     */
+    public function arrayVal($input): IterableVal
     {
-        $val = new ArrayVal($input, $this->configuration->defaultValue(ArrayVal::class));
+        return $this->iterableVal($input);
+    }
+
+    public function iterableVal($input): IterableVal
+    {
+        $val = new IterableVal($input, $this->configuration->defaultValue(IterableVal::class));
         $this->addVal($val);
 
         return $val;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace InValTest;
 
 use InVal\Configuration;
-use InVal\Vals\ArrayVal;
+use InVal\Vals\IterableVal;
 use InVal\Vals\BoolVal;
 use InVal\Vals\FloatVal;
 use InVal\Vals\InstanceOfVal;
@@ -42,8 +42,7 @@ class ConfigurationTest extends TestCase
         return [
             [''],
             ['nonexistent'],
-            [ArrayVal::class],
-            [ArrayVal::class],
+            [IterableVal::class],
             [BoolVal::class],
             [FloatVal::class],
             [InstanceOfVal::class],

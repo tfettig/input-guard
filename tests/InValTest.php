@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace InValTest;
 
+use ArrayObject;
 use InVal\InVal;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -86,7 +87,7 @@ class InValTest extends TestCase
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    public function testBoolValBuilder(): void
+    public function testBoolVal(): void
     {
         $input = false;
         self::assertSame($input, $this->inVal->boolVal($input)->value());
@@ -96,7 +97,7 @@ class InValTest extends TestCase
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    public function testIntValBuilder(): void
+    public function testIntVal(): void
     {
         $input = 1;
         self::assertSame($input, $this->inVal->intVal($input)->value());
@@ -106,7 +107,7 @@ class InValTest extends TestCase
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    public function testFloatValBuilder(): void
+    public function testFloatVal(): void
     {
         $input = 1.1;
         self::assertSame($input, $this->inVal->floatVal($input)->value());
@@ -116,7 +117,7 @@ class InValTest extends TestCase
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    public function testInstanceOfValBuilder(): void
+    public function testInstanceOfVal(): void
     {
         $input = new stdClass();
         self::assertSame($input, $this->inVal->instanceOfVal($input, stdClass::class)->value());
@@ -126,7 +127,7 @@ class InValTest extends TestCase
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    public function testStringValBuilder(): void
+    public function testStringVal(): void
     {
         $input = 'string';
         self::assertSame($input, $this->inVal->stringVal($input)->value());
@@ -136,7 +137,7 @@ class InValTest extends TestCase
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    public function testStringableValBuilder(): void
+    public function testStringableVal(): void
     {
         $input = new class()
         {
@@ -153,10 +154,20 @@ class InValTest extends TestCase
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    public function testArrayValBuilder(): void
+    public function testArrayVal(): void
     {
         $input = [0, 1, 2];
         self::assertSame($input, $this->inVal->arrayVal($input)->value());
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testIterableVal(): void
+    {
+        $input = new ArrayObject();
+        self::assertSame($input, $this->inVal->iterableVal($input)->value());
     }
 
     /**

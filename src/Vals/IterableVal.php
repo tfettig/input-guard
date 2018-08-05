@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace InVal\Vals;
 
-class ArrayVal implements CompleteVal
+use Traversable;
+
+class IterableVal implements CompleteVal
 {
     use CompleteValTrait;
     use ValidateSingleInputTrait;
@@ -18,7 +20,7 @@ class ArrayVal implements CompleteVal
      */
     private $maxSize;
 
-    public function __construct($input, ?array $default = null)
+    public function __construct($input, ?iterable $default = null)
     {
         $this->input = $input;
         $this->value = $default;
@@ -46,21 +48,33 @@ class ArrayVal implements CompleteVal
         return $this;
     }
 
-    public function value(): ?array
+    public function value(): ?iterable
     {
         $this->success();
 
         return $this->value;
     }
 
+    public function valueAsArray(): array
+    {
+        $this->success();
+
+        return $this->value instanceof Traversable ? iterator_to_array($this->value) : (array)$this->value;
+    }
+
     protected function validation(): bool
     {
-        if (!\is_array($this->input)) {
+        if (!\is_array($this->input) && !$this->input instanceof Traversable) {
             return false;
         }
 
-        $arraySize = count($this->input);
-        if ($arraySize < $this->minSize || ($this->maxSize && $arraySize > $this->maxSize)) {
+        if (\is_array($this->input)) {
+            $iterableSize = count($this->input);
+        } else {
+            $iterableSize = iterator_count($this->input);
+        }
+
+        if ($iterableSize < $this->minSize || ($this->maxSize && $iterableSize > $this->maxSize)) {
             return false;
         }
 
