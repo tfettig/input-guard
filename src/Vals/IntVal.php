@@ -6,7 +6,7 @@ namespace InVal\Vals;
 class IntVal implements CompleteVal
 {
     use CompleteValTrait;
-    use ValidateSingleInputTrait;
+    use SingleInputValidationTrait;
 
     /**
      * @var int

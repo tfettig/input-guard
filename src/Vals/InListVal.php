@@ -8,7 +8,7 @@ use ArrayObject;
 class InListVal implements CompleteVal
 {
     use CompleteValTrait;
-    use ValidateSingleInputTrait;
+    use SingleInputValidationTrait;
 
     /**
      * @var iterable

@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace InVal\Vals;
 
-trait ValidateSingleInputTrait
+trait SingleInputValidationTrait
 {
     /**
      * The input to be validated.

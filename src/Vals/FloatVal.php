@@ -13,7 +13,7 @@ namespace InVal\Vals;
 class FloatVal implements CompleteVal
 {
     use CompleteValTrait;
-    use ValidateSingleInputTrait;
+    use SingleInputValidationTrait;
 
     /**
      * @var float

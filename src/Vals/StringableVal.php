@@ -7,7 +7,7 @@ class StringableVal implements CompleteVal, StringValidatable
 {
     use CompleteValTrait;
     use StringTrait;
-    use ValidateSingleInputTrait;
+    use SingleInputValidationTrait;
 
     public function __construct($input, ?int $default = null)
     {

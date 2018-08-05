@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace InValTest\Vals;
 
-use InVal\Vals\ValidateSingleInputTrait;
+use InVal\Vals\SingleInputValidationTrait;
 use PHPUnit\Framework\TestCase;
 
 class ValidateSingleInputTraitTest extends TestCase
@@ -16,10 +16,10 @@ class ValidateSingleInputTraitTest extends TestCase
     {
         $object = new class()
         {
-            use ValidateSingleInputTrait {
+            use SingleInputValidationTrait {
                 // A hack for some weirdness in phpmd.
-                ValidateSingleInputTrait::allowNull as allowNullWhat;
-                ValidateSingleInputTrait::success as successWhat;
+                SingleInputValidationTrait::allowNull as allowNullWhat;
+                SingleInputValidationTrait::success as successWhat;
             }
 
             public function __construct()
@@ -52,10 +52,10 @@ class ValidateSingleInputTraitTest extends TestCase
     {
         $object = new class()
         {
-            use ValidateSingleInputTrait {
+            use SingleInputValidationTrait {
                 // A hack for some weirdness in phpmd.
-                ValidateSingleInputTrait::allowEmptyString as allowEmptyStringWhen;
-                ValidateSingleInputTrait::success as successWhen;
+                SingleInputValidationTrait::allowEmptyString as allowEmptyStringWhen;
+                SingleInputValidationTrait::success as successWhen;
             }
 
             public function __construct()
