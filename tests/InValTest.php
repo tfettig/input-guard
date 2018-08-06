@@ -184,6 +184,34 @@ class InValTest extends TestCase
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
+    public function testIterableStringVal(): void
+    {
+        $input = ['one', 'two', 'three'];
+        self::assertSame($input, $this->inVal->iterableStringVal($input)->value());
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testIterableStringableVal(): void
+    {
+        $input = [
+            new class()
+            {
+                public function __toString()
+                {
+                    return 'success';
+                }
+            }
+        ];
+        self::assertSame($input, $this->inVal->iterableStringableVal($input)->value());
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
     public function testInListVal(): void
     {
         $input = 0;
