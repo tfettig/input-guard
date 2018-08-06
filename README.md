@@ -33,7 +33,7 @@ assert($validation->success());
 assert(count($validation->pullErrorMessages()) === 0);
 ```
 
-Validator plan:
+Validators plan:
 - [x] Add boolean validator
 - [x] Add integer validator
 - [x] Add float validator
@@ -43,11 +43,14 @@ Validator plan:
 - [x] Add instance of validator
 - [x] Add list validator
 
+Validator feature plan:
+- [ ] Add strict() and nonStrict() methods to integer, float, string, and stringable validation (type juggling).
+
 Iterable validator plan:
 - [x] Validation of values in an iterable of integers
 - [x] Validation of values in an iterable of strings
 - [x] Validation of values in an iterable of stringable
-- [ ] Validation of values in an iterable of floats
+- [x] Validation of values in an iterable of floats
 
 String validator plan
 - [ ] SECURITY: Add helper method for for common XSS injections.
@@ -57,3 +60,4 @@ String validator plan
 
 Library plan:
 - [ ] Rename library to: Paladin, Vanguard, HighGuard, LowGuard, InputGuard, or Guard
+- [ ] Figure out input types possibilities: NonStrict, Strict with null/NullObject, and Strict.
