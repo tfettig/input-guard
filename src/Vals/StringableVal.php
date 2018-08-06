@@ -6,7 +6,10 @@ namespace InVal\Vals;
 class StringableVal implements CompleteVal, StringValidatable
 {
     use CompleteValTrait;
-    use StringTrait;
+    use StringTrait {
+        SingleInputValidationTrait::validation insteadof StringTrait;
+        StringTrait::validation as stringValidation;
+    }
     use SingleInputValidationTrait;
 
     public function __construct($input, ?int $default = null)
@@ -17,17 +20,15 @@ class StringableVal implements CompleteVal, StringValidatable
 
     protected function validation($input, &$value): bool
     {
-        // Short circuit for anything not a integer, float, string or boolean.
+        // Short circuit for anything not a integer, float, string, boolean, or object with a __toString method.
         if (\is_scalar($input) === false &&
             \is_object($input) && method_exists($input, '__toString') === false) {
             return false;
         }
 
-        if ($this->stringValidation((string)$input) === false) {
+        if ($this->stringValidation($input, $value) === false) {
             return false;
         }
-
-        $value = \is_scalar($input) ? (string)$input : $input;
 
         return true;
     }

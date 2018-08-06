@@ -3,10 +3,8 @@ declare(strict_types=1);
 
 namespace InVal\Vals;
 
-trait SingleInputIntTrait
+trait IntTrait
 {
-    use SingleInputValidationTrait;
-
     /**
      * @var int
      */

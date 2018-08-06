@@ -6,7 +6,8 @@ namespace InVal\Vals;
 class IntVal implements CompleteVal
 {
     use CompleteValTrait;
-    use SingleInputIntTrait;
+    use IntTrait;
+    use SingleInputValidationTrait;
 
     public function __construct($input, ?int $default = null)
     {

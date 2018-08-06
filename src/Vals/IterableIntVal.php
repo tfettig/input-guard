@@ -6,14 +6,12 @@ namespace InVal\Vals;
 class IterableIntVal implements CompleteVal
 {
     use CompleteValTrait;
-    use SingleInputIterableValidationTrait;
-    use SingleInputIntTrait {
-        SingleInputIterableValidationTrait::allowEmptyString insteadof SingleInputIntTrait;
-        SingleInputIterableValidationTrait::allowNull insteadof SingleInputIntTrait;
-        SingleInputIterableValidationTrait::success insteadof SingleInputIntTrait;
-        SingleInputIterableValidationTrait::validation insteadof SingleInputIntTrait;
-        SingleInputIntTrait::validation as intValidation;
+    use IntTrait {
+        // Use the Iterable's validation as the primary validation logic and rename the Int validation method.
+        SingleInputIterableValidationTrait::validation insteadof IntTrait;
+        IntTrait::validation as intValidation;
     }
+    use SingleInputIterableValidationTrait;
 
     public function __construct($input, ?iterable $default = null)
     {

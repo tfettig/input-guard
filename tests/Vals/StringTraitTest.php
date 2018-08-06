@@ -24,22 +24,24 @@ class StringTraitTest extends TestCase
      */
     public function testSuccess($input, int $min, ?int $max, string $regex, string $message): void
     {
-        $val = (new class() implements StringValidatable
+        $val = new class() implements StringValidatable
         {
             use StringTrait {
                 StringTrait::minLen as minLenTraitA;
                 StringTrait::maxLen as maxLenTraitA;
                 StringTrait::betweenLen as betweenLenA;
                 StringTrait::regex as regexA;
-                StringTrait::stringValidation as stringValidationA;
+                StringTrait::validation as stringValidationA;
             }
 
             public function runValidation(string $input): bool
             {
-                return $this->stringValidation($input);
+                $value = null;
+                return $this->validation($input, $value);
             }
-        })
-            ->minLen($min)
+        };
+
+        $val->minLen($min)
             ->maxLen($max)
             ->regex($regex);
 
@@ -52,21 +54,24 @@ class StringTraitTest extends TestCase
      */
     public function testBetweenSuccess(): void
     {
-        $val = (new class() implements StringValidatable
+        $val = new class() implements StringValidatable
         {
             use StringTrait {
                 StringTrait::minLen as minLenTraitB;
                 StringTrait::maxLen as maxLenTraitB;
                 StringTrait::betweenLen as betweenLenB;
                 StringTrait::regex as regexB;
-                StringTrait::stringValidation as stringValidationB;
+                StringTrait::validation as stringValidationB;
             }
 
             public function runValidation(string $input): bool
             {
-                return $this->stringValidation($input);
+                $value = null;
+                return $this->validation($input, $value);
             }
-        })->betweenLen(5, 10);
+        };
+
+        $val->betweenLen(5, 10);
 
         self::assertTrue($val->runValidation('success'));
     }
@@ -85,22 +90,24 @@ class StringTraitTest extends TestCase
      */
     public function testFailure($input, int $min, ?int $max, string $regex, string $message): void
     {
-        $val = (new class() implements StringValidatable
+        $val = new class() implements StringValidatable
         {
             use StringTrait {
                 StringTrait::minLen as minLenTraitC;
                 StringTrait::maxLen as maxLenTraitC;
                 StringTrait::betweenLen as betweenLenC;
                 StringTrait::regex as regexC;
-                StringTrait::stringValidation as stringValidationC;
+                StringTrait::validation as stringValidationC;
             }
 
             public function runValidation(string $input): bool
             {
-                return $this->stringValidation($input);
+                $value = null;
+                return $this->validation($input, $value);
             }
-        })
-            ->minLen($min)
+        };
+
+        $val->minLen($min)
             ->maxLen($max)
             ->regex($regex);
 

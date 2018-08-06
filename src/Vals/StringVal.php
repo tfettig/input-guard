@@ -6,7 +6,9 @@ namespace InVal\Vals;
 class StringVal implements CompleteVal, StringValidatable
 {
     use CompleteValTrait;
-    use StringTrait;
+    use StringTrait {
+        StringTrait::validation as stringValidation;
+    }
     use SingleInputValidationTrait;
 
     public function __construct($input, ?int $default = null)
@@ -23,7 +25,7 @@ class StringVal implements CompleteVal, StringValidatable
         }
 
         $input = (string)$input;
-        if ($this->stringValidation($input) === false) {
+        if ($this->stringValidation($input, $value) === false) {
             return false;
         }
 

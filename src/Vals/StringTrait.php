@@ -49,16 +49,20 @@ trait StringTrait
         return $this;
     }
 
-    private function stringValidation(string $input): bool
+    protected function validation($input, &$value): bool
     {
-        $length = mb_strlen($input, mb_detect_encoding($input));
+        $inputString = (string)$input;
+
+        $length = mb_strlen($inputString, mb_detect_encoding($inputString));
         if ($length < $this->minLen || ($this->maxLen !== null && $length > $this->maxLen)) {
             return false;
         }
 
-        if ($this->regex && !preg_match($this->regex, $input)) {
+        if ($this->regex && !preg_match($this->regex, $inputString)) {
             return false;
         }
+
+        $value = is_scalar($input) ? $inputString : $input;
 
         return true;
     }
