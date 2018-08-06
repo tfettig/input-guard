@@ -3,12 +3,19 @@ declare(strict_types=1);
 
 namespace InVal\Vals;
 
+/**
+ * Base valid inputs:
+ * 1) An empty string.
+ * 2) A scalar (can be cast back and forth by PHP).
+ *
+ * Modifiable validations:
+ * 1) Character length for the string.
+ * 2) Regex on the string.
+ */
 class StringVal implements CompleteVal, StringValidatable
 {
     use CompleteValTrait;
-    use StringTrait {
-        StringTrait::validation as stringValidation;
-    }
+    use StringTrait;
     use SingleInputValidationTrait;
 
     public function __construct($input, ?int $default = null)
@@ -17,21 +24,10 @@ class StringVal implements CompleteVal, StringValidatable
         $this->value = $default;
     }
 
-    protected function validation($input, &$value): bool
+    protected function extraStringValidation($input): bool
     {
         // Short circuit for anything not a integer, float, string or boolean.
-        if (\is_scalar($input) === false) {
-            return false;
-        }
-
-        $input = (string)$input;
-        if ($this->stringValidation($input, $value) === false) {
-            return false;
-        }
-
-        $value = $input;
-
-        return true;
+        return \is_scalar($input);
     }
 
     public function value(): ?string

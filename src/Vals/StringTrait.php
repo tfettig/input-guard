@@ -49,8 +49,21 @@ trait StringTrait
         return $this;
     }
 
+    /**
+     * A method to allow extra validation to be done for strings.
+     *
+     * @param mixed $input
+     *
+     * @return bool
+     */
+    abstract protected function extraStringValidation($input): bool;
+
     protected function validation($input, &$value): bool
     {
+        if ($this->extraStringValidation($input) === false) {
+            return false;
+        }
+
         $inputString = (string)$input;
 
         $length = mb_strlen($inputString, mb_detect_encoding($inputString));

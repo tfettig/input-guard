@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace InValTest\Vals;
 
-use InVal\Vals\IterableStringVal;
+use InVal\Vals\IterableStringableVal;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
-class IterableStringValTest extends TestCase
+class IterableStringableValTest extends TestCase
 {
     /**
      * @dataProvider successProvider
@@ -19,7 +20,7 @@ class IterableStringValTest extends TestCase
      */
     public function testSuccess($input, string $message): void
     {
-        $val = new IterableStringVal($input);
+        $val = new IterableStringableVal($input);
 
         self::assertTrue($val->success(), $message);
         self::assertSame($input, $val->value(), $message);
@@ -32,9 +33,17 @@ class IterableStringValTest extends TestCase
      */
     public function successProvider(): array
     {
+        $object = new class()
+        {
+            public function __toString()
+            {
+                return 'success';
+            }
+        };
+
         return [
             [[], 'An empty array'],
-            [['two', 1, true, 234.23], 'Array of types that can be cast to strings.'],
+            [[$object, 'two', 1, true, 234.23], 'Array of types that can be cast to strings.'],
         ];
     }
 
@@ -50,7 +59,7 @@ class IterableStringValTest extends TestCase
      */
     public function testFailure($input, string $message): void
     {
-        $val = new IterableStringVal($input);
+        $val = new IterableStringableVal($input);
 
         self::assertFalse($val->success(), $message);
         self::assertNull($val->value(), $message);
@@ -63,16 +72,9 @@ class IterableStringValTest extends TestCase
      */
     public function failureProvider(): array
     {
-        $object = new class()
-        {
-            public function __toString()
-            {
-                return 'success';
-            }
-        };
-
         return [
-            [[$object], 'A class with toString.'],
+            [[new stdClass()], 'A class without toString.'],
+            [[[1], [1,3,4]], 'An iterable of arrays'],
         ];
     }
 }

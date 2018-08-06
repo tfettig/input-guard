@@ -6,14 +6,14 @@ namespace InVal\Vals;
 /**
  * Base valid inputs:
  * 1) An empty iterable.
- * 2) An iterable of scalars (can be cast back and forth by PHP).
+ * 2) An iterable of scalars (can be cast back and forth by PHP), and a class with a __toString() method.
  *
  * Modifiable validations:
  * 1) Number of elements in the iterable.
  * 2) Character length for each element.
  * 3) Regex on each element.
  */
-class IterableStringVal implements CompleteVal
+class IterableStringableVal implements CompleteVal
 {
     use CompleteValTrait;
     use SingleInputIterableValidationTrait;
@@ -31,8 +31,8 @@ class IterableStringVal implements CompleteVal
 
     protected function extraStringValidation($input): bool
     {
-        // Short circuit for anything not a integer, float, string or boolean.
-        return \is_scalar($input);
+        // Short circuit for anything not a integer, float, string, boolean, or object with a __toString method.
+        return \is_scalar($input) || (\is_object($input) && method_exists($input, '__toString'));
     }
 
     protected function extraIterableValidation(iterable $input): bool

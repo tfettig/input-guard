@@ -47,6 +47,7 @@ class StringValTest extends TestCase
     public function successProvider(): array
     {
         return [
+            ['', 'Empty string scalar'],
             ['success', 'String scalar'],
             [1, 'Integer scalar'],
             [1.1, 'Float scalar'],

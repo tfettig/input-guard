@@ -34,6 +34,12 @@ class StringTraitTest extends TestCase
                 StringTrait::validation as stringValidationA;
             }
 
+            protected function extraStringValidation($input): bool
+            {
+                /** @noinspection SuspiciousBinaryOperationInspection */
+                return $input === $input;
+            }
+
             public function runValidation(string $input): bool
             {
                 $value = null;
@@ -62,6 +68,12 @@ class StringTraitTest extends TestCase
                 StringTrait::betweenLen as betweenLenB;
                 StringTrait::regex as regexB;
                 StringTrait::validation as stringValidationB;
+            }
+
+            protected function extraStringValidation($input): bool
+            {
+                /** @noinspection SuspiciousBinaryOperationInspection */
+                return $input === $input;
             }
 
             public function runValidation(string $input): bool
@@ -100,6 +112,12 @@ class StringTraitTest extends TestCase
                 StringTrait::validation as stringValidationC;
             }
 
+            protected function extraStringValidation($input): bool
+            {
+                /** @noinspection SuspiciousBinaryOperationInspection */
+                return $input === $input;
+            }
+
             public function runValidation(string $input): bool
             {
                 $value = null;
@@ -121,6 +139,7 @@ class StringTraitTest extends TestCase
     public function successProvider(): array
     {
         return [
+            ['', 0, 9, '/[\w]*/', 'Empty string'],
             ['The birds', 0, 9, '/[\w]+/', 'English string'],
             ['Die Vögel', 0, null, '/[\w]+/', 'German string'],
             ['鳥たち', 0, 3, '/[\w]+/u', 'Japanese string'],

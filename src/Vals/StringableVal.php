@@ -3,13 +3,19 @@ declare(strict_types=1);
 
 namespace InVal\Vals;
 
+/**
+ * Base valid inputs:
+ * 1) An empty string.
+ * 2) A scalar (can be cast back and forth by PHP), and a class with a __toString() method.
+ *
+ * Modifiable validations:
+ * 1) Character length for the string.
+ * 2) Regex on the string.
+ */
 class StringableVal implements CompleteVal, StringValidatable
 {
     use CompleteValTrait;
-    use StringTrait {
-        SingleInputValidationTrait::validation insteadof StringTrait;
-        StringTrait::validation as stringValidation;
-    }
+    use StringTrait;
     use SingleInputValidationTrait;
 
     public function __construct($input, ?int $default = null)
@@ -18,19 +24,10 @@ class StringableVal implements CompleteVal, StringValidatable
         $this->value = $default;
     }
 
-    protected function validation($input, &$value): bool
+    protected function extraStringValidation($input): bool
     {
         // Short circuit for anything not a integer, float, string, boolean, or object with a __toString method.
-        if (\is_scalar($input) === false &&
-            \is_object($input) && method_exists($input, '__toString') === false) {
-            return false;
-        }
-
-        if ($this->stringValidation($input, $value) === false) {
-            return false;
-        }
-
-        return true;
+        return \is_scalar($input) || (\is_object($input) && method_exists($input, '__toString'));
     }
 
     /**

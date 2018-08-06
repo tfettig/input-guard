@@ -46,11 +46,12 @@ Validator plan:
 Iterable validator plan:
 - [x] Validation of values in an iterable of integers
 - [x] Validation of values in an iterable of strings
-- [ ] Validation of values in an iterable of stringable
+- [x] Validation of values in an iterable of stringable
 - [ ] Validation of values in an iterable of floats
 
 String validator plan
 - [ ] SECURITY: Add helper method for for common XSS injections.
+- [ ] Set language encoding.
 - [ ] Country locales (using Locale)
 - [ ] State/Providence codes
 
