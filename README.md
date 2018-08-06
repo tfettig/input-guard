@@ -39,13 +39,14 @@ Validator plan:
 - [x] Add float validator
 - [x] Add iterable validator
 - [x] Add string validator
-- [x] Add object that implement toString validator
+- [x] Add stringable validator (an object that implements __toString)
 - [x] Add instance of validator
 - [x] Add list validator
 
 Iterable validator plan:
 - [x] Validation of values in an iterable of integers
-- [ ] Validation of values in an iterable of strings
+- [x] Validation of values in an iterable of strings
+- [ ] Validation of values in an iterable of stringable
 - [ ] Validation of values in an iterable of floats
 
 String validator plan
