@@ -50,5 +50,9 @@ Iterable validator plan:
 - [ ] Validation of values in an iterable of floats
 
 String validator plan
+- [ ] SECURITY: Add helper method for for common XSS injections.
 - [ ] Country locales (using Locale)
 - [ ] State/Providence codes
+
+Library plan:
+- [ ] Rename library to: Paladin, Vanguard, HighGuard, LowGuard, InputGuard, or Guard
