@@ -87,6 +87,7 @@ class IntValTest extends TestCase
     {
         return [
             ['one.point.one', null, null, 'Input as string'],
+            [1.5, 0, 2, 'Input as float.'],
             [true, 0, 2, 'Input as boolean'],
             ['', 0, 2, 'Input as empty string'],
             [new stdClass(), 0, 2, 'Input as object'],

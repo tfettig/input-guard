@@ -10,6 +10,7 @@ use InVal\Vals\FloatVal;
 use InVal\Vals\InListVal;
 use InVal\Vals\InstanceOfVal;
 use InVal\Vals\IntVal;
+use InVal\Vals\IterableFloatVal;
 use InVal\Vals\IterableIntVal;
 use InVal\Vals\IterableStringableVal;
 use InVal\Vals\IterableStringVal;
@@ -178,6 +179,14 @@ class InVal implements CompleteVal
     public function iterableIntVal($input): IterableIntVal
     {
         $val = new IterableIntVal($input, $this->configuration->defaultValue(IterableIntVal::class));
+        $this->addVal($val);
+
+        return $val;
+    }
+
+    public function iterableFloatVal($input): IterableFloatVal
+    {
+        $val = new IterableFloatVal($input, $this->configuration->defaultValue(IterableFloatVal::class));
         $this->addVal($val);
 
         return $val;
