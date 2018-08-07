@@ -5,7 +5,7 @@ namespace InVal\Vals;
 
 class InstanceOfVal implements BuildableVal
 {
-    use CompleteValTrait;
+    use BuildableValTrait;
     use SingleInputValidationTrait;
 
     /**

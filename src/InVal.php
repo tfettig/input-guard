@@ -5,7 +5,7 @@ namespace InVal;
 
 use InVal\Vals\BoolVal;
 use InVal\Vals\BuildableVal;
-use InVal\Vals\CompleteValTrait;
+use InVal\Vals\BuildableValTrait;
 use InVal\Vals\FloatVal;
 use InVal\Vals\InListVal;
 use InVal\Vals\InstanceOfVal;
@@ -25,7 +25,7 @@ use InVal\Vals\StringVal;
  */
 class InVal implements BuildableVal
 {
-    use CompleteValTrait;
+    use BuildableValTrait;
 
     /**
      * An array of objects that implement the Valadatable interface.

@@ -58,6 +58,14 @@ String validator plan
 - [ ] Country locales (using Locale)
 - [ ] State/Providence codes
 
+Renaming plan:
+- [ ] Move Traits and Interfaces into their own directories.
+- [ ] Move InVal\Vals\BuildableVal to InVal\Guard
+- [ ] Rename InVal\Vals\*Val to InVal\Guards\*Guard.
+- [ ] Rename InVal\* to InputGuard\*
+- [ ] Rename InVal to InputGuard.
+- [ ] Rename repository to InputGuard.
+- [ ] Update CI build and badge.
+
 Library plan:
-- [ ] Rename library to: Paladin, Vanguard, HighGuard, LowGuard, InputGuard, or Guard
 - [ ] Figure out input types possibilities: NonStrict, Strict with null/NullObject, and Strict.

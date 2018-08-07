@@ -5,7 +5,7 @@ namespace InVal\Vals;
 
 class IterableVal implements BuildableVal
 {
-    use CompleteValTrait;
+    use BuildableValTrait;
     use SingleInputIterableValidationTrait;
 
     public function __construct($input, ?iterable $default = null)

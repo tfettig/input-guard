@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace InValTest\Vals;
 
-use InVal\Vals\CompleteValTrait;
+use InVal\Vals\BuildableValTrait;
 use PHPUnit\Framework\TestCase;
 
-class CompleteValTraitTest extends TestCase
+class BuildableValTraitTest extends TestCase
 {
     /**
      * @throws \PHPUnit\Framework\ExpectationFailedException
@@ -16,7 +16,7 @@ class CompleteValTraitTest extends TestCase
     {
         $anonClass = new class()
         {
-            use CompleteValTrait;
+            use BuildableValTrait;
 
             public function success(): bool
             {
@@ -47,10 +47,10 @@ class CompleteValTraitTest extends TestCase
     {
         $anonClass = new class()
         {
-            use CompleteValTrait {
+            use BuildableValTrait {
                 // A hack for some weirdness in phpmd.
-                CompleteValTrait::errorMessage as errorMessageA;
-                CompleteValTrait::pullErrorMessages as pullErrorMessagesA;
+                BuildableValTrait::errorMessage as errorMessageA;
+                BuildableValTrait::pullErrorMessages as pullErrorMessagesA;
             }
 
             public $success = true;

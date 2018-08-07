@@ -5,7 +5,7 @@ namespace InVal\Vals;
 
 class IterableIntVal implements BuildableVal
 {
-    use CompleteValTrait;
+    use BuildableValTrait;
     use IntTrait {
         // Use the Iterable's validation as the primary validation logic and rename the Int validation method.
         SingleInputIterableValidationTrait::validation insteadof IntTrait;

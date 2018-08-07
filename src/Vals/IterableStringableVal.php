@@ -15,7 +15,7 @@ namespace InVal\Vals;
  */
 class IterableStringableVal implements BuildableVal
 {
-    use CompleteValTrait;
+    use BuildableValTrait;
     use SingleInputIterableValidationTrait;
     use StringTrait {
         // Use the iterable's validation as the primary validation logic and rename the string validation method.

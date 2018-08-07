@@ -5,7 +5,7 @@ namespace InVal\Vals;
 
 class IntVal implements BuildableVal
 {
-    use CompleteValTrait;
+    use BuildableValTrait;
     use IntTrait;
     use SingleInputValidationTrait;
 

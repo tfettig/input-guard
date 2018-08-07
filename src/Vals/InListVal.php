@@ -7,7 +7,7 @@ use ArrayObject;
 
 class InListVal implements BuildableVal
 {
-    use CompleteValTrait;
+    use BuildableValTrait;
     use SingleInputValidationTrait;
 
     /**

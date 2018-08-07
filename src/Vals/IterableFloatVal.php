@@ -5,7 +5,7 @@ namespace InVal\Vals;
 
 class IterableFloatVal implements BuildableVal
 {
-    use CompleteValTrait;
+    use BuildableValTrait;
     use FloatTrait {
         // Use the Iterable's validation as the primary validation logic and rename the float validation method.
         SingleInputIterableValidationTrait::validation insteadof FloatTrait;

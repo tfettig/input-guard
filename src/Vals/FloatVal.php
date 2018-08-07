@@ -12,7 +12,7 @@ namespace InVal\Vals;
  */
 class FloatVal implements BuildableVal
 {
-    use CompleteValTrait;
+    use BuildableValTrait;
     use FloatTrait;
     use SingleInputValidationTrait;
 

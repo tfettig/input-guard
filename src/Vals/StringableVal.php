@@ -14,7 +14,7 @@ namespace InVal\Vals;
  */
 class StringableVal implements BuildableVal, StringValidatable
 {
-    use CompleteValTrait;
+    use BuildableValTrait;
     use StringTrait;
     use SingleInputValidationTrait;
 
