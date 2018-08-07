@@ -1,4 +1,4 @@
-# InVal
+# InputGuard
 [![Build Status](https://travis-ci.com/tfettig01/InVal.svg?branch=master)](https://travis-ci.com/tfettig01/InVal)
 
 InvVal is a stand alone validation library using a builder interface to validate values.
@@ -11,19 +11,19 @@ Demonstration Usage: [DemonstrationTest Usage](https://github.com/tfettig01/InVa
 <?php
 declare(strict_types=1);
 
-use InVal\InVal;
+use InputGuard\InputGuard;
 
-$validation = new InVal();
+$validation = new InputGuard();
 
-$validation->intVal(1)
+$validation->int(1)
            ->min(0)
            ->errorMessage('This message will not be present on validation.');
 
-$validation->floatVal(.6)
+$validation->float(.6)
            ->between(.1, .9)
            ->errorMessage('This message will not be present on validation.');
 
-$validation->stringVal('A string value that needs to be validated.')
+$validation->string('A string value that needs to be validated.')
            ->errorMessage('This message will not be present on validation.')
            ->regex('/^[\w .]+$/')
            ->minLen(0)
@@ -34,38 +34,37 @@ assert(count($validation->pullErrorMessages()) === 0);
 ```
 
 Validators plan:
-- [x] Add boolean validator
-- [x] Add integer validator
-- [x] Add float validator
-- [x] Add iterable validator
-- [x] Add string validator
-- [x] Add stringable validator (an object that implements __toString)
-- [x] Add instance of validator
-- [x] Add list validator
+- [x] Add boolean validator.
+- [x] Add integer validator.
+- [x] Add float validator.
+- [x] Add iterable validator.
+- [x] Add string validator.
+- [x] Add stringable validator (an object that implements __toString).
+- [x] Add instance of validator.
+- [x] Add list validator.
 
 Validator feature plan:
 - [ ] Add strict() and nonStrict() methods to integer, float, string, and stringable validation (type juggling).
 
 Iterable validator plan:
-- [x] Validation of values in an iterable of integers
-- [x] Validation of values in an iterable of strings
-- [x] Validation of values in an iterable of stringable
-- [x] Validation of values in an iterable of floats
+- [x] Validation of values in an iterable of integers.
+- [x] Validation of values in an iterable of strings.
+- [x] Validation of values in an iterable of stringable.
+- [x] Validation of values in an iterable of floats.
 
 String validator plan
 - [ ] SECURITY: Add helper method for for common XSS injections.
 - [ ] Set language encoding.
-- [ ] Country locales (using Locale)
-- [ ] State/Providence codes
+- [ ] Country locales (using Locale).
+- [ ] State/Providence codes.
 
 Renaming plan:
-- [ ] Move Traits and Interfaces into their own directories.
-- [ ] Move InVal\Vals\BuildableVal to InVal\Guard
-- [ ] Rename InVal\Vals\*Val to InVal\Guards\*Guard.
-- [ ] Rename InVal\* to InputGuard\*
-- [ ] Rename InVal to InputGuard.
-- [ ] Rename repository to InputGuard.
-- [ ] Update CI build and badge.
+- [x] Move base traits into their own directories.
+- [x] Rename InVal\Vals\*Val to InVal\Guards\*Guard.
+- [x] Rename InVal\* to InputGuard\*.
+- [x] Rename InVal to InputGuard.
+- [x] Rename repository to InputGuard.
+- [ ] Update CI build and badge to InputGuard.
 
 Library plan:
 - [ ] Figure out input types possibilities: NonStrict, Strict with null/NullObject, and Strict.

@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace InValTest;
+namespace InputGuardTests;
 
-use InVal\InVal;
-use InVal\Vals\BuildableVal;
-use InVal\Vals\BuildableValTrait;
+use InputGuard\Guards\ErrorMessagesBase;
+use InputGuard\Guards\Guard;
+use InputGuard\InputGuard;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -29,41 +29,41 @@ class DemonstrationTest extends TestCase
      */
     public function testIntegerValidationDemonstration(): void
     {
-        $validation = new InVal();
+        $validation = new InputGuard();
 
         // Success
-        $validation->intVal(1)
+        $validation->int(1)
                    ->errorMessage('This message will not be present on validation.');
 
         // Success
-        $validation->intVal('1')
+        $validation->int('1')
                    ->errorMessage('This message will not be present on validation.');
 
         // Success
-        $validation->intVal(5)
+        $validation->int(5)
                    ->min(PHP_INT_MIN)
                    ->errorMessage('This message will not be present on validation.');
 
-        $validation->intVal(5)
+        $validation->int(5)
                    ->between(0, 10)
                    ->errorMessage('This message will not be present on validation.');
 
         // Success
-        $validation->intVal(null)
+        $validation->int(null)
                    ->allowNull()
                    ->errorMessage('This message will not be present on validation.');
 
         // Success
-        $validation->intVal('')
+        $validation->int('')
                    ->allowEmptyString()
                    ->errorMessage('This message will not be present on validation.');
 
         // Failure
-        $validation->intVal('error')
+        $validation->int('error')
                    ->errorMessage("A string of 'error' is invalid.");
 
         // Failure
-        $validation->intVal('second error')
+        $validation->int('second error')
                    ->errorMessage("A string of 'error' is invalid.")
                    ->errorMessage("A string of 'error' is invalid, and there is another error message with it.");
 
@@ -90,17 +90,17 @@ class DemonstrationTest extends TestCase
      */
     public function testFloatValidationDemonstration(): void
     {
-        $validation = new InVal();
+        $validation = new InputGuard();
 
         // Success
-        $validation->floatVal(1.1)
+        $validation->float(1.1)
                    ->errorMessage('This message will not be present on validation.');
 
-        $validation->floatVal('1.1')
+        $validation->float('1.1')
                    ->between(.5, 2)
                    ->errorMessage('This message will not be present on validation.');
 
-        $validation->floatVal(1)
+        $validation->float(1)
                    ->min(.1)
                    ->errorMessage('This message will not be present on validation.');
 
@@ -118,22 +118,22 @@ class DemonstrationTest extends TestCase
      */
     public function testStringValidationDemonstration(): void
     {
-        $validation = new InVal();
+        $validation = new InputGuard();
 
         // Success
-        $validation->stringVal('A string value that needs to be validated.')
+        $validation->string('A string value that needs to be validated.')
                    ->errorMessage('This message will not be present on validation.')
                    ->regex('/^[\w .]+$/')
                    ->minLen(0)
                    ->maxLen(500);
 
         // Success
-        $validation->stringVal(1)
+        $validation->string(1)
                    ->errorMessage('This message will not be present on validation.')
                    ->betweenLen(1, null);
 
         // Success
-        $validation->stringableVal(
+        $validation->stringable(
             new class()
             {
                 public function __toString()
@@ -157,14 +157,14 @@ class DemonstrationTest extends TestCase
      */
     public function testBooleanValidationDemonstration(): void
     {
-        $validation = new InVal();
+        $validation = new InputGuard();
 
         // Success
-        $validation->boolVal(false)
+        $validation->bool(false)
                    ->errorMessage('This message will not be present on validation.');
 
         // Success
-        $validation->boolVal('1')
+        $validation->bool('1')
                    ->allowPseudoBools()
                    ->errorMessage('This message will not be present on validation.');
 
@@ -177,12 +177,12 @@ class DemonstrationTest extends TestCase
      */
     public function testIterableDemonstration(): void
     {
-        $validation = new InVal();
+        $validation = new InputGuard();
 
-        $validation->iterableVal([1, 'a', new stdClass()])
+        $validation->iterable([1, 'a', new stdClass()])
                    ->errorMessage('This message will not be present on validation.');
 
-        $validation->iterableIntVal([1, 2, 3])
+        $validation->iterableInt([1, 2, 3])
                    ->errorMessage('This message will not be present on validation.');
 
         self::assertTrue($validation->success());
@@ -197,10 +197,10 @@ class DemonstrationTest extends TestCase
      */
     public function testOtherValidationDemonstration(): void
     {
-        $validation = new InVal();
+        $validation = new InputGuard();
 
         // Success
-        $validation->instanceOfVal(new stdClass(), stdClass::class)
+        $validation->instanceOf(new stdClass(), stdClass::class)
                    ->errorMessage('This message will not be present on validation.');
 
 
@@ -217,20 +217,20 @@ class DemonstrationTest extends TestCase
      */
     public function testAdvanceUsageDemonstration(): void
     {
-        $validation = new InVal();
+        $validation = new InputGuard();
 
         // Failure
-        $success = $validation->stringVal(null)
+        $success = $validation->string(null)
                               ->errorMessage('This error message will come after the others before it.')
                               ->success();
 
         self::assertFalse($success);
 
         // Success
-        $validation->addVal(
-            new class() implements BuildableVal
+        $validation->add(
+            new class() implements Guard
             {
-                use BuildableValTrait;
+                use ErrorMessagesBase;
 
                 public function success(): bool
                 {

@@ -12,12 +12,12 @@
         "@default": true,
         "ProtectedVisibility": {
             "ignore": [
-                "InVal\\*"
+                "InputGuard\\*"
             ]
         },
         "IdenticalEqual": {
             "ignore": [
-                "InVal\\*"
+                "InputGuard\\*"
             ]
         }
     }

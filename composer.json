@@ -1,5 +1,5 @@
 {
-  "name": "tfettig01/InVal",
+  "name": "tfettig01/InputGuard",
   "description": "A standalone input validation library.",
   "license": "MIT",
   "authors": [
@@ -20,12 +20,12 @@
   },
   "autoload": {
     "psr-4": {
-      "InVal\\": "src/"
+      "InputGuard\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "InValTest\\": "tests/"
+      "InputGuardTests\\": "tests/"
     }
   },
   "prefer-stable": true,
