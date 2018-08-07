@@ -69,10 +69,10 @@ class InListVal implements CompleteVal
         }
 
         $validate = $this->strict
-            ? function ($value) use ($input) {
+            ? function ($value) use ($input): bool {
                 return $value === $input;
             }
-            : function ($value) use ($input) {
+            : function ($value) use ($input): bool {
                 /** @noinspection TypeUnsafeComparisonInspection */
                 return $value == $input;
             };

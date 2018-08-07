@@ -7,5 +7,18 @@
     },
     "logs": {
         "text": "build\/infection.txt"
+    },
+    "mutators": {
+        "@default": true,
+        "ProtectedVisibility": {
+            "ignore": [
+                "InVal\\*"
+            ]
+        },
+        "IdenticalEqual": {
+            "ignore": [
+                "InVal\\*"
+            ]
+        }
     }
 }

@@ -33,6 +33,7 @@
     "git_config_hooks": "git config core.hooksPath ./.git-config/hooks",
     "git_hooks_add": "cp -R ./.git-config/hooks/. ./.git/hooks/",
     "infection": "./vendor/bin/infection --log-verbosity=none -j$(nproc)",
+    "infection_logs": "./vendor/bin/infection --log-verbosity=debug -j$(nproc)",
     "infection_build": "./vendor/bin/infection --coverage=build/phpunit -j$(nproc)",
     "phpcs": "./vendor/bin/phpcs",
     "phpmd": "./vendor/bin/phpmd src/,tests/ text phpmd.xml",
