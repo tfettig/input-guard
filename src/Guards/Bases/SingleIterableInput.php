@@ -76,7 +76,7 @@ trait SingleIterableInput
             $iterableSize = iterator_count($input);
         }
 
-        if ($iterableSize < $this->minCount || ($this->maxCount && $iterableSize > $this->maxCount)) {
+        if ($iterableSize < $this->minCount || ($this->maxCount !== null && $iterableSize > $this->maxCount)) {
             return false;
         }
 

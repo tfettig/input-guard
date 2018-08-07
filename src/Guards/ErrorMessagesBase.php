@@ -10,6 +10,8 @@ trait ErrorMessagesBase
      */
     private $errorMessages = [];
 
+    abstract public function success(): bool;
+
     /** @noinspection ReturnTypeCanBeDeclaredInspection */
     /**
      * @param string $message

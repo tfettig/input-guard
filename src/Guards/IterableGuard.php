@@ -23,7 +23,7 @@ class IterableGuard implements Guard
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    protected function extraIterableValidation(iterable $input): bool
+    protected function extraIterableValidation(/** @scrutinizer ignore-unused */ iterable $input): bool
     {
         return true;
     }

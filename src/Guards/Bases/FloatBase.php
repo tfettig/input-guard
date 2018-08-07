@@ -15,12 +15,6 @@ trait FloatBase
      */
     private $max = PHP_FLOAT_MAX;
 
-    public function __construct($input, ?float $default = null)
-    {
-        $this->input = $input;
-        $this->value = $default;
-    }
-
     public function between(float $min, float $max): self
     {
         $this->min = $min;
