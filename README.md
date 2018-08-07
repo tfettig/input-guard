@@ -1,11 +1,11 @@
 # InputGuard
-[![Build Status](https://travis-ci.com/tfettig01/InVal.svg?branch=master)](https://travis-ci.com/tfettig01/InVal)
+[![Build Status](https://travis-ci.com/tfettig01/InputGuard.svg?branch=master)](https://travis-ci.com/tfettig01/InputGuard)
 
-InvVal is a stand alone validation library using a builder interface to validate values.
+InputGuard is a stand alone validation library using a builder interface to validate inputs.
 
 This project is currently an unstable pre-alpha. Tags will be added when stability is achieved.
 
-Demonstration Usage: [DemonstrationTest Usage](https://github.com/tfettig01/InVal/blob/master/tests/DemonstrationTest.php).
+Demonstration Usage: [DemonstrationTest Usage](https://github.com/tfettig01/InputGuard/blob/master/tests/DemonstrationTest.php).
 
 ```php
 <?php
@@ -64,7 +64,7 @@ Renaming plan:
 - [x] Rename InVal\* to InputGuard\*.
 - [x] Rename InVal to InputGuard.
 - [x] Rename repository to InputGuard.
-- [ ] Update CI build and badge to InputGuard.
+- [x] Update CI build and badge to InputGuard.
 
 Library plan:
 - [ ] Figure out input types possibilities: NonStrict, Strict with null/NullObject, and Strict.
