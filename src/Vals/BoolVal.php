@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace InVal\Vals;
 
-class BoolVal implements CompleteVal
+class BoolVal implements BuildableVal
 {
     use CompleteValTrait;
     use SingleInputValidationTrait;

@@ -10,7 +10,7 @@ namespace InVal\Vals;
  * PHP's handling of floating point handling needs to be done. It turns out that floating points for all computers are
  * hard. Who knew?
  */
-class FloatVal implements CompleteVal
+class FloatVal implements BuildableVal
 {
     use CompleteValTrait;
     use FloatTrait;

@@ -12,7 +12,7 @@ namespace InVal\Vals;
  * 1) Character length for the string.
  * 2) Regex on the string.
  */
-class StringVal implements CompleteVal, StringValidatable
+class StringVal implements BuildableVal, StringValidatable
 {
     use CompleteValTrait;
     use StringTrait;

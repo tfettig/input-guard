@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace InVal;
 
 use InVal\Vals\BoolVal;
-use InVal\Vals\CompleteVal;
+use InVal\Vals\BuildableVal;
 use InVal\Vals\CompleteValTrait;
 use InVal\Vals\FloatVal;
 use InVal\Vals\InListVal;
@@ -23,7 +23,7 @@ use InVal\Vals\StringVal;
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class InVal implements CompleteVal
+class InVal implements BuildableVal
 {
     use CompleteValTrait;
 
@@ -66,7 +66,7 @@ class InVal implements CompleteVal
     {
         // Pass a local error messages variable to avoid merging arrays inside a loop.
         $error_messages = [];
-        $success        = array_reduce($this->vals, function (bool $success, CompleteVal $val) use (&$error_messages) {
+        $success        = array_reduce($this->vals, function (bool $success, BuildableVal $val) use (&$error_messages) {
             // Check for success/failure for all collected Val's.
             if ($val->success() === false) {
                 $error_messages[] = $val->pullErrorMessages();
@@ -97,11 +97,11 @@ class InVal implements CompleteVal
     /**
      * Allow for the injection of any Valadatable object.
      *
-     * @param CompleteVal $val
+     * @param BuildableVal $val
      *
-     * @return CompleteVal
+     * @return BuildableVal
      */
-    public function addVal(CompleteVal $val): CompleteVal
+    public function addVal(BuildableVal $val): BuildableVal
     {
         $this->vals[] = $val;
 

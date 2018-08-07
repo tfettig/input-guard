@@ -5,7 +5,7 @@ namespace InVal\Vals;
 
 use ArrayObject;
 
-class InListVal implements CompleteVal
+class InListVal implements BuildableVal
 {
     use CompleteValTrait;
     use SingleInputValidationTrait;

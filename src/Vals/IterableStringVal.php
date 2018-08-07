@@ -13,7 +13,7 @@ namespace InVal\Vals;
  * 2) Character length for each element.
  * 3) Regex on each element.
  */
-class IterableStringVal implements CompleteVal
+class IterableStringVal implements BuildableVal
 {
     use CompleteValTrait;
     use SingleInputIterableValidationTrait;

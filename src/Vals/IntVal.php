@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace InVal\Vals;
 
-class IntVal implements CompleteVal
+class IntVal implements BuildableVal
 {
     use CompleteValTrait;
     use IntTrait;

@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace InValTest;
 
 use InVal\InVal;
-use InVal\Vals\CompleteVal;
+use InVal\Vals\BuildableVal;
 use InVal\Vals\CompleteValTrait;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -228,7 +228,7 @@ class DemonstrationTest extends TestCase
 
         // Success
         $validation->addVal(
-            new class() implements CompleteVal
+            new class() implements BuildableVal
             {
                 use CompleteValTrait;
 
