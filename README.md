@@ -1,5 +1,5 @@
 # InputGuard
-[![Build Status](https://travis-ci.com/tfettig01/InputGuard.svg?branch=master)](https://travis-ci.com/tfettig01/InputGuard)
+[![Build Status](https://travis-ci.com/tfettig01/InputGuard.svg?branch=master)](https://travis-ci.com/tfettig01/InputGuard) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/tfettig01/InputGuard/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/tfettig01/InputGuard/?branch=master)
 
 InputGuard is a stand alone validation library using a builder interface to validate inputs.
 
