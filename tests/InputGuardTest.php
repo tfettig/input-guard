@@ -66,6 +66,27 @@ class InputGuardTest extends TestCase
         self::assertFalse($this->validation->success());
     }
 
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testCallingSuccessMultipleTimesDoesNotChangeState(): void
+    {
+        self::assertSame($this->validation->success(), $this->validation->success());
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testCallingSuccessMultipleTimesAfterUpdatesDoesChangeState(): void
+    {
+        self::assertTrue($this->validation->success());
+        $this->validation->int('fail');
+        self::assertFalse($this->validation->success());
+    }
+
     /**
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException

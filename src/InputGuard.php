@@ -38,6 +38,11 @@ class InputGuard implements GuardBuilder
     private $configuration;
 
     /**
+     * @var bool|null
+     */
+    private $validated;
+
+    /**
      * Allows for injection of a Configurable object.
      *
      * @param Configuration $configuration
@@ -62,22 +67,32 @@ class InputGuard implements GuardBuilder
      */
     public function success(): bool
     {
+        if ($this->validated !== null) {
+            return $this->validated;
+        }
+
         // Pass a local error messages variable to avoid merging arrays inside a loop.
         $error_messages = [];
-        $success        = array_reduce($this->guards, function (bool $success, Guard $guard) use (&$error_messages) {
-            // Check for success/failure for all collected Val's.
-            if ($guard->success() === false) {
-                $error_messages[] = $guard->pullErrorMessages();
-                $success          = false;
-            }
+        $success        = array_reduce(
+            $this->guards,
+            function (bool $success, Guard $guard) use (&$error_messages): bool {
+                // Check for success/failure for all collected Val's.
+                if ($guard->success() === false) {
+                    $error_messages[] = $guard->pullErrorMessages();
+                    $success          = false;
+                }
 
-            return $success;
-        }, true);
+                return $success;
+            },
+            true
+        );
 
         if ($error_messages) {
             // Merge the errors, remove duplicates, and reset the keys.
             $this->errorMessages = array_values(array_unique(array_merge($this->errorMessages, ...$error_messages)));
         }
+
+        $this->validated = $success;
 
         return $success;
     }
@@ -103,7 +118,8 @@ class InputGuard implements GuardBuilder
      */
     public function add(Guard $val): Guard
     {
-        $this->guards[] = $val;
+        $this->validated = null;
+        $this->guards[]  = $val;
 
         return $val;
     }
