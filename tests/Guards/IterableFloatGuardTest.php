@@ -22,7 +22,7 @@ class IterableFloatGuardTest extends TestCase
         $val = new IterableFloatGuard($input);
 
         self::assertTrue($val->success(), $message);
-        self::assertSame($input, $val->value(), $message);
+        self::assertSame(array_map('\floatval', $input), $val->value(), $message);
     }
 
     /**

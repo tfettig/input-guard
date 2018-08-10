@@ -208,7 +208,7 @@ class InputGuardTest extends TestCase
     public function testIterableFloatVal(): void
     {
         $input = [1.1, 2.9, 3];
-        self::assertSame($input, $this->validation->iterableFloat($input)->value());
+        self::assertSame(array_map('\floatval', $input), $this->validation->iterableFloat($input)->value());
     }
 
     /**
@@ -234,7 +234,7 @@ class InputGuardTest extends TestCase
                 {
                     return 'success';
                 }
-            }
+            },
         ];
         self::assertSame($input, $this->validation->iterableStringable($input)->value());
     }

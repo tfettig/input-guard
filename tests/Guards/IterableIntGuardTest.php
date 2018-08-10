@@ -22,7 +22,7 @@ class IterableIntGuardTest extends TestCase
         $val = new IterableIntGuard($input);
 
         self::assertTrue($val->success(), $message);
-        self::assertSame($input, $val->value(), $message);
+        self::assertSame(array_map('\intval', $input), $val->value(), $message);
     }
 
     /**

@@ -38,15 +38,8 @@ class IterableStringGuard implements Guard
         return \is_scalar($input);
     }
 
-    protected function extraIterableValidation(iterable $input): bool
+    protected function validateIterableElement($element, &$value): bool
     {
-        foreach ($input as $item) {
-            $value = null;
-            if ($this->stringValidation($item, $value) === false) {
-                return false;
-            }
-        }
-
-        return true;
+        return $this->stringValidation($element, $value);
     }
 }

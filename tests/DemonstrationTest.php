@@ -1,10 +1,9 @@
 <?php
+/** @noinspection PhpFullyQualifiedNameUsageInspection */
 declare(strict_types=1);
 
 namespace InputGuardTests;
 
-use InputGuard\Guards\ErrorMessagesBase;
-use InputGuard\Guards\Guard;
 use InputGuard\InputGuard;
 use PHPUnit\Framework\TestCase;
 use stdClass;
@@ -31,15 +30,13 @@ class DemonstrationTest extends TestCase
     {
         $validation = new InputGuard();
 
-        // Success
         $validation->int(1)
                    ->errorMessage('This message will not be present on validation.');
 
-        // Success
+        // A string that PHP can cast to an integer will be considered valid in non-strict mode.
         $validation->int('1')
                    ->errorMessage('This message will not be present on validation.');
 
-        // Success
         $validation->int(5)
                    ->min(PHP_INT_MIN)
                    ->errorMessage('This message will not be present on validation.');
@@ -48,34 +45,18 @@ class DemonstrationTest extends TestCase
                    ->between(0, 10)
                    ->errorMessage('This message will not be present on validation.');
 
-        // Success
+        // Nulls can be optionally allowed.
         $validation->int(null)
                    ->allowNull()
                    ->errorMessage('This message will not be present on validation.');
 
-        // Success
+        // Empty strings can be optionally allowed.
         $validation->int('')
                    ->allowEmptyString()
                    ->errorMessage('This message will not be present on validation.');
 
-        // Failure
-        $validation->int('error')
-                   ->errorMessage("A string of 'error' is invalid.");
-
-        // Failure
-        $validation->int('second error')
-                   ->errorMessage("A string of 'error' is invalid.")
-                   ->errorMessage("A string of 'error' is invalid, and there is another error message with it.");
-
-        // Assertions demonstrating the value of the entire validation class and the error messages returned.
-        self::assertFalse($validation->success());
-        self::assertSame(
-            [
-                "A string of 'error' is invalid.",
-                "A string of 'error' is invalid, and there is another error message with it.",
-            ],
-            $validation->pullErrorMessages()
-        );
+        self::assertTrue($validation->success());
+        self::assertSame([], $validation->pullErrorMessages());
     }
 
 
@@ -92,7 +73,6 @@ class DemonstrationTest extends TestCase
     {
         $validation = new InputGuard();
 
-        // Success
         $validation->float(1.1)
                    ->errorMessage('This message will not be present on validation.');
 
@@ -120,19 +100,16 @@ class DemonstrationTest extends TestCase
     {
         $validation = new InputGuard();
 
-        // Success
         $validation->string('A string value that needs to be validated.')
                    ->errorMessage('This message will not be present on validation.')
                    ->regex('/^[\w .]+$/')
                    ->minLen(0)
                    ->maxLen(500);
 
-        // Success
         $validation->string(1)
                    ->errorMessage('This message will not be present on validation.')
                    ->betweenLen(1, null);
 
-        // Success
         $validation->stringable(
             new class()
             {
@@ -159,11 +136,9 @@ class DemonstrationTest extends TestCase
     {
         $validation = new InputGuard();
 
-        // Success
         $validation->bool(false)
                    ->errorMessage('This message will not be present on validation.');
 
-        // Success
         $validation->bool('1')
                    ->allowPseudoBools()
                    ->errorMessage('This message will not be present on validation.');
@@ -195,22 +170,22 @@ class DemonstrationTest extends TestCase
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    public function testOtherValidationDemonstration(): void
+    public function testInstanceOfDemonstration(): void
     {
         $validation = new InputGuard();
 
-        // Success
         $validation->instanceOf(new stdClass(), stdClass::class)
                    ->errorMessage('This message will not be present on validation.');
-
 
         self::assertTrue($validation->success());
     }
 
     /**
      * Advance usage demonstration:
-     * 1) Capture validation state immediately.
-     * 2) User defined validation classes.
+     * 1) Multiple error messages can be set.
+     * 2) Duplicate error messages will only be returned once when pulled.
+     * 3) Guard objects can be assigned a handler and manipulated away from the builder.
+     * 4) Custom guard objects can be added to the InputGuard builder.
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
@@ -219,37 +194,51 @@ class DemonstrationTest extends TestCase
     {
         $validation = new InputGuard();
 
-        // Failure
-        $success = $validation->string(null)
-                              ->errorMessage('This error message will come after the others before it.')
-                              ->success();
+        $validation->string(null)
+                   ->errorMessage('This is the first error message.')
+                   ->errorMessage('This is a duplicated second error message that is not shown twice.')
+                   ->errorMessage('This is a duplicated second error message that is not shown twice.');
 
-        self::assertFalse($success);
+        // This assigns the instantiated StringGuard class to a local variable for later use.
+        $stringGuard = $validation->string('Input that is too short.')
+                                  ->errorMessage('This error message will be in the order it was added.');
 
-        // Success
+        $stringGuard->minLen(100);
+
+        // Check the success of the validation for the individual guard class.
+        self::assertFalse($stringGuard->success());
+
+        // Get the value of the StringGuard class.
+        self::assertNull($stringGuard->value());
+
+        // Custom Guard classes can be created as long as they implement the Guard interface.
+        // This allows for those more complex validations to done.
         $validation->add(
-            new class() implements Guard
+            new class() implements \InputGuard\Guards\Guard
             {
-                use ErrorMessagesBase;
+                use \InputGuard\Guards\ErrorMessagesBase;
 
                 public function success(): bool
                 {
-                    return true;
+                    return false;
                 }
 
-                public function value()
+                public function value(): string
                 {
                     return 'A custom validation object.';
                 }
 
             }
         )
-                   ->errorMessage('This message will not be present on validation.');
+                   ->errorMessage('The custom Guard failed validation.');
 
         self::assertFalse($validation->success());
         self::assertSame(
             [
-                'This error message will come after the others before it.',
+                'This is the first error message.',
+                'This is a duplicated second error message that is not shown twice.',
+                'This error message will be in the order it was added.',
+                'The custom Guard failed validation.',
             ],
             $validation->pullErrorMessages()
         );

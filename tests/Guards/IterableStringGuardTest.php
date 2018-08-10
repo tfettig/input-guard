@@ -21,8 +21,9 @@ class IterableStringGuardTest extends TestCase
     {
         $val = new IterableStringGuard($input);
 
+
         self::assertTrue($val->success(), $message);
-        self::assertSame($input, $val->value(), $message);
+        self::assertSame(array_map('\strval', $input), $val->value(), $message);
     }
 
     /**

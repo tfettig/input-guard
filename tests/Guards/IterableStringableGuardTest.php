@@ -23,7 +23,12 @@ class IterableStringableGuardTest extends TestCase
         $val = new IterableStringableGuard($input);
 
         self::assertTrue($val->success(), $message);
-        self::assertSame($input, $val->value(), $message);
+
+        $cast_if_not_object = function ($element) {
+            return \is_object($element) ? $element : (string)$element;
+        };
+
+        self::assertSame(array_map($cast_if_not_object, $input), $val->value(), $message);
     }
 
     /**
@@ -74,7 +79,7 @@ class IterableStringableGuardTest extends TestCase
     {
         return [
             [[new stdClass()], 'A class without toString.'],
-            [[[1], [1,3,4]], 'An iterable of arrays'],
+            [[[1], [1, 3, 4]], 'An iterable of arrays'],
         ];
     }
 }

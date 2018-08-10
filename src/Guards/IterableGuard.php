@@ -16,15 +16,9 @@ class IterableGuard implements Guard
         $this->value = $default;
     }
 
-    /**
-     * @param iterable $input
-     *
-     * @return bool
-     *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
-    protected function extraIterableValidation(/** @scrutinizer ignore-unused */ iterable $input): bool
+    protected function validateIterableElement($element, &$value): bool
     {
+        $value = $element;
         return true;
     }
 }

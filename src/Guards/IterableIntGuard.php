@@ -22,15 +22,8 @@ class IterableIntGuard implements Guard
         $this->value = $default;
     }
 
-    protected function extraIterableValidation(iterable $input): bool
+    protected function validateIterableElement($element, &$value): bool
     {
-        foreach ($input as $item) {
-            $value = null;
-            if ($this->intValidation($item, $value) === false) {
-                return false;
-            }
-        }
-
-        return true;
+        return $this->intValidation($element, $value);
     }
 }
