@@ -23,7 +23,7 @@ use InputGuard\Guards\StringGuard;
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class InputGuard implements GuardBuilder
+class InputGuard implements GuardChain
 {
     use ErrorMessagesBase;
 

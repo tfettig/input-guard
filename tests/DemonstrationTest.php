@@ -184,8 +184,8 @@ class DemonstrationTest extends TestCase
      * Advance usage demonstration:
      * 1) Multiple error messages can be set.
      * 2) Duplicate error messages will only be returned once when pulled.
-     * 3) Guard objects can be assigned a handler and manipulated away from the builder.
-     * 4) Custom guard objects can be added to the InputGuard builder.
+     * 3) Guard objects can be assigned a handler and manipulated away from the InputGuard.
+     * 4) Custom guard objects can be added to the InputGuard.
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException

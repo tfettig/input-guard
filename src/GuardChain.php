@@ -6,11 +6,11 @@ namespace InputGuard;
 use InputGuard\Guards\Guard;
 
 /**
- * All builder classes are also a Guard class because:
- * 1) The API for the guard and builder to do the same actions are the same.
- * 2) Builders can be injected into other builders.
+ * All classes that implement the GuardChain must also be Guard class because:
+ * 1) The API for the Guard and GuardChain actions should be the same.
+ * 2) An GuardChain can be injected into other GuardChain.
  */
-interface GuardBuilder extends Guard
+interface GuardChain extends Guard
 {
     /**
      * Allow for property injection of any Guard object.
