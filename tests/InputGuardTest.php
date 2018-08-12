@@ -6,6 +6,8 @@ namespace InputGuardTests;
 use ArrayObject;
 use InputGuard\InputGuard;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
+use ReflectionProperty;
 use stdClass;
 
 class InputGuardTest extends TestCase
@@ -41,10 +43,34 @@ class InputGuardTest extends TestCase
     /**
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws \ReflectionException
      */
     public function testClone(): void
     {
-        self::assertEquals($this->validation, clone $this->validation);
+        // Get the values of all properties of a freshly created InputGuard.
+        $reflect       = new ReflectionClass($this->validation);
+        $defaultValues = array_map(function (ReflectionProperty $property) {
+            $property->setAccessible(true);
+            return $property->getValue($this->validation);
+        }, $reflect->getProperties());
+
+        // Add a guard and call the methods defined in the GuardChain interface.
+        $this->validation->int(1);
+        $this->validation->success();
+        $this->validation->errorMessage('An error.');
+        $this->validation->pullErrorMessages();
+        $this->validation->value();
+
+        // Clone the updated InputGuard object and then get all the property values.
+        $newValidation = clone $this->validation;
+        $reflect       = new ReflectionClass($newValidation);
+        $newValues     = array_map(function (ReflectionProperty $property) use ($newValidation) {
+            $property->setAccessible(true);
+            return $property->getValue($newValidation);
+        }, $reflect->getProperties());
+
+        // Assert that the values of a brand new InputGuard matches that of a cloned InputGuard that was used.
+        self::assertSame($defaultValues, $newValues);
     }
 
     /**
@@ -65,7 +91,6 @@ class InputGuardTest extends TestCase
         $this->validation->int('fail');
         self::assertFalse($this->validation->success());
     }
-
 
     /**
      * @throws \PHPUnit\Framework\ExpectationFailedException
@@ -91,13 +116,27 @@ class InputGuardTest extends TestCase
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
+    public function testErrorMessage(): void
+    {
+        $error = 'error';
+        $this->validation->errorMessage($error);
+        self::assertSame($this->validation->pullErrorMessages(), [$error]);
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
     public function testRemovingDuplicatedErrorMessages(): void
     {
-        $this->validation->int('error')
+        $this->validation->int('Incorrect input')
                          ->errorMessage('The same message');
-        $this->validation->float('error')
+
+        $this->validation->float('Incorrect input')
                          ->errorMessage('The same message')
                          ->errorMessage('The same message');
+
+        $this->validation->errorMessage('The same message');
 
         $this->validation->success();
 

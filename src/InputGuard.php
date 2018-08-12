@@ -53,11 +53,13 @@ class InputGuard implements GuardChain
     }
 
     /**
-     * Remove all the guards that were setup but keep the configuration.
+     * Reset all properties except the configuration to there default values.
      */
     public function __clone()
     {
-        $this->guards = [];
+        $this->errorMessages = [];
+        $this->guards        = [];
+        $this->validated     = null;
     }
 
     /**
@@ -173,7 +175,7 @@ class InputGuard implements GuardChain
     }
 
     /**
-     * Proxy to iterable value. The method exists since most people think of and use arrays over iterables.
+     * Wrapper to iterable.
      *
      * @param $input
      *

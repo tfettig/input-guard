@@ -12,17 +12,15 @@ trait ErrorMessagesBase
 
     abstract public function success(): bool;
 
-    /** @noinspection ReturnTypeCanBeDeclaredInspection */
     /**
      * @param string $message
      *
      * @return $this
      */
-    public function errorMessage(string $message)
+    public function errorMessage(string $message): self
     {
         $this->errorMessages[] = $message;
 
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this;
     }
 
