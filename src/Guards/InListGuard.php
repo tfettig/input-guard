@@ -63,10 +63,13 @@ class InListGuard implements Guard
     protected function validation($input, &$value): bool
     {
         // If the input is an array or an ArrayObject then it's cheap to cast it and use in_array().
-        if ((\is_array($this->list) || $this->list instanceof ArrayObject) &&
-            \in_array($input, (array)$this->list, $this->strict)) {
-            $value = $input;
-            return true;
+        if (\is_array($this->list) || $this->list instanceof ArrayObject) {
+            if (\in_array($input, (array)$this->list, $this->strict)) {
+                $value = $input;
+                return true;
+            }
+
+            return false;
         }
 
         $validate = $this->strict

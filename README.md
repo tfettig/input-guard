@@ -92,4 +92,5 @@ Renaming plan:
 - [x] Update CI build and badge to InputGuard.
 
 Library plan:
+- [ ] Add a configuration for early exit (stop on first failure) for Iterable validators.
 - [ ] Figure out input types possibilities: NonStrict, Strict with null/NullObject, and Strict.

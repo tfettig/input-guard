@@ -19,6 +19,11 @@
             "ignore": [
                 "InputGuard\\*"
             ]
+        },
+        "NotIdenticalNotEqual": {
+            "ignore": [
+                "InputGuard\\*"
+            ]
         }
     }
 }

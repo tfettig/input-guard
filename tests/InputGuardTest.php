@@ -5,8 +5,10 @@ namespace InputGuardTests;
 
 use ArrayObject;
 use InputGuard\InputGuard;
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
+use ReflectionException;
 use ReflectionProperty;
 use stdClass;
 
@@ -43,7 +45,18 @@ class InputGuardTest extends TestCase
     /**
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     * @throws \ReflectionException
+     */
+    public function testValidationOccursWhenValueIsCalled(): void
+    {
+        $this->validation->int('Invalid input');
+
+        self::assertFalse($this->validation->value()->success());
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ReflectionException
      */
     public function testClone(): void
     {
@@ -151,6 +164,7 @@ class InputGuardTest extends TestCase
     {
         $input = false;
         self::assertSame($input, $this->validation->bool($input)->value());
+        self::assertSame(1, $this->guardCount());
     }
 
     /**
@@ -161,6 +175,7 @@ class InputGuardTest extends TestCase
     {
         $input = 1;
         self::assertSame($input, $this->validation->int($input)->value());
+        self::assertSame(1, $this->guardCount());
     }
 
     /**
@@ -171,6 +186,7 @@ class InputGuardTest extends TestCase
     {
         $input = 1.1;
         self::assertSame($input, $this->validation->float($input)->value());
+        self::assertSame(1, $this->guardCount());
     }
 
     /**
@@ -181,6 +197,7 @@ class InputGuardTest extends TestCase
     {
         $input = new stdClass();
         self::assertSame($input, $this->validation->instanceOf($input, stdClass::class)->value());
+        self::assertSame(1, $this->guardCount());
     }
 
     /**
@@ -191,6 +208,7 @@ class InputGuardTest extends TestCase
     {
         $input = 'string';
         self::assertSame($input, $this->validation->string($input)->value());
+        self::assertSame(1, $this->guardCount());
     }
 
     /**
@@ -208,6 +226,7 @@ class InputGuardTest extends TestCase
         };
 
         self::assertSame($input, $this->validation->stringable($input)->value());
+        self::assertSame(1, $this->guardCount());
     }
 
     /**
@@ -218,6 +237,7 @@ class InputGuardTest extends TestCase
     {
         $input = [0, 1, 2];
         self::assertSame($input, $this->validation->array($input)->value());
+        self::assertSame(1, $this->guardCount());
     }
 
     /**
@@ -228,6 +248,7 @@ class InputGuardTest extends TestCase
     {
         $input = new ArrayObject();
         self::assertSame($input, $this->validation->iterable($input)->value());
+        self::assertSame(1, $this->guardCount());
     }
 
     /**
@@ -238,6 +259,7 @@ class InputGuardTest extends TestCase
     {
         $input = [1, 2, 3];
         self::assertSame($input, $this->validation->iterableInt($input)->value());
+        self::assertSame(1, $this->guardCount());
     }
 
     /**
@@ -248,6 +270,7 @@ class InputGuardTest extends TestCase
     {
         $input = [1.1, 2.9, 3];
         self::assertSame(array_map('\floatval', $input), $this->validation->iterableFloat($input)->value());
+        self::assertSame(1, $this->guardCount());
     }
 
     /**
@@ -258,6 +281,7 @@ class InputGuardTest extends TestCase
     {
         $input = ['one', 'two', 'three'];
         self::assertSame($input, $this->validation->iterableString($input)->value());
+        self::assertSame(1, $this->guardCount());
     }
 
     /**
@@ -276,6 +300,7 @@ class InputGuardTest extends TestCase
             },
         ];
         self::assertSame($input, $this->validation->iterableStringable($input)->value());
+        self::assertSame(1, $this->guardCount());
     }
 
     /**
@@ -286,5 +311,23 @@ class InputGuardTest extends TestCase
     {
         $input = 0;
         self::assertSame($input, $this->validation->inList($input, [0])->value());
+        self::assertSame(1, $this->guardCount());
+    }
+
+    /**
+     * @return int
+     * @throws ExpectationFailedException
+     */
+    private function guardCount(): int
+    {
+        try {
+            $reflect = new ReflectionClass($this->validation);
+        } catch (ReflectionException $e) {
+            throw new ExpectationFailedException('Could not get Guard count', null, $e);
+        }
+
+        $property = $reflect->getProperty('guards');
+        $property->setAccessible(true);
+        return count($property->getValue($this->validation));
     }
 }

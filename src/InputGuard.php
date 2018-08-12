@@ -100,14 +100,12 @@ class InputGuard implements GuardChain
     }
 
     /**
-     * Return the current instance as the correct value.
+     * Return the current instance.
      *
      * @return InputGuard
      */
     public function value(): InputGuard
     {
-        $this->success();
-
         return $this;
     }
 
