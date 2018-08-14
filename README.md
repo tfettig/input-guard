@@ -5,7 +5,8 @@ InputGuard is a stand alone validation library using a fluid interface to valida
 
 This project is currently an unstable pre-alpha. Tags will be added when stability is achieved.
 
-Simple Demonstration:
+## Demonstration
+### Simple:
 ```php
 <?php
 declare(strict_types=1);
@@ -54,9 +55,11 @@ assert($validation->success());
 assert(count($validation->pullErrorMessages()) === 0);
 ```
 
-Advanced Demonstration: [Demonstration Unit Test](https://github.com/tfettig01/InputGuard/blob/master/tests/DemonstrationTest.php).
+### Advanced: 
+[Demonstration Unit Test](https://github.com/tfettig01/InputGuard/blob/master/tests/DemonstrationTest.php).
 
-Validators plan:
+## Roadmap to Alpha
+Validators:
 - [x] Add boolean validator.
 - [x] Add integer validator.
 - [x] Add float validator.
@@ -66,10 +69,10 @@ Validators plan:
 - [x] Add instance of validator.
 - [x] Add list validator.
 
-Validator feature plan:
+Validator features:
 - [ ] Add strict() and nonStrict() methods to integer, float, string, and stringable validation (type juggling).
 
-Iterable validator plan:
+Iterable validator:
 - [x] Validation of values in an iterable of integers.
 - [x] Validation of values in an iterable of strings.
 - [x] Validation of values in an iterable of stringable.
@@ -77,13 +80,13 @@ Iterable validator plan:
 - [x] Allow elements in the iterable to be null.
 - [ ] Allow elements in the iterable to be empty strings.
 
-String validator plan
-- [ ] SECURITY: Add helper method for for common XSS injections.
-- [ ] Set language encoding.
-- [ ] Country locales (using Locale).
-- [ ] State/Providence codes.
+String validator:
+- [ ] SECURITY: Add helper method for common XSS injections.
+- [ ] Set language encoding (avoid the overhead / misidentification of using discovery).
+- [ ] Add helper for Country locales (using Locale).
+- [ ] Add helper for State/Providence codes using [ISO 3166](https://www.iso.org/iso-3166-country-codes.html).
 
-Renaming plan:
+Library Renaming:
 - [x] Move base traits into their own directories.
 - [x] Rename InVal\Vals\*Val to InVal\Guards\*Guard.
 - [x] Rename InVal\* to InputGuard\*.
@@ -91,6 +94,6 @@ Renaming plan:
 - [x] Rename repository to InputGuard.
 - [x] Update CI build and badge to InputGuard.
 
-Library plan:
+Library:
 - [ ] Add a configuration for early exit (stop on first failure) for Iterable validators.
-- [ ] Figure out input types possibilities: NonStrict, Strict with null/NullObject, and Strict.
+- [ ] Decide on output types: NonStrict, Strict with null/NullObject, and Strict.
