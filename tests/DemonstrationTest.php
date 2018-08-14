@@ -16,12 +16,10 @@ class DemonstrationTest extends TestCase
     /**
      * Integer demonstration:
      *
-     * 1) Native type juggling for inputs will be respected.
+     * 1) Native type juggling for integers will be respected.
      * 2) Adding a range to the validation.
      * 3) Null values can be optional included in the validation set.
      * 4) Empty strings can be optional included in the validation set.
-     * 5) Multiple error message can be set.
-     * 6) When duplicate error messages are configured only one is displayed.
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
@@ -62,9 +60,7 @@ class DemonstrationTest extends TestCase
 
     /**
      * Float demonstration:
-     * 1) A float boolean input.
-     * 2) A flat as a string.
-     * 3) An integer.
+     * 1) Native type juggling for integers is respected.
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
@@ -90,7 +86,7 @@ class DemonstrationTest extends TestCase
     /**
      * String demonstration:
      * 1) Use of regex, and minimum and maximum string lengths.
-     * 2) Type juggling using a non-string.
+     * 2) Native type juggling for strings is respected.
      * 3) An objects that implement __toString().
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException
@@ -147,6 +143,10 @@ class DemonstrationTest extends TestCase
     }
 
     /**
+     * Iterable demonstration:
+     * 1) Basic arrays are respectec.
+     * 2) @todo Add implementation of an Iterable and ArrayObject.
+     *
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
@@ -165,7 +165,7 @@ class DemonstrationTest extends TestCase
 
     /**
      * InstanceOf demonstration:
-     * 1) An object instance input
+     * 1) An instanceof check
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
