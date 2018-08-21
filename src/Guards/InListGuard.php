@@ -5,21 +5,18 @@ namespace InputGuard\Guards;
 
 use ArrayObject;
 use InputGuard\Guards\Bases\SingleInput;
+use InputGuard\Guards\Bases\Strict;
 
 class InListGuard implements Guard
 {
     use ErrorMessagesBase;
     use SingleInput;
+    use Strict;
 
     /**
      * @var iterable
      */
     private $list;
-
-    /**
-     * @var bool
-     */
-    private $strict;
 
     /**
      * InListVal constructor.
@@ -37,20 +34,6 @@ class InListGuard implements Guard
         $this->list   = $list;
         $this->value  = $defaultValue;
         $this->strict = $defaultStrict;
-    }
-
-    public function strict(): self
-    {
-        $this->strict = true;
-
-        return $this;
-    }
-
-    public function nonStrict(): self
-    {
-        $this->strict = false;
-
-        return $this;
     }
 
     public function value()

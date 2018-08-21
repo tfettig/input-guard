@@ -23,11 +23,10 @@ class DefaultConfiguration implements Configuration
      *
      * @var array
      */
-    protected $defaults = [
+    protected $defaultValues = [
         BoolGuard::class               => null,
         FloatGuard::class              => null,
         InListGuard::class             => null,
-        InListGuard::class . 'strict'  => true,
         InstanceOfGuard::class         => null,
         IntGuard::class                => null,
         IterableFloatGuard::class      => null,
@@ -40,12 +39,29 @@ class DefaultConfiguration implements Configuration
     ];
 
     /**
+     * @var bool
+     */
+    protected $strictTypeComparisionDefault = false;
+
+    /**
+     * @var bool[]
+     */
+    protected $strictTypeComparisionOverride = [
+        InListGuard::class => true,
+    ];
+
+    /**
      * @param string $className
      *
      * @return mixed
      */
     public function defaultValue(string $className)
     {
-        return $this->defaults[$className] ?? null;
+        return $this->defaultValues[$className] ?? null;
+    }
+
+    public function defaultStrict(string $className = ''): bool
+    {
+        return $this->strictTypeComparisionOverride[$className] ?? $this->strictTypeComparisionDefault;
     }
 }

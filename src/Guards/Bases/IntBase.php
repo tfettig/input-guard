@@ -5,6 +5,8 @@ namespace InputGuard\Guards\Bases;
 
 trait IntBase
 {
+    use Strict;
+
     /**
      * @var int
      */
@@ -40,6 +42,10 @@ trait IntBase
     protected function validation($input, &$value): bool
     {
         if (\is_bool($input)) {
+            return false;
+        }
+
+        if ($this->strict && \is_int($input) === false) {
             return false;
         }
 

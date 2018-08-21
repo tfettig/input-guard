@@ -3,13 +3,14 @@ declare(strict_types=1);
 
 namespace InputGuardTests\Guards\Bases;
 
-use InputGuard\Guards\Bases\StringBase;
+use InputGuard\Guards\Bases\IntBase;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
-class StringBaseTest extends TestCase
+class IntBaseTest extends TestCase
 {
     /**
-     * @var StringBase
+     * @var IntBase
      */
     private $guard;
 
@@ -17,7 +18,7 @@ class StringBaseTest extends TestCase
     {
         $this->guard = new class()
         {
-            use StringBase;
+            use IntBase;
 
             protected function extraStringValidation($input): bool
             {
@@ -25,7 +26,7 @@ class StringBaseTest extends TestCase
                 return $input === $input;
             }
 
-            public function runValidation(string $input): bool
+            public function runValidation($input): bool
             {
                 $value = null;
                 return $this->validation($input, $value);
@@ -36,21 +37,19 @@ class StringBaseTest extends TestCase
     /**
      * @dataProvider successProvider
      *
-     * @param          $input
+     * @param            $input
      *
-     * @param int      $min
-     * @param int|null $max
-     * @param string   $regex
-     * @param string   $message
+     * @param int|null   $min
+     * @param int|null   $max
+     * @param string     $message
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    public function testSuccess($input, int $min, ?int $max, string $regex, string $message): void
+    public function testSuccess($input, ?int $min, ?int $max, string $message): void
     {
-        $this->guard->minLen($min)
-                    ->maxLen($max)
-                    ->regex($regex);
+        $this->guard->min($min)
+                    ->max($max);
 
         /** @noinspection PhpUndefinedMethodInspection */
         self::assertTrue($this->guard->runValidation($input), $message);
@@ -58,14 +57,15 @@ class StringBaseTest extends TestCase
 
     /**
      * @return array
+     *
+     * @throws \Exception
      */
     public function successProvider(): array
     {
         return [
-            ['', 0, 9, '/[\w]*/', 'Empty string'],
-            ['The birds', 0, 9, '/[\w]+/', 'English string'],
-            ['Die Vögel', 0, null, '/[\w]+/', 'German string'],
-            ['鳥たち', 0, 3, '/[\w]+/u', 'Japanese string'],
+            [5, 1, 10, 'Right in the middle.'],
+            [1, 1, 2, 'Input and min are equal'],
+            [2, 1, 2, 'Input and max are equal'],
         ];
     }
 
@@ -75,43 +75,55 @@ class StringBaseTest extends TestCase
      */
     public function testBetweenSuccess(): void
     {
-        $this->guard->betweenLen(5, 10);
+        $this->guard->min(500)
+                    ->max(5000);
 
         /** @noinspection PhpUndefinedMethodInspection */
-        self::assertTrue($this->guard->runValidation('success'));
+        self::assertTrue($this->guard->runValidation(1000));
     }
 
     /**
      * @dataProvider failureProvider
      *
      * @param mixed    $input
-     * @param int      $min
+     * @param int|null $min
      * @param int|null $max
-     * @param string   $regex
      * @param string   $message
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    public function testFailure($input, int $min, ?int $max, string $regex, string $message): void
+    public function testFailure($input, ?int $min, ?int $max, string $message): void
     {
-        $this->guard->minLen($min)
-                    ->maxLen($max)
-                    ->regex($regex);
+        $this->guard->min($min)
+                    ->max($max);
 
         /** @noinspection PhpUndefinedMethodInspection */
         self::assertFalse($this->guard->runValidation($input), $message);
     }
 
-    /**
-     * @return array
-     */
     public function failureProvider(): array
     {
         return [
-            ['failure', 0, 1, '/[\w]+/', 'Too long'],
-            ['failure', 15, null, '/[\w]+/', 'Too short'],
-            ['failure', 0, null, '/[\d]+/', 'Non-matching pattern'],
+            ['one.point.one', 0, 1, 'Input as string'],
+            [1.5, 0, 2, 'Input as float.'],
+            [true, 0, 2, 'Input as boolean'],
+            ['', 0, 2, 'Input as empty string'],
+            [new stdClass(), 0, 2, 'Input as object'],
+            [0, 1, 2, 'Input less then min'],
+            [3, 1, 2, 'Input greater than max'],
         ];
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testStrictFailure(): void
+    {
+        $this->guard->strict();
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        self::assertFalse($this->guard->runValidation('5'));
     }
 }

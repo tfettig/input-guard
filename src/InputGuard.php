@@ -150,7 +150,7 @@ class InputGuard implements GuardChain
 
     public function instanceOf($input, string $className): InstanceOfGuard
     {
-        $val = new InstanceOfGuard($input, $className);
+        $val = new InstanceOfGuard($input, $className, $this->configuration->defaultValue(StringGuard::class));
         $this->add($val);
 
         return $val;
@@ -230,8 +230,9 @@ class InputGuard implements GuardChain
             $input,
             $list,
             $this->configuration->defaultValue(InListGuard::class),
-            $this->configuration->defaultValue(InListGuard::class . 'strict')
+            $this->configuration->defaultStrict(InListGuard::class)
         );
+
         $this->add($val);
 
         return $val;

@@ -70,7 +70,11 @@ Validators:
 - [x] Add list validator.
 
 Validator features:
-- [ ] Add strict() and nonStrict() methods to integer, float, string, and stringable validation (type juggling).
+- [x] Add Strict Trait to IntGuard (to disable/enable type juggling).
+- [x] Add Strict Trait to InListGuard.
+- [ ] Add Strict Trait to FloatGuard
+- [ ] Add Strict Trait to StringGuard
+- [ ] Add Strict Trait to StringableGuard
 
 Iterable validator:
 - [x] Validation of values in an iterable of integers.

@@ -15,10 +15,11 @@ class InstanceOfGuard implements Guard
      */
     private $className;
 
-    public function __construct($input, string $className)
+    public function __construct($input, string $className, object $defaultValue = null)
     {
         $this->className = $className;
         $this->input     = $input;
+        $this->value     = $defaultValue;
     }
 
     protected function validation($input, &$value): bool
