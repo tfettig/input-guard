@@ -72,7 +72,7 @@ Validators:
 Validator features:
 - [x] Add Strict Trait to IntGuard (to disable/enable type juggling).
 - [x] Add Strict Trait to InListGuard.
-- [ ] Add Strict Trait to FloatGuard
+- [x] Add Strict Trait to FloatGuard
 - [ ] Add Strict Trait to StringGuard
 - [ ] Add Strict Trait to StringableGuard
 

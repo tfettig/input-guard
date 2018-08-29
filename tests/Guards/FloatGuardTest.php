@@ -12,31 +12,18 @@ class FloatGuardTest extends TestCase
     /**
      * @dataProvider successProvider
      *
-     * @param            $input
-     *
-     * @param float|null $min
-     * @param float|null $max
-     * @param string     $message
+     * @param mixed  $input
+     * @param float  $expected
+     * @param string $message
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    public function testSuccess($input, ?float $min, ?float $max, string $message): void
+    public function testSuccess($input, float $expected, string $message): void
     {
         $val = new FloatGuard($input);
-
-        if ($min !== null && $max !== null) {
-            $val->between($min, $max);
-        } elseif ($min !== null) {
-            $val->min($min);
-        } elseif ($max !== null) {
-            $val->max($max);
-        }
-
-        self::assertTrue($val->success(), $message);
-        self::assertSame((float)$input, $val->value(), $message);
+        self::assertSame($expected, $val->value(), $message);
     }
-
 
     /**
      * @return array
@@ -46,53 +33,35 @@ class FloatGuardTest extends TestCase
     public function successProvider(): array
     {
         return [
-            [33545313590, null, null, "int between PHP's min and max"],
-            ['33545313590', null, null, "'int' between PHP's min and max"],
-            ['24332423.23423', null, null, "float between PHP's min and max"],
-            [1.5, 0, 2.5, 'Using between'],
-            [1.5, .9, null, 'Using min'],
-            [1.5, null, 2.5, 'Using max'],
-            [1, 1, 2, 'Input and min are equal'],
-            [2, 1, 2, 'Input and max are equal'],
+            [33545313590, 33545313590.0, 'Integer'],
+            [1.5, 1.5, 'Float'],
+            ['33545313590', 33545313590.0, 'Integer as a string'],
+            ['24332423.23423', 24332423.23423, 'Float as a string'],
         ];
     }
 
     /**
      * @dataProvider failureProvider
      *
-     * @param mixed      $input
-     * @param float|null $min
-     * @param float|null $max
-     * @param string     $message
+     * @param mixed  $input
+     * @param string $message
      *
      * @throws \PHPUnit\Framework\ExpectationFailedException
      * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    public function testFailure($input, ?float $min, ?float $max, string $message): void
+    public function testFailure($input, string $message): void
     {
         $val = new FloatGuard($input);
 
-        if ($min !== null && $max !== null) {
-            $val->between($min, $max);
-        } elseif ($min !== null) {
-            $val->min($min);
-        } elseif ($max !== null) {
-            $val->max($max);
-        }
-
-        self::assertFalse($val->success(), $message);
         self::assertNull($val->value(), $message);
     }
 
     public function failureProvider(): array
     {
         return [
-            ['one.point.one', null, null, 'Input as string'],
-            [true, 0, 2.5, 'Input as boolean'],
-            ['', 0, 2.5, 'Input as empty string'],
-            [new stdClass(), 0, 2.5, 'Input as object'],
-            [0, 1, 2, 'Input less then min'],
-            [3, 1, 2, 'Input greater than max'],
+            ['one.point.one', 'Input as string'],
+            [true, 'Input as boolean'],
+            [new stdClass(), 'Input as object'],
         ];
     }
 }

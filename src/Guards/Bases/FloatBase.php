@@ -5,6 +5,8 @@ namespace InputGuard\Guards\Bases;
 
 trait FloatBase
 {
+    use Strict;
+
     /**
      * @var float
      */
@@ -43,7 +45,12 @@ trait FloatBase
             return false;
         }
 
-        $return = filter_var($input, FILTER_VALIDATE_FLOAT);
+        if ($this->strict) {
+            $return = \is_float($input) ? $input : false;
+        } else {
+            $return = filter_var($input, FILTER_VALIDATE_FLOAT);
+        }
+
         if ($return === false) {
             return false;
         }
