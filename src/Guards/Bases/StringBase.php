@@ -5,6 +5,8 @@ namespace InputGuard\Guards\Bases;
 
 trait StringBase
 {
+    use Strict;
+
     /**
      * @var int
      */

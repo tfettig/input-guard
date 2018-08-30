@@ -29,8 +29,12 @@ class StringableGuard implements Guard
 
     protected function extraStringValidation($input): bool
     {
-        // Short circuit for anything not a integer, float, string, boolean, or object with a __toString method.
-        return \is_scalar($input) || (\is_object($input) && method_exists($input, '__toString'));
+        // The is_scalar is a short circuit for anything not a integer, float, string, boolean.
+        if ($this->strict ? \is_string($input) : \is_scalar($input)) {
+            return true;
+        }
+
+        return (\is_object($input) && method_exists($input, '__toString'));
     }
 
     /**

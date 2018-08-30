@@ -86,4 +86,28 @@ class StringableGuardTest extends TestCase
             [new stdClass(), 0, 'A non-scalar'],
         ];
     }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testStrictFailure(): void
+    {
+        $guard = (new StringableGuard(1))->strict();
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        self::assertNull($guard->value());
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testStrictSuccess(): void
+    {
+        $guard = (new StringableGuard('1'))->strict();
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        self::assertSame('1', $guard->value());
+    }
 }

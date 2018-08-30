@@ -24,25 +24,7 @@ class StringGuardTest extends TestCase
     }
 
     /**
-     * @dataProvider failureProvider
-     *
-     * @param mixed    $input
-     * @param int|null $max
-     * @param string   $message
-     *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     */
-    public function testFailure($input, ?int $max, string $message): void
-    {
-        $val = (new StringGuard($input))->maxLen($max);
-
-        self::assertNull($val->value(), $message);
-    }
-
-    /**
      * @return array
-     * @throws \Exception
      */
     public function successProvider(): array
     {
@@ -56,14 +38,35 @@ class StringGuardTest extends TestCase
     }
 
     /**
-     * @return array
-     * @throws \Exception
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
      */
-    public function failureProvider(): array
+    public function testFailure(): void
     {
-        return [
-            ['failure', 0, 'Scalar that fails validation.'],
-            [new stdClass(), 0, 'A non-scalar'],
-        ];
+        self::assertNull((new StringGuard(new stdClass()))->value());
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testStrictFailure(): void
+    {
+        $guard = (new StringGuard(1))->strict();
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        self::assertNull($guard->value());
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testStrictSuccess(): void
+    {
+        $guard = (new StringGuard('1'))->strict();
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        self::assertSame('1', $guard->value());
     }
 }

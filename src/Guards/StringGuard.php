@@ -29,8 +29,8 @@ class StringGuard implements Guard
 
     protected function extraStringValidation($input): bool
     {
-        // Short circuit for anything not a integer, float, string or boolean.
-        return \is_scalar($input);
+        // The is_scalar is a short circuit for anything not a integer, float, string or boolean.
+        return $this->strict ? \is_string($input) : \is_scalar($input);
     }
 
     public function value(): ?string

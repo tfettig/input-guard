@@ -25,7 +25,7 @@ class StringBaseTest extends TestCase
                 return $input === $input;
             }
 
-            public function runValidation(string $input): bool
+            public function runValidation($input): bool
             {
                 $value = null;
                 return $this->validation($input, $value);
@@ -113,5 +113,17 @@ class StringBaseTest extends TestCase
             ['failure', 15, null, '/[\w]+/', 'Too short'],
             ['failure', 0, null, '/[\d]+/', 'Non-matching pattern'],
         ];
+    }
+
+    /**
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     */
+    public function testStrictSuccess(): void
+    {
+        $this->guard->strict();
+
+        /** @noinspection PhpUndefinedMethodInspection */
+        self::assertTrue($this->guard->runValidation('success'));
     }
 }
