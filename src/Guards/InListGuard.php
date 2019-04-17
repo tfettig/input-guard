@@ -45,29 +45,37 @@ class InListGuard implements Guard
 
     protected function validation($input, &$value): bool
     {
-        // If the input is an array or an ArrayObject then it's cheap to cast it and use in_array().
-        if (\is_array($this->list) || $this->list instanceof ArrayObject) {
-            if (\in_array($input, (array)$this->list, $this->strict)) {
-                $value = $input;
-                return true;
-            }
-
-            return false;
+        if ($this->isCastable() ? $this->validateCastableList($input) : $this->validateTraversableList($input)) {
+            $value = $input;
+            return true;
         }
 
+        return false;
+    }
+
+    private function isCastable(): bool
+    {
+        return \is_array($this->list) || $this->list instanceof ArrayObject;
+    }
+
+    private function validateCastableList($input): bool
+    {
+        return \in_array($input, (array)$this->list, $this->strict);
+    }
+
+    private function validateTraversableList($input): bool
+    {
         $validate = $this->strict
-            ? function ($value) use ($input): bool {
+            ? static function ($value) use ($input): bool {
                 return $value === $input;
             }
-            : function ($value) use ($input): bool {
+            : static function ($value) use ($input): bool {
                 /** @noinspection TypeUnsafeComparisonInspection */
                 return $value == $input;
             };
 
-        // Since the type hint is 'iterable' (aka Traversable) iterate over the object.
         foreach ($this->list as $item) {
             if ($validate($item)) {
-                $value = $input;
                 return true;
             }
         }
