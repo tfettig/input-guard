@@ -5,7 +5,9 @@ namespace InputGuardTests\Guards\Bases;
 
 use InputGuard\Guards\Bases\SingleIterableInput;
 use Iterator;
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
+use SebastianBergmann\RecursionContext\InvalidArgumentException;
 
 class SingleIterableInputTest extends TestCase
 {
@@ -37,8 +39,8 @@ class SingleIterableInputTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testNullsAreAllowed(): void
     {
@@ -53,8 +55,8 @@ class SingleIterableInputTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testNullsAreNotAllowed(): void
     {
@@ -68,8 +70,8 @@ class SingleIterableInputTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testEmptyArraySuccess(): void
     {
@@ -83,8 +85,8 @@ class SingleIterableInputTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testIteratorSuccess(): void
     {
@@ -98,8 +100,8 @@ class SingleIterableInputTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testBetweenCountSuccess(): void
     {
@@ -114,8 +116,8 @@ class SingleIterableInputTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testMaxCountSuccess(): void
     {
@@ -130,8 +132,8 @@ class SingleIterableInputTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testMinCountSuccess(): void
     {
@@ -146,8 +148,8 @@ class SingleIterableInputTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testInputIsNullFailure(): void
     {
@@ -166,8 +168,8 @@ class SingleIterableInputTest extends TestCase
      * @param iterable $input
      * @param string   $message
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testBetweenCountFailure(iterable $input, string $message): void
     {
@@ -188,8 +190,8 @@ class SingleIterableInputTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testMaxCountFailure(): void
     {
@@ -204,8 +206,8 @@ class SingleIterableInputTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testMinCountFailure(): void
     {

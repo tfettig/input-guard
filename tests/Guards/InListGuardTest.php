@@ -6,7 +6,9 @@ namespace InputGuardTests\Guards;
 use ArrayObject;
 use InputGuard\Guards\InListGuard;
 use Iterator;
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
+use SebastianBergmann\RecursionContext\InvalidArgumentException;
 use stdClass;
 
 class InListGuardTest extends TestCase
@@ -14,13 +16,13 @@ class InListGuardTest extends TestCase
     /**
      * @dataProvider successProvider
      *
-     * @param            $input
-     * @param iterable   $list
-     * @param bool       $strict
-     * @param string     $message
+     * @param mixed    $input
+     * @param iterable $list
+     * @param bool     $strict
+     * @param string   $message
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testSuccess($input, iterable $list, bool $strict, string $message): void
     {
@@ -65,14 +67,12 @@ class InListGuardTest extends TestCase
      * @param bool     $strict
      * @param string   $message
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
-     *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testChangingFromNonStrictToStrict($input, iterable $list, bool $strict, string $message): void
     {
-        $val = new InListGuard($input, $list, null, false);
+        $val = new InListGuard($input, $list, null, $strict);
         $val->strict();
 
         self::assertFalse($val->success(), $message);
@@ -87,8 +87,8 @@ class InListGuardTest extends TestCase
      * @param bool       $strict
      * @param string     $message
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testFailure($input, iterable $list, bool $strict, string $message): void
     {

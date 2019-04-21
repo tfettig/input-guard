@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace InputGuardTests\Guards\Bases;
 
 use InputGuard\Guards\Bases\StringBase;
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
+use SebastianBergmann\RecursionContext\InvalidArgumentException;
 
 class StringBaseTest extends TestCase
 {
@@ -19,10 +21,9 @@ class StringBaseTest extends TestCase
         {
             use StringBase;
 
-            protected function extraStringValidation($input): bool
+            protected function validationShortCircuit($input): bool
             {
-                /** @noinspection SuspiciousBinaryOperationInspection */
-                return $input === $input;
+                return true;
             }
 
             public function runValidation($input): bool
@@ -43,8 +44,8 @@ class StringBaseTest extends TestCase
      * @param string   $regex
      * @param string   $message
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testSuccess($input, int $min, ?int $max, string $regex, string $message): void
     {
@@ -70,8 +71,8 @@ class StringBaseTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testBetweenSuccess(): void
     {
@@ -90,8 +91,8 @@ class StringBaseTest extends TestCase
      * @param string   $regex
      * @param string   $message
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testFailure($input, int $min, ?int $max, string $regex, string $message): void
     {
@@ -116,8 +117,8 @@ class StringBaseTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testStrictSuccess(): void
     {

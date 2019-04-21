@@ -37,16 +37,34 @@ class BoolGuard implements Guard
 
     protected function validation($input, &$value): bool
     {
-        if ($input === true || ($this->pseudoBools && \in_array($input, [1, '1'], true))) {
-            $value = true;
-            return true;
+        if ($this->isTrue($input)) {
+            $value  = true;
+            $return = true;
+        } elseif ($this->isFalse($input)) {
+            $value  = false;
+            $return = true;
         }
 
-        if ($input === false || ($this->pseudoBools && \in_array($input, [0, '0', ''], true))) {
-            $value = false;
-            return true;
-        }
+        return $return ?? false;
+    }
 
-        return false;
+    private function isTrue($input): bool
+    {
+        return $input === true || $this->isPseudoTrue($input);
+    }
+
+    private function isPseudoTrue($input): bool
+    {
+        return $this->pseudoBools && \in_array($input, [1, '1'], true);
+    }
+
+    private function isFalse($input): bool
+    {
+        return $input === false || $this->isPseudoFalse($input);
+    }
+
+    private function isPseudoFalse($input): bool
+    {
+        return $this->pseudoBools && \in_array($input, [0, '0', ''], true);
     }
 }

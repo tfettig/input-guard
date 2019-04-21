@@ -16,7 +16,9 @@ use InputGuard\Guards\IterableStringableGuard;
 use InputGuard\Guards\IterableStringGuard;
 use InputGuard\Guards\StringableGuard;
 use InputGuard\Guards\StringGuard;
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
+use SebastianBergmann\RecursionContext\InvalidArgumentException;
 
 /** @noinspection EfferentObjectCouplingInspection */
 
@@ -43,7 +45,7 @@ class DefaultConfigurationTest extends TestCase
             {
                 $this->strictTypeComparisionOverride[$class] = isset($this->strictTypeComparisionOverride[$class])
                     ? !$this->strictTypeComparisionOverride[$class]
-                    : !$this->strictTypeComparisionDefault;
+                    : !$this->defaultStrictTypeComparision;
             }
         };
     }
@@ -54,8 +56,8 @@ class DefaultConfigurationTest extends TestCase
      * @param string $class
      * @param string $message
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testDefaultValue(string $class, string $message): void
     {
@@ -68,8 +70,8 @@ class DefaultConfigurationTest extends TestCase
      * @param string $class
      * @param string $message
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testDefaultValueChanged(string $class, string $message): void
     {
@@ -106,8 +108,8 @@ class DefaultConfigurationTest extends TestCase
      * @param bool   $expected_return
      * @param string $message
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testDefaultStrict(string $class, bool $expected_return, string $message): void
     {
@@ -121,8 +123,8 @@ class DefaultConfigurationTest extends TestCase
      * @param bool   $expected_return
      * @param string $message
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testDefaultStrictChanged(string $class, bool $expected_return, string $message): void
     {

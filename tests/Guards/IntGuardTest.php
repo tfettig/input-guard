@@ -4,14 +4,16 @@ declare(strict_types=1);
 namespace InputGuardTests\Guards;
 
 use InputGuard\Guards\IntGuard;
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
+use SebastianBergmann\RecursionContext\InvalidArgumentException;
 
 class IntGuardTest extends TestCase
 {
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testSuccess(): void
     {
@@ -26,8 +28,8 @@ class IntGuardTest extends TestCase
      * @param int|null $default
      * @param string   $message
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testFailure($input, ?int $default, string $message): void
     {

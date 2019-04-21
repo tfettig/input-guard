@@ -27,7 +27,7 @@ class StringGuard implements Guard
         $this->value = $default;
     }
 
-    protected function extraStringValidation($input): bool
+    protected function validationShortCircuit($input): bool
     {
         // The is_scalar is a short circuit for anything not a integer, float, string or boolean.
         return $this->strict ? \is_string($input) : \is_scalar($input);

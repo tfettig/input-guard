@@ -7,6 +7,7 @@ use InputGuard\Guards\BoolGuard;
 use InputGuard\Guards\ErrorMessagesBase;
 use InputGuard\Guards\FloatGuard;
 use InputGuard\Guards\Guard;
+use InputGuard\Guards\GuardFactory;
 use InputGuard\Guards\InListGuard;
 use InputGuard\Guards\InstanceOfGuard;
 use InputGuard\Guards\IntGuard;
@@ -33,28 +34,23 @@ class InputGuard implements GuardChain
     private $guards = [];
 
     /**
-     * @var Configuration
-     */
-    private $configuration;
-
-    /**
      * @var bool|null
      */
     private $validated;
 
     /**
-     * Allows for injection of a Configurable object.
-     *
+     * @var GuardFactory
+     */
+    private $factory;
+
+    /**
      * @param Configuration $configuration
      */
     public function __construct(Configuration $configuration = null)
     {
-        $this->configuration = $configuration ?? new DefaultConfiguration();
+        $this->factory = new GuardFactory($configuration ?? new DefaultConfiguration());
     }
 
-    /**
-     * Reset all properties except the configuration to there default values.
-     */
     public function __clone()
     {
         $this->errorMessages = [];
@@ -62,11 +58,83 @@ class InputGuard implements GuardChain
         $this->validated     = null;
     }
 
-    /**
-     * Check for success on all the guard objects.
-     *
-     * @return bool
-     */
+    public function bool($input): BoolGuard
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return $this->createGuard(BoolGuard::class, $input);
+    }
+
+    public function int($input): IntGuard
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return $this->createGuard(IntGuard::class, $input);
+    }
+
+    public function float($input): FloatGuard
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return $this->createGuard(FloatGuard::class, $input);
+    }
+
+    public function instanceOf($input, string $className): InstanceOfGuard
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return $this->createGuard(InstanceOfGuard::class, $input, $className);
+    }
+
+    public function string($input): StringGuard
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return $this->createGuard(StringGuard::class, $input);
+    }
+
+    public function stringable($input): StringableGuard
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return $this->createGuard(StringableGuard::class, $input);
+    }
+
+    public function array($input): IterableGuard
+    {
+        return $this->iterable($input);
+    }
+
+    public function iterable($input): IterableGuard
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return $this->createGuard(IterableGuard::class, $input);
+    }
+
+    public function iterableInt($input): IterableIntGuard
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return $this->createGuard(IterableIntGuard::class, $input);
+    }
+
+    public function iterableFloat($input): IterableFloatGuard
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return $this->createGuard(IterableFloatGuard::class, $input);
+    }
+
+    public function iterableString($input): IterableStringGuard
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return $this->createGuard(IterableStringGuard::class, $input);
+    }
+
+    public function iterableStringable($input): IterableStringableGuard
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return $this->createGuard(IterableStringableGuard::class, $input);
+    }
+
+    public function inList($input, iterable $list): InListGuard
+    {
+        /** @noinspection PhpIncompatibleReturnTypeInspection */
+        return $this->createGuard(InListGuard::class, $input, $list);
+    }
+
     public function success(): bool
     {
         if ($this->validated !== null) {
@@ -77,7 +145,7 @@ class InputGuard implements GuardChain
         $error_messages = [];
         $success        = array_reduce(
             $this->guards,
-            function (bool $success, Guard $guard) use (&$error_messages): bool {
+            static function (bool $success, Guard $guard) use (&$error_messages): bool {
                 // Check for success/failure for all collected Val's.
                 if ($guard->success() === false) {
                     $error_messages[] = $guard->pullErrorMessages();
@@ -99,23 +167,11 @@ class InputGuard implements GuardChain
         return $success;
     }
 
-    /**
-     * Return the current instance.
-     *
-     * @return InputGuard
-     */
     public function value(): InputGuard
     {
         return $this;
     }
 
-    /**
-     * Allow for the injection of any Guard object.
-     *
-     * @param Guard $val
-     *
-     * @return Guard
-     */
     public function add(Guard $val): Guard
     {
         $this->validated = null;
@@ -124,117 +180,8 @@ class InputGuard implements GuardChain
         return $val;
     }
 
-    public function bool($input): BoolGuard
+    private function createGuard(string $class, $input, ...$extra): Guard
     {
-        $val = new BoolGuard($input, $this->configuration->defaultValue(BoolGuard::class));
-        $this->add($val);
-
-        return $val;
-    }
-
-    public function int($input): IntGuard
-    {
-        $val = new IntGuard($input, $this->configuration->defaultValue(IntGuard::class));
-        $this->add($val);
-
-        return $val;
-    }
-
-    public function float($input): FloatGuard
-    {
-        $val = new FloatGuard($input, $this->configuration->defaultValue(FloatGuard::class));
-        $this->add($val);
-
-        return $val;
-    }
-
-    public function instanceOf($input, string $className): InstanceOfGuard
-    {
-        $val = new InstanceOfGuard($input, $className, $this->configuration->defaultValue(StringGuard::class));
-        $this->add($val);
-
-        return $val;
-    }
-
-    public function string($input): StringGuard
-    {
-        $val = new StringGuard($input, $this->configuration->defaultValue(StringGuard::class));
-        $this->add($val);
-
-        return $val;
-    }
-
-    public function stringable($input): StringableGuard
-    {
-        $val = new StringableGuard($input, $this->configuration->defaultValue(StringableGuard::class));
-        $this->add($val);
-
-        return $val;
-    }
-
-    /**
-     * Wrapper to iterable.
-     *
-     * @param $input
-     *
-     * @return IterableGuard
-     */
-    public function array($input): IterableGuard
-    {
-        return $this->iterable($input);
-    }
-
-    public function iterable($input): IterableGuard
-    {
-        $val = new IterableGuard($input, $this->configuration->defaultValue(IterableGuard::class));
-        $this->add($val);
-
-        return $val;
-    }
-
-    public function iterableInt($input): IterableIntGuard
-    {
-        $val = new IterableIntGuard($input, $this->configuration->defaultValue(IterableIntGuard::class));
-        $this->add($val);
-
-        return $val;
-    }
-
-    public function iterableFloat($input): IterableFloatGuard
-    {
-        $val = new IterableFloatGuard($input, $this->configuration->defaultValue(IterableFloatGuard::class));
-        $this->add($val);
-
-        return $val;
-    }
-
-    public function iterableString($input): IterableStringGuard
-    {
-        $val = new IterableStringGuard($input, $this->configuration->defaultValue(IterableStringGuard::class));
-        $this->add($val);
-
-        return $val;
-    }
-
-    public function iterableStringable($input): IterableStringableGuard
-    {
-        $val = new IterableStringableGuard($input, $this->configuration->defaultValue(IterableStringableGuard::class));
-        $this->add($val);
-
-        return $val;
-    }
-
-    public function inList($input, iterable $list): InListGuard
-    {
-        $val = new InListGuard(
-            $input,
-            $list,
-            $this->configuration->defaultValue(InListGuard::class),
-            $this->configuration->defaultStrict(InListGuard::class)
-        );
-
-        $this->add($val);
-
-        return $val;
+        return $this->add($this->factory->create($class, $input, $extra));
     }
 }

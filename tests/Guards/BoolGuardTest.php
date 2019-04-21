@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace InputGuardTests\Guards;
 
 use InputGuard\Guards\BoolGuard;
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
+use SebastianBergmann\RecursionContext\InvalidArgumentException;
 use stdClass;
 
 class BoolGuardTest extends TestCase
@@ -16,8 +18,8 @@ class BoolGuardTest extends TestCase
      * @param bool   $expected
      * @param string $message
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testSuccess($input, bool $expected, string $message): void
     {
@@ -41,8 +43,8 @@ class BoolGuardTest extends TestCase
      * @param mixed  $input
      * @param string $message
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testFailure($input, string $message): void
     {
@@ -70,8 +72,8 @@ class BoolGuardTest extends TestCase
      * @param bool   $expected
      * @param string $message
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testSuccessWithPseudoBools($input, bool $expected, string $message): void
     {
@@ -100,8 +102,8 @@ class BoolGuardTest extends TestCase
      * @param mixed  $input
      * @param string $message
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testFailureWithPseudoBools($input, string $message): void
     {

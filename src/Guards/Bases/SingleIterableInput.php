@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace InputGuard\Guards\Bases;
 
 use ArrayAccess;
+use Countable;
 use Traversable;
 
 trait SingleIterableInput
@@ -91,7 +92,7 @@ trait SingleIterableInput
         }
 
         /** @var iterable $input */
-        if ($this->isWithinCountSize($input) === false) {
+        if ($this->isBetweenCountSize($input) === false) {
             return false;
         }
 
@@ -124,20 +125,22 @@ trait SingleIterableInput
         return true;
     }
 
-    private function isWithinCountSize(iterable $input): bool
+    private function isBetweenCountSize(iterable $input): bool
     {
         /** @noinspection PhpParamsInspection */
-        $iterableSize = \is_array($input) ? count($input) : iterator_count($input);
+        $count = \is_array($input) || $input instanceof Countable ? count($input) : iterator_count($input);
 
-        if ($iterableSize < $this->minCount) {
-            return false;
-        }
+        return $this->isMoreThanMinCount($count) && $this->isLessThanMaxCount($count);
+    }
 
-        if ($this->maxCount !== null && $iterableSize > $this->maxCount) {
-            return false;
-        }
+    private function isMoreThanMinCount(int $count): bool
+    {
+        return $count >= $this->minCount;
+    }
 
-        return true;
+    private function isLessThanMaxCount(int $count): bool
+    {
+        return $this->maxCount === null || $count <= $this->maxCount;
     }
 
     protected function elementsCanBeUpdated(iterable $input): bool

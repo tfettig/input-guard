@@ -3,8 +3,11 @@ declare(strict_types=1);
 
 namespace InputGuardTests\Guards;
 
+use Exception;
 use InputGuard\Guards\IterableIntGuard;
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
+use SebastianBergmann\RecursionContext\InvalidArgumentException;
 
 class IterableIntGuardTest extends TestCase
 {
@@ -14,8 +17,8 @@ class IterableIntGuardTest extends TestCase
      * @param            $input
      * @param string     $message
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testSuccess($input, string $message): void
     {
@@ -28,7 +31,7 @@ class IterableIntGuardTest extends TestCase
     /**
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function successProvider(): array
     {
@@ -44,8 +47,8 @@ class IterableIntGuardTest extends TestCase
      * @param            $input
      * @param string     $message
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testFailure($input, string $message): void
     {
@@ -60,7 +63,7 @@ class IterableIntGuardTest extends TestCase
     /**
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function failureProvider(): array
     {

@@ -4,7 +4,9 @@ declare(strict_types=1);
 namespace InputGuardTests\Guards;
 
 use InputGuard\Guards\StringGuard;
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
+use SebastianBergmann\RecursionContext\InvalidArgumentException;
 use stdClass;
 
 class StringGuardTest extends TestCase
@@ -15,8 +17,8 @@ class StringGuardTest extends TestCase
      * @param          $input
      * @param string   $message
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testSuccess($input, string $message): void
     {
@@ -38,8 +40,8 @@ class StringGuardTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testFailure(): void
     {
@@ -47,8 +49,8 @@ class StringGuardTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testStrictFailure(): void
     {
@@ -59,8 +61,8 @@ class StringGuardTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testStrictSuccess(): void
     {

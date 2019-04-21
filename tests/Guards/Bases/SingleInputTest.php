@@ -4,13 +4,15 @@ declare(strict_types=1);
 namespace InputGuardTests\Guards\Bases;
 
 use InputGuard\Guards\Bases\SingleInput;
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
+use SebastianBergmann\RecursionContext\InvalidArgumentException;
 
 class SingleInputTest extends TestCase
 {
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testAllowNulls(): void
     {
@@ -45,8 +47,8 @@ class SingleInputTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testAllowEmptyString(): void
     {

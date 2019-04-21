@@ -4,13 +4,15 @@ declare(strict_types=1);
 namespace InputGuardTests\Guards;
 
 use InputGuard\Guards\ErrorMessagesBase;
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
+use SebastianBergmann\RecursionContext\InvalidArgumentException;
 
 class ErrorMessagesBaseTest extends TestCase
 {
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testPullErrorMessages(): void
     {
@@ -38,8 +40,8 @@ class ErrorMessagesBaseTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      *
      * @SuppressWarnings(PHPMD.UnusedLocalVariable)
      */

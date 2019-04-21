@@ -3,8 +3,11 @@ declare(strict_types=1);
 
 namespace InputGuardTests\Guards;
 
+use Exception;
 use InputGuard\Guards\FloatGuard;
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
+use SebastianBergmann\RecursionContext\InvalidArgumentException;
 use stdClass;
 
 class FloatGuardTest extends TestCase
@@ -16,8 +19,8 @@ class FloatGuardTest extends TestCase
      * @param float  $expected
      * @param string $message
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testSuccess($input, float $expected, string $message): void
     {
@@ -28,7 +31,7 @@ class FloatGuardTest extends TestCase
     /**
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function successProvider(): array
     {
@@ -46,8 +49,8 @@ class FloatGuardTest extends TestCase
      * @param mixed  $input
      * @param string $message
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testFailure($input, string $message): void
     {

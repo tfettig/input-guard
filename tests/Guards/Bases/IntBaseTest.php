@@ -3,8 +3,11 @@ declare(strict_types=1);
 
 namespace InputGuardTests\Guards\Bases;
 
+use Exception;
 use InputGuard\Guards\Bases\IntBase;
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
+use SebastianBergmann\RecursionContext\InvalidArgumentException;
 use stdClass;
 
 class IntBaseTest extends TestCase
@@ -43,8 +46,8 @@ class IntBaseTest extends TestCase
      * @param int|null   $max
      * @param string     $message
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testSuccess($input, ?int $min, ?int $max, string $message): void
     {
@@ -58,7 +61,7 @@ class IntBaseTest extends TestCase
     /**
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function successProvider(): array
     {
@@ -70,8 +73,8 @@ class IntBaseTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testBetweenSuccess(): void
     {
@@ -90,8 +93,8 @@ class IntBaseTest extends TestCase
      * @param int|null $max
      * @param string   $message
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testFailure($input, ?int $min, ?int $max, string $message): void
     {
@@ -116,8 +119,8 @@ class IntBaseTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testStrictFailure(): void
     {

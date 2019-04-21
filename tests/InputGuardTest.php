@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionProperty;
+use SebastianBergmann\RecursionContext\InvalidArgumentException;
 use stdClass;
 
 class InputGuardTest extends TestCase
@@ -21,12 +22,13 @@ class InputGuardTest extends TestCase
 
     public function setUp(): void
     {
+        parent::setUp();
         $this->validation = new InputGuard();
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testAutoload(): void
     {
@@ -34,8 +36,8 @@ class InputGuardTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testValue(): void
     {
@@ -43,8 +45,8 @@ class InputGuardTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testValidationOccursWhenValueIsCalled(): void
     {
@@ -54,8 +56,8 @@ class InputGuardTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      * @throws ReflectionException
      */
     public function testClone(): void
@@ -77,7 +79,7 @@ class InputGuardTest extends TestCase
         // Clone the updated InputGuard object and then get all the property values.
         $newValidation = clone $this->validation;
         $reflect       = new ReflectionClass($newValidation);
-        $newValues     = array_map(function (ReflectionProperty $property) use ($newValidation) {
+        $newValues     = array_map(static function (ReflectionProperty $property) use ($newValidation) {
             $property->setAccessible(true);
             return $property->getValue($newValidation);
         }, $reflect->getProperties());
@@ -87,8 +89,8 @@ class InputGuardTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testSuccessSuccess(): void
     {
@@ -96,8 +98,8 @@ class InputGuardTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testSuccessFailure(): void
     {
@@ -106,8 +108,8 @@ class InputGuardTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testCallingSuccessMultipleTimesDoesNotChangeState(): void
     {
@@ -115,8 +117,8 @@ class InputGuardTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testCallingSuccessMultipleTimesAfterUpdatesDoesChangeState(): void
     {
@@ -126,8 +128,8 @@ class InputGuardTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testErrorMessage(): void
     {
@@ -137,8 +139,8 @@ class InputGuardTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testRemovingDuplicatedErrorMessages(): void
     {
@@ -157,8 +159,9 @@ class InputGuardTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws ReflectionException
      */
     public function testBoolVal(): void
     {
@@ -168,8 +171,9 @@ class InputGuardTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws ReflectionException
      */
     public function testIntVal(): void
     {
@@ -179,8 +183,9 @@ class InputGuardTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws ReflectionException
      */
     public function testFloatVal(): void
     {
@@ -190,8 +195,9 @@ class InputGuardTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws ReflectionException
      */
     public function testInstanceOfVal(): void
     {
@@ -201,8 +207,9 @@ class InputGuardTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws ReflectionException
      */
     public function testStringVal(): void
     {
@@ -212,8 +219,9 @@ class InputGuardTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws ReflectionException
      */
     public function testStringableVal(): void
     {
@@ -230,8 +238,9 @@ class InputGuardTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws ReflectionException
      */
     public function testArrayVal(): void
     {
@@ -241,8 +250,9 @@ class InputGuardTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws ReflectionException
      */
     public function testIterableVal(): void
     {
@@ -252,8 +262,9 @@ class InputGuardTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws ReflectionException
      */
     public function testIterableIntVal(): void
     {
@@ -263,8 +274,9 @@ class InputGuardTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws ReflectionException
      */
     public function testIterableFloatVal(): void
     {
@@ -274,8 +286,9 @@ class InputGuardTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws ReflectionException
      */
     public function testIterableStringVal(): void
     {
@@ -285,8 +298,9 @@ class InputGuardTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws ReflectionException
      */
     public function testIterableStringableVal(): void
     {
@@ -304,8 +318,9 @@ class InputGuardTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     * @throws ReflectionException
      */
     public function testInListVal(): void
     {
@@ -317,6 +332,7 @@ class InputGuardTest extends TestCase
     /**
      * @return int
      * @throws ExpectationFailedException
+     * @throws ReflectionException
      */
     private function guardCount(): int
     {

@@ -3,8 +3,11 @@ declare(strict_types=1);
 
 namespace InputGuardTests\Guards;
 
+use Exception;
 use InputGuard\Guards\IterableStringableGuard;
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
+use SebastianBergmann\RecursionContext\InvalidArgumentException;
 use stdClass;
 
 class IterableStringableGuardTest extends TestCase
@@ -15,8 +18,8 @@ class IterableStringableGuardTest extends TestCase
      * @param            $input
      * @param string     $message
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testSuccess($input, string $message): void
     {
@@ -24,7 +27,7 @@ class IterableStringableGuardTest extends TestCase
 
         self::assertTrue($val->success(), $message);
 
-        $cast_if_not_object = function ($element) {
+        $cast_if_not_object = static function ($element) {
             return \is_object($element) ? $element : (string)$element;
         };
 
@@ -34,7 +37,7 @@ class IterableStringableGuardTest extends TestCase
     /**
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function successProvider(): array
     {
@@ -59,8 +62,8 @@ class IterableStringableGuardTest extends TestCase
      * @param            $input
      * @param string     $message
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testFailure($input, string $message): void
     {
@@ -73,7 +76,7 @@ class IterableStringableGuardTest extends TestCase
     /**
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function failureProvider(): array
     {

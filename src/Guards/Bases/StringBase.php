@@ -58,27 +58,45 @@ trait StringBase
      *
      * @return bool
      */
-    abstract protected function extraStringValidation($input): bool;
+    abstract protected function validationShortCircuit($input): bool;
 
     protected function validation($input, &$value): bool
     {
-        if ($this->extraStringValidation($input) === false) {
-            return false;
-        }
+        return $this->validationShortCircuit($input) && $this->validationComplete($input, $value);
+    }
 
+    private function validationComplete($input, &$value): bool
+    {
         $inputString = (string)$input;
 
-        $length = mb_strlen($inputString, mb_detect_encoding($inputString));
-        if ($length < $this->minLen || ($this->maxLen !== null && $length > $this->maxLen)) {
-            return false;
+        if ($this->isBetweenLength($inputString) && $this->passesRegex($inputString)) {
+            $value = is_scalar($input) ? $inputString : $input;
+
+            return true;
         }
 
-        if ($this->regex && !preg_match($this->regex, $inputString)) {
-            return false;
-        }
+        return false;
+    }
 
-        $value = is_scalar($input) ? $inputString : $input;
+    private function isBetweenLength(string $input): bool
+    {
+        $length = mb_strlen($input, mb_detect_encoding($input));
 
-        return true;
+        return $this->isMoreThanMinLength($length) && $this->isLessThanMaxLength($length);
+    }
+
+    private function isMoreThanMinLength(int $length): bool
+    {
+        return $length >= $this->minLen;
+    }
+
+    private function isLessThanMaxLength(int $length): bool
+    {
+        return $this->maxLen === null || $length <= $this->maxLen;
+    }
+
+    private function passesRegex(string $input): bool
+    {
+        return $this->regex === '' || preg_match($this->regex, $input) === 1;
     }
 }

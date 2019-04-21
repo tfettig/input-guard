@@ -3,8 +3,11 @@ declare(strict_types=1);
 
 namespace InputGuardTests\Guards\Bases;
 
+use Exception;
 use InputGuard\Guards\Bases\FloatBase;
+use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
+use SebastianBergmann\RecursionContext\InvalidArgumentException;
 use stdClass;
 
 class FloatBaseTest extends TestCase
@@ -42,8 +45,8 @@ class FloatBaseTest extends TestCase
      * @param float  $max
      * @param string $message
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testSuccess($input, float $min, float $max, string $message): void
     {
@@ -57,7 +60,7 @@ class FloatBaseTest extends TestCase
     /**
      * @return array
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function successProvider(): array
     {
@@ -71,8 +74,8 @@ class FloatBaseTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testBetweenSuccess(): void
     {
@@ -92,8 +95,8 @@ class FloatBaseTest extends TestCase
      * @param float  $max
      * @param string $message
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testFailure($input, float $min, float $max, string $message): void
     {
@@ -116,8 +119,8 @@ class FloatBaseTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testStrictFailure(): void
     {
@@ -128,8 +131,8 @@ class FloatBaseTest extends TestCase
     }
 
     /**
-     * @throws \PHPUnit\Framework\ExpectationFailedException
-     * @throws \SebastianBergmann\RecursionContext\InvalidArgumentException
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
      */
     public function testStrictSuccess(): void
     {

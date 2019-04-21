@@ -8,18 +8,20 @@ interface Configuration
     /**
      * Allows for the configuration of the default value of invalid Guard objects.
      *
-     * @param string $className
+     * @param string $class
      *
      * @return mixed
      */
-    public function defaultValue(string $className);
+    public function defaultValue(string $class);
 
     /**
      * Sets the default strictness to strict for type comparison of inputs.
      *
      * @see http://php.net/manual/en/language.types.type-juggling.php
      *
+     * @param string $class
+     *
      * @return bool
      */
-    public function defaultStrict(): bool;
+    public function defaultStrict(string $class = ''): bool;
 }

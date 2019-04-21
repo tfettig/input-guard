@@ -32,10 +32,10 @@ class IterableStringableGuard implements Guard
         $this->value = $default;
     }
 
-    protected function extraStringValidation($input): bool
+    protected function validationShortCircuit($input): bool
     {
         // Short circuit for anything not a integer, float, string, boolean, or object with a __toString method.
-        return \is_scalar($input) || (\is_object($input) && method_exists($input, '__toString'));
+        return is_scalar($input) || (\is_object($input) && method_exists($input, '__toString'));
     }
 
     protected function validateIterableElement($element, &$value): bool

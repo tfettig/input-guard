@@ -32,7 +32,7 @@ class IterableStringGuard implements Guard
         $this->value = $default;
     }
 
-    protected function extraStringValidation($input): bool
+    protected function validationShortCircuit($input): bool
     {
         // Short circuit for anything not a integer, float, string or boolean.
         return \is_scalar($input);
