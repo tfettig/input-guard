@@ -132,6 +132,17 @@ class InputGuardTest extends TestCase
      * @throws ExpectationFailedException
      * @throws InvalidArgumentException
      */
+    public function testCallingSuccessOnAnInvalidInputWithNoErrorMessageReturnsFalse(): void
+    {
+        $this->validation->float('Invalid input');
+
+        self::assertFalse($this->validation->success());
+    }
+
+    /**
+     * @throws ExpectationFailedException
+     * @throws InvalidArgumentException
+     */
     public function testErrorMessage(): void
     {
         $error = 'error';

@@ -222,20 +222,16 @@ class InputGuard implements GuardChain
             return $this->validated;
         }
 
-        // Pass a local error messages variable to avoid merging arrays inside a loop.
-        $error_messages = [];
-        $success        = array_reduce(
+        $error_messages = array_reduce(
             $this->guards,
-            static function (bool $success, Guard $guard) use (&$error_messages): bool {
-                // Check for success/failure for all collected Val's.
+            static function (array $error_message, Guard $guard): array {
                 if ($guard->success() === false) {
-                    $error_messages[] = $guard->pullErrorMessages();
-                    $success          = false;
+                    $error_message[] = $guard->pullErrorMessages();
                 }
 
-                return $success;
+                return $error_message;
             },
-            true
+            []
         );
 
         if ($error_messages) {
@@ -243,9 +239,9 @@ class InputGuard implements GuardChain
             $this->errorMessages = array_values(array_unique(array_merge($this->errorMessages, ...$error_messages)));
         }
 
-        $this->validated = $success;
+        $this->validated = empty($error_messages);
 
-        return $success;
+        return $this->validated;
     }
 
     public function value(): InputGuard
