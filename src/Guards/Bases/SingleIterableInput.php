@@ -153,12 +153,4 @@ trait SingleIterableInput
     {
         return $this->maxCount === null || $count <= $this->maxCount;
     }
-
-    protected function elementsCanBeUpdated(iterable $input): bool
-    {
-        // At this time only iterable that are arrays or implement array access can be modified.
-        // I need to look into using http://www.php.net/manual/en/closure.bind.php or Refection to see if it's
-        // possible to modify the elements of an object that only implements the Iterator interface.
-        return \is_array($input) || $input instanceof ArrayAccess;
-    }
 }
