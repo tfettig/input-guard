@@ -15,7 +15,7 @@ class Test extends TestCase
      */
     private $object;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->object = new class()
         {

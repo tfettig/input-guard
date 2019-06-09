@@ -17,7 +17,7 @@ class IntBaseTest extends TestCase
      */
     private $guard;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->guard = new class()
         {

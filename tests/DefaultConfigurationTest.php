@@ -32,7 +32,7 @@ class DefaultConfigurationTest extends TestCase
      */
     private $configuration;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->configuration = new class() extends DefaultConfiguration
         {
