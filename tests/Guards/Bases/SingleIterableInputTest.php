@@ -18,6 +18,8 @@ class SingleIterableInputTest extends TestCase
 
     public static function setUpBeforeClass(): void
     {
+        parent::setUpBeforeClass();
+
         self::$singleIterableInputFactory = function ($input): object {
             return new class ($input)
             {

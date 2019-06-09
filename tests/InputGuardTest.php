@@ -5,6 +5,7 @@ namespace InputGuardTests;
 
 use ArrayObject;
 use InputGuard\InputGuard;
+use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\ExpectationFailedException;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
@@ -27,8 +28,8 @@ class InputGuardTest extends TestCase
     }
 
     /**
-     * @throws ExpectationFailedException
      * @throws InvalidArgumentException
+     * @throws Exception
      */
     public function testAutoload(): void
     {
@@ -139,8 +140,8 @@ class InputGuardTest extends TestCase
     }
 
     /**
-     * @throws ExpectationFailedException
      * @throws InvalidArgumentException
+     * @throws Exception
      */
     public function testRemovingDuplicatedErrorMessages(): void
     {
@@ -227,7 +228,7 @@ class InputGuardTest extends TestCase
     {
         $input = new class()
         {
-            public function __toString()
+            public function __toString(): string
             {
                 return 'string';
             }

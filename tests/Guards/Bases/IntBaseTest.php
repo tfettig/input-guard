@@ -19,6 +19,8 @@ class IntBaseTest extends TestCase
 
     public function setUp(): void
     {
+        parent::setUp();
+
         $this->guard = new class()
         {
             use IntBase;

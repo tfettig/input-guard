@@ -17,11 +17,13 @@ class StringBaseTest extends TestCase
 
     public function setUp(): void
     {
+        parent::setUp();
+
         $this->guard = new class()
         {
             use StringBase;
 
-            protected function validationShortCircuit($input): bool
+            protected function validationShortCircuit(/** @noinspection PhpUnusedParameterInspection */ $input): bool
             {
                 return true;
             }

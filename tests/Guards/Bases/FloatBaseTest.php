@@ -19,6 +19,8 @@ class FloatBaseTest extends TestCase
 
     public function setUp(): void
     {
+        parent::setUp();
+
         $this->guard = new class()
         {
             use FloatBase;

@@ -17,6 +17,8 @@ class Test extends TestCase
 
     public function setUp(): void
     {
+        parent::setUp();
+
         $this->object = new class()
         {
             use Strict;

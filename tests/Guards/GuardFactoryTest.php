@@ -18,7 +18,7 @@ use InputGuard\Guards\IterableStringableGuard;
 use InputGuard\Guards\IterableStringGuard;
 use InputGuard\Guards\StringableGuard;
 use InputGuard\Guards\StringGuard;
-use PHPUnit\Framework\ExpectationFailedException;
+use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\TestCase;
 use SebastianBergmann\RecursionContext\InvalidArgumentException;
 
@@ -35,8 +35,8 @@ class GuardFactoryTest extends TestCase
      * @param mixed  $input
      * @param array  $extra
      *
-     * @throws ExpectationFailedException
      * @throws InvalidArgumentException
+     * @throws Exception
      */
     public function testCreate(string $class, $input, array $extra): void
     {

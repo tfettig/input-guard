@@ -34,6 +34,8 @@ class DefaultConfigurationTest extends TestCase
 
     public function setUp(): void
     {
+        parent::setUp();
+
         $this->configuration = new class() extends DefaultConfiguration
         {
             public function changeDefaultValue(string $class): void
