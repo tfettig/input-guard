@@ -4,23 +4,8 @@ declare(strict_types=1);
 namespace InputGuardTests\Guards;
 
 use InputGuard\DefaultConfiguration;
-use InputGuard\Guards\BoolGuard;
-use InputGuard\Guards\FailAlwaysGuard;
-use InputGuard\Guards\FloatGuard;
 use InputGuard\Guards\GuardFactory;
-use InputGuard\Guards\InListGuard;
-use InputGuard\Guards\InstanceOfGuard;
-use InputGuard\Guards\IntGuard;
-use InputGuard\Guards\IterableFloatGuard;
-use InputGuard\Guards\IterableGuard;
-use InputGuard\Guards\IterableIntGuard;
-use InputGuard\Guards\IterableStringableGuard;
-use InputGuard\Guards\IterableStringGuard;
-use InputGuard\Guards\StringableGuard;
-use InputGuard\Guards\StringGuard;
-use PHPUnit\Framework\Exception;
 use PHPUnit\Framework\TestCase;
-use SebastianBergmann\RecursionContext\InvalidArgumentException;
 
 /**
  * @noinspection EfferentObjectCouplingInspection
@@ -29,42 +14,92 @@ use SebastianBergmann\RecursionContext\InvalidArgumentException;
 class GuardFactoryTest extends TestCase
 {
     /**
-     * @dataProvider createProvider
-     *
-     * @param string $class
-     * @param mixed  $input
-     * @param array  $extra
-     *
-     * @throws InvalidArgumentException
-     * @throws Exception
+     * @var GuardFactory
      */
-    public function testCreate(string $class, $input, array $extra): void
-    {
-        $instance = new GuardFactory(new DefaultConfiguration());
+    private $factory;
 
-        /** @noinspection UnnecessaryAssertionInspection */
-        self::assertInstanceOf($class, $instance->create($class, $input, $extra));
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->factory = new GuardFactory(new DefaultConfiguration());
     }
 
-    /**
-     * @return array[]
-     */
-    public function createProvider(): array
+    public function testBoolGuard(): void
     {
-        return [
-            [BoolGuard::class, '', []],
-            [IntGuard::class, '', []],
-            [FloatGuard::class, '', []],
-            [InstanceOfGuard::class, '', ['1']],
-            [StringGuard::class, '', []],
-            [StringableGuard::class, '', []],
-            [IterableGuard::class, '', []],
-            [IterableIntGuard::class, '', []],
-            [IterableFloatGuard::class, '', []],
-            [IterableStringGuard::class, '', []],
-            [IterableStringableGuard::class, '', []],
-            [InListGuard::class, '', [[]]],
-            [FailAlwaysGuard::class, '', []],
-        ];
+        $this->factory->boolGuard('');
+        $this->addToAssertionCount(1);
+    }
+
+    public function testIntGuard(): void
+    {
+        $this->factory->intGuard('');
+        $this->addToAssertionCount(1);
+    }
+
+    public function testFloatGuard(): void
+    {
+        $this->factory->floatGuard('');
+        $this->addToAssertionCount(1);
+    }
+
+    public function testStringGuard(): void
+    {
+        $this->factory->stringGuard('');
+        $this->addToAssertionCount(1);
+    }
+
+    public function testStringableGuard(): void
+    {
+        $this->factory->stringableGuard('');
+        $this->addToAssertionCount(1);
+    }
+
+    public function testInstanceOfGuard(): void
+    {
+        $this->factory->instanceOfGuard('', '');
+        $this->addToAssertionCount(1);
+    }
+
+    public function testIterableGuard(): void
+    {
+        $this->factory->iterableGuard('');
+        $this->addToAssertionCount(1);
+    }
+
+    public function testIterableIntGuard(): void
+    {
+        $this->factory->iterableIntGuard('');
+        $this->addToAssertionCount(1);
+    }
+
+    public function testIterableFloatGuard(): void
+    {
+        $this->factory->iterableFloatGuard('');
+        $this->addToAssertionCount(1);
+    }
+
+    public function testIterableStringGuard(): void
+    {
+        $this->factory->iterableStringGuard('');
+        $this->addToAssertionCount(1);
+    }
+
+    public function testIterableStringableGuard(): void
+    {
+        $this->factory->iterableStringableGuard('');
+        $this->addToAssertionCount(1);
+    }
+
+    public function testInListGuard(): void
+    {
+        $this->factory->inListGuard('', []);
+        $this->addToAssertionCount(1);
+    }
+
+    public function testFailAlwaysGuard(): void
+    {
+        $this->factory->failAlwaysGuard();
+        $this->addToAssertionCount(1);
     }
 }

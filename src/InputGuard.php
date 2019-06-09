@@ -65,8 +65,9 @@ class InputGuard implements GuardChain
      */
     public function bool($input): BoolGuard
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return $this->createGuard(BoolGuard::class, $input);
+        $guard = $this->factory->boolGuard($input);
+        $this->add($guard);
+        return $guard;
     }
 
     /**
@@ -76,8 +77,9 @@ class InputGuard implements GuardChain
      */
     public function int($input): IntGuard
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return $this->createGuard(IntGuard::class, $input);
+        $guard = $this->factory->intGuard($input);
+        $this->add($guard);
+        return $guard;
     }
 
     /**
@@ -87,8 +89,9 @@ class InputGuard implements GuardChain
      */
     public function float($input): FloatGuard
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return $this->createGuard(FloatGuard::class, $input);
+        $guard = $this->factory->floatGuard($input);
+        $this->add($guard);
+        return $guard;
     }
 
     /**
@@ -99,8 +102,9 @@ class InputGuard implements GuardChain
      */
     public function instanceOf($input, string $className): InstanceOfGuard
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return $this->createGuard(InstanceOfGuard::class, $input, $className);
+        $guard = $this->factory->instanceOfGuard($input, $className);
+        $this->add($guard);
+        return $guard;
     }
 
     /**
@@ -110,8 +114,9 @@ class InputGuard implements GuardChain
      */
     public function string($input): StringGuard
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return $this->createGuard(StringGuard::class, $input);
+        $guard = $this->factory->stringGuard($input);
+        $this->add($guard);
+        return $guard;
     }
 
     /**
@@ -121,8 +126,9 @@ class InputGuard implements GuardChain
      */
     public function stringable($input): StringableGuard
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return $this->createGuard(StringableGuard::class, $input);
+        $guard = $this->factory->stringableGuard($input);
+        $this->add($guard);
+        return $guard;
     }
 
     /**
@@ -132,7 +138,9 @@ class InputGuard implements GuardChain
      */
     public function array($input): IterableGuard
     {
-        return $this->iterable($input);
+        $guard = $this->factory->iterableGuard($input);
+        $this->add($guard);
+        return $guard;
     }
 
     /**
@@ -142,8 +150,9 @@ class InputGuard implements GuardChain
      */
     public function iterable($input): IterableGuard
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return $this->createGuard(IterableGuard::class, $input);
+        $guard = $this->factory->iterableGuard($input);
+        $this->add($guard);
+        return $guard;
     }
 
     /**
@@ -153,8 +162,9 @@ class InputGuard implements GuardChain
      */
     public function iterableInt($input): IterableIntGuard
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return $this->createGuard(IterableIntGuard::class, $input);
+        $guard = $this->factory->iterableIntGuard($input);
+        $this->add($guard);
+        return $guard;
     }
 
     /**
@@ -164,8 +174,9 @@ class InputGuard implements GuardChain
      */
     public function iterableFloat($input): IterableFloatGuard
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return $this->createGuard(IterableFloatGuard::class, $input);
+        $guard = $this->factory->iterableFloatGuard($input);
+        $this->add($guard);
+        return $guard;
     }
 
     /**
@@ -175,8 +186,9 @@ class InputGuard implements GuardChain
      */
     public function iterableString($input): IterableStringGuard
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return $this->createGuard(IterableStringGuard::class, $input);
+        $guard = $this->factory->iterableStringGuard($input);
+        $this->add($guard);
+        return $guard;
     }
 
     /**
@@ -186,8 +198,9 @@ class InputGuard implements GuardChain
      */
     public function iterableStringable($input): IterableStringableGuard
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return $this->createGuard(IterableStringableGuard::class, $input);
+        $guard = $this->factory->iterableStringableGuard($input);
+        $this->add($guard);
+        return $guard;
     }
 
     /**
@@ -198,8 +211,9 @@ class InputGuard implements GuardChain
      */
     public function inList($input, iterable $list): InListGuard
     {
-        /** @noinspection PhpIncompatibleReturnTypeInspection */
-        return $this->createGuard(InListGuard::class, $input, $list);
+        $guard = $this->factory->inListGuard($input, $list);
+        $this->add($guard);
+        return $guard;
     }
 
     public function success(): bool
@@ -245,10 +259,5 @@ class InputGuard implements GuardChain
         $this->guards[]  = $val;
 
         return $val;
-    }
-
-    private function createGuard(string $class, $input, ...$extra): Guard
-    {
-        return $this->add($this->factory->create($class, $input, $extra));
     }
 }

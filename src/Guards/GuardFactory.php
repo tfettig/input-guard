@@ -21,64 +21,138 @@ class GuardFactory
     }
 
     /**
-     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @param mixed $input
      *
-     * @param string $class
-     * @param mixed  $input
-     * @param array  $extra
-     *
-     * @return Guard
+     * @return BoolGuard
      */
-    public function create(string $class, $input, array $extra): Guard
+    public function boolGuard($input): BoolGuard
     {
-        switch ($class) {
-            case BoolGuard::class:
-                $guard = new BoolGuard($input, $this->defaultValue(BoolGuard::class));
-                break;
-            case IntGuard::class:
-                $guard = new IntGuard($input, $this->defaultValue(IntGuard::class));
-                break;
-            case FloatGuard::class:
-                $guard = new FloatGuard($input, $this->defaultValue(FloatGuard::class));
-                break;
-            case InstanceOfGuard::class:
-                $guard = new InstanceOfGuard($input, $extra[0], $this->defaultValue(InstanceOfGuard::class));
-                break;
-            case StringGuard::class:
-                $guard = new StringGuard($input, $this->defaultValue(StringGuard::class));
-                break;
-            case StringableGuard::class:
-                $guard = new StringableGuard($input, $this->defaultValue(StringableGuard::class));
-                break;
-            case IterableGuard::class:
-                $guard = new IterableGuard($input, $this->defaultValue(IterableGuard::class));
-                break;
-            case IterableIntGuard::class:
-                $guard = new IterableIntGuard($input, $this->defaultValue(IterableIntGuard::class));
-                break;
-            case IterableFloatGuard::class:
-                $guard = new IterableFloatGuard($input, $this->defaultValue(IterableFloatGuard::class));
-                break;
-            case IterableStringGuard::class:
-                $guard = new IterableStringGuard($input, $this->defaultValue(IterableStringGuard::class));
-                break;
-            case IterableStringableGuard::class:
-                $guard = new IterableStringableGuard($input, $this->defaultValue(IterableStringableGuard::class));
-                break;
-            case InListGuard::class:
-                $guard = new InListGuard(
-                    $input,
-                    $extra[0],
-                    $this->defaultValue(InListGuard::class),
-                    $this->defaultStrict(InListGuard::class)
-                );
-                break;
-            default:
-                $guard = new FailAlwaysGuard($this->defaultValue(FailAlwaysGuard::class));
-                break;
-        }
+        return new BoolGuard($input, $this->defaultValue(BoolGuard::class));
+    }
 
-        return $guard;
+    /**
+     * @param mixed $input
+     *
+     * @return IntGuard
+     */
+    public function intGuard($input): IntGuard
+    {
+        return new IntGuard($input, $this->defaultValue(IntGuard::class));
+    }
+
+    /**
+     * @param mixed $input
+     *
+     * @return FloatGuard
+     */
+    public function floatGuard($input): FloatGuard
+    {
+        return new FloatGuard($input, $this->defaultValue(FloatGuard::class));
+    }
+
+    /**
+     * @param mixed $input
+     *
+     * @return StringGuard
+     */
+    public function stringGuard($input): StringGuard
+    {
+        return new StringGuard($input, $this->defaultValue(StringGuard::class));
+    }
+
+    /**
+     * @param mixed $input
+     *
+     * @return StringableGuard
+     */
+    public function stringableGuard($input): StringableGuard
+    {
+        return new StringableGuard($input, $this->defaultValue(StringableGuard::class));
+    }
+
+    /**
+     * @param mixed  $input
+     * @param string $className
+     *
+     * @return InstanceOfGuard
+     */
+    public function instanceOfGuard($input, string $className): InstanceOfGuard
+    {
+        return new InstanceOfGuard($input, $className, $this->defaultValue(InstanceOfGuard::class));
+    }
+
+    /**
+     * @param mixed $input
+     *
+     * @return IterableGuard
+     */
+    public function iterableGuard($input): IterableGuard
+    {
+        return new IterableGuard($input, $this->defaultValue(IterableGuard::class));
+    }
+
+    /**
+     * @param mixed $input
+     *
+     * @return IterableIntGuard
+     */
+    public function iterableIntGuard($input): IterableIntGuard
+    {
+        return new IterableIntGuard($input, $this->defaultValue(IterableIntGuard::class));
+    }
+
+    /**
+     * @param mixed $input
+     *
+     * @return IterableFloatGuard
+     */
+    public function iterableFloatGuard($input): IterableFloatGuard
+    {
+        return new IterableFloatGuard($input, $this->defaultValue(IterableFloatGuard::class));
+    }
+
+    /**
+     * @param mixed $input
+     *
+     * @return IterableStringGuard
+     */
+    public function iterableStringGuard($input): IterableStringGuard
+    {
+        return new IterableStringGuard($input, $this->defaultValue(IterableStringGuard::class));
+    }
+
+    /**
+     * @param mixed $input
+     *
+     * @return IterableStringableGuard
+     */
+    public function iterableStringableGuard($input): IterableStringableGuard
+    {
+        return new IterableStringableGuard($input, $this->defaultValue(IterableStringableGuard::class));
+    }
+
+    /**
+     * @param mixed    $input
+     * @param iterable $list
+     *
+     * @return InListGuard
+     */
+    public function inListGuard($input, iterable $list): InListGuard
+    {
+        return new InListGuard(
+            $input,
+            $list,
+            $this->defaultValue(InListGuard::class),
+            $this->defaultStrict(InListGuard::class)
+        );
+    }
+
+    /**
+     * @return FailAlwaysGuard
+     */
+    public function failAlwaysGuard(): FailAlwaysGuard
+    {
+        return new FailAlwaysGuard($this->defaultValue(FailAlwaysGuard::class));
     }
 
     /**
