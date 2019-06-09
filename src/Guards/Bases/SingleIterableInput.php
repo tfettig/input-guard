@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace InputGuard\Guards\Bases;
 
 use ArrayAccess;
-use Countable;
 use Traversable;
 
 trait SingleIterableInput
@@ -27,7 +26,7 @@ trait SingleIterableInput
     private $allowNullElement = false;
 
     /**
-     * A method to allow extra validation to be done for each element of an iterable.
+     * Do validation for each for each element of an iterable.
      *
      * @param mixed $element
      * @param mixed $value
@@ -79,19 +78,17 @@ trait SingleIterableInput
         return $this->value instanceof Traversable ? iterator_to_array($this->value) : (array)$this->value;
     }
 
-    /**
-     * @param $input
-     * @param $value
-     *
-     * @return bool
-     */
     protected function validation($input, &$value): bool
     {
         if (is_iterable($input) === false) {
             return false;
         }
 
-        /** @var iterable $input */
+        return $this->validationForIterableInput($input, $value);
+    }
+
+    private function validationForIterableInput(iterable $input, &$value): bool
+    {
         if ($this->isBetweenCountSize($input) === false) {
             return false;
         }
@@ -127,8 +124,7 @@ trait SingleIterableInput
 
     private function isBetweenCountSize(iterable $input): bool
     {
-        /** @noinspection PhpParamsInspection */
-        $count = \is_array($input) || $input instanceof Countable ? count($input) : iterator_count($input);
+        $count = $input instanceof Traversable ? iterator_count($input) : count($input);
 
         return $this->isMoreThanMinCount($count) && $this->isLessThanMaxCount($count);
     }
