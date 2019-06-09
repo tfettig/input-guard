@@ -20,7 +20,7 @@ class InstanceOfGuard implements Guard
      * @param string      $className
      * @param object|null $defaultValue
      */
-    public function __construct($input, string $className, object $defaultValue = null)
+    public function __construct($input, string $className, ?object $defaultValue = null)
     {
         $this->className = $className;
         $this->input     = $input;

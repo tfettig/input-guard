@@ -46,7 +46,7 @@ class InputGuard implements GuardChain
     /**
      * @param Configuration $configuration
      */
-    public function __construct(Configuration $configuration = null)
+    public function __construct(?Configuration $configuration = null)
     {
         $this->factory = new GuardFactory($configuration ?? new DefaultConfiguration());
     }
