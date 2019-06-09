@@ -15,6 +15,11 @@ class InstanceOfGuard implements Guard
      */
     private $className;
 
+    /**
+     * @param mixed       $input
+     * @param string      $className
+     * @param object|null $defaultValue
+     */
     public function __construct($input, string $className, object $defaultValue = null)
     {
         $this->className = $className;

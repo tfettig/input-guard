@@ -26,6 +26,10 @@ class IterableStringGuard implements Guard
         StringBase::validation as stringValidation;
     }
 
+    /**
+     * @param mixed         $input
+     * @param iterable|null $default
+     */
     public function __construct($input, ?iterable $default = null)
     {
         $this->input = $input;

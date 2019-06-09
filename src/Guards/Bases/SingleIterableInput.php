@@ -78,6 +78,12 @@ trait SingleIterableInput
         return $this->value instanceof Traversable ? iterator_to_array($this->value) : (array)$this->value;
     }
 
+    /**
+     * @param mixed $input
+     * @param mixed $value
+     *
+     * @return bool
+     */
     protected function validation($input, &$value): bool
     {
         if (is_iterable($input) === false) {
@@ -87,13 +93,17 @@ trait SingleIterableInput
         return $this->validationForIterableInput($input, $value);
     }
 
+    /**
+     * @param iterable $input
+     * @param mixed    $value
+     *
+     * @return bool
+     */
     private function validationForIterableInput(iterable $input, &$value): bool
     {
         if ($this->isBetweenCountSize($input) === false) {
             return false;
         }
-
-        $can_be_updated = $this->elementsCanBeUpdated($input);
 
         foreach ($input as $key => $element) {
             if ($element === null) {
@@ -109,7 +119,12 @@ trait SingleIterableInput
                 return false;
             }
 
-            if ($can_be_updated) {
+            if (\is_array($input) || $input instanceof ArrayAccess) {
+                // At this time only iterable that are arrays or implement array access can be modified.
+                // I need to look into using http://www.php.net/manual/en/closure.bind.php, Refection, or other hacks
+                // to see if it's possible to modify the elements of an object that only implements the Iterator
+                // interface.
+
                 /** @noinspection OffsetOperationsInspection */
                 $input[$key] = $element_value;
             }

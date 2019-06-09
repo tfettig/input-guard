@@ -60,11 +60,23 @@ trait StringBase
      */
     abstract protected function validationShortCircuit($input): bool;
 
+    /**
+     * @param mixed $input
+     * @param mixed $value
+     *
+     * @return bool
+     */
     protected function validation($input, &$value): bool
     {
         return $this->validationShortCircuit($input) && $this->validationComplete($input, $value);
     }
 
+    /**
+     * @param mixed $input
+     * @param mixed $value
+     *
+     * @return bool
+     */
     private function validationComplete($input, &$value): bool
     {
         $inputString = (string)$input;

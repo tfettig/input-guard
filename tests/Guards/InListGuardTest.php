@@ -62,7 +62,7 @@ class InListGuardTest extends TestCase
     /**
      * @dataProvider nonStrictSuccessProvider
      *
-     * @param          $input
+     * @param mixed    $input
      * @param iterable $list
      * @param bool     $strict
      * @param string   $message

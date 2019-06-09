@@ -39,6 +39,12 @@ trait FloatBase
         return $this;
     }
 
+    /**
+     * @param mixed $input
+     * @param mixed $value
+     *
+     * @return bool
+     */
     protected function validation($input, &$value): bool
     {
         if (\is_bool($input)) {

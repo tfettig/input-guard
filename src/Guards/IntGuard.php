@@ -12,6 +12,10 @@ class IntGuard implements Guard
     use IntBase;
     use SingleInput;
 
+    /**
+     * @param mixed    $input
+     * @param int|null $default
+     */
     public function __construct($input, ?int $default = null)
     {
         $this->input = $input;

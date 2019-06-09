@@ -16,6 +16,10 @@ class IterableIntGuard implements Guard
     }
     use SingleIterableInput;
 
+    /**
+     * @param mixed         $input
+     * @param iterable|null $default
+     */
     public function __construct($input, ?iterable $default = null)
     {
         $this->input = $input;

@@ -15,6 +15,10 @@ class BoolGuard implements Guard
      */
     private $pseudoBools = false;
 
+    /**
+     * @param mixed     $input
+     * @param bool|null $default
+     */
     public function __construct($input, ?bool $default = null)
     {
         $this->input = $input;
@@ -35,6 +39,12 @@ class BoolGuard implements Guard
         return $this->value;
     }
 
+    /**
+     * @param mixed $input
+     * @param mixed $value
+     *
+     * @return bool
+     */
     protected function validation($input, &$value): bool
     {
         if ($this->isTrue($input)) {
@@ -48,21 +58,41 @@ class BoolGuard implements Guard
         return $return ?? false;
     }
 
+    /**
+     * @param mixed $input
+     *
+     * @return bool
+     */
     private function isTrue($input): bool
     {
         return $input === true || $this->isPseudoTrue($input);
     }
 
+    /**
+     * @param mixed $input
+     *
+     * @return bool
+     */
     private function isPseudoTrue($input): bool
     {
         return $this->pseudoBools && \in_array($input, [1, '1'], true);
     }
 
+    /**
+     * @param mixed $input
+     *
+     * @return bool
+     */
     private function isFalse($input): bool
     {
         return $input === false || $this->isPseudoFalse($input);
     }
 
+    /**
+     * @param mixed $input
+     *
+     * @return bool
+     */
     private function isPseudoFalse($input): bool
     {
         return $this->pseudoBools && \in_array($input, [0, '0', ''], true);

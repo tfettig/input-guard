@@ -23,5 +23,6 @@ before_script:
 script:
   - composer phpcs
   - composer phpmd_build
+  - composer psalm
   - if [ `command -v phpdbg` ]; then composer phpunit_build; fi
   - if [ -d "./build/phpunit/" ]; then composer infection_build; fi

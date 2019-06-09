@@ -19,6 +19,10 @@ class FloatGuard implements Guard
     use FloatBase;
     use SingleInput;
 
+    /**
+     * @param mixed      $input
+     * @param float|null $default
+     */
     public function __construct($input, ?float $default = null)
     {
         $this->input = $input;

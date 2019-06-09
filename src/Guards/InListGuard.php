@@ -19,8 +19,6 @@ class InListGuard implements Guard
     private $list;
 
     /**
-     * InListVal constructor.
-     *
      * @param mixed       $input
      * @param iterable    $list
      * @param mixed|\null $defaultValue
@@ -58,24 +56,33 @@ class InListGuard implements Guard
         return \is_array($this->list) || $this->list instanceof ArrayObject;
     }
 
+    /**
+     * @param mixed $input
+     *
+     * @return bool
+     */
     private function validateCastableList($input): bool
     {
         return \in_array($input, (array)$this->list, $this->strict);
     }
 
+    /**
+     * @param mixed $input
+     *
+     * @return bool
+     */
     private function validateTraversableList($input): bool
     {
-        $validate = $this->strict
-            ? static function ($value) use ($input): bool {
-                return $value === $input;
-            }
-            : static function ($value) use ($input): bool {
-                /** @noinspection TypeUnsafeComparisonInspection */
-                return $value == $input;
-            };
-
         foreach ($this->list as $item) {
-            if ($validate($item)) {
+            if ($this->strict) {
+                if ($item === $input) {
+                    return true;
+                }
+                continue;
+            }
+
+            /** @noinspection TypeUnsafeComparisonInspection */
+            if ($item == $input) {
                 return true;
             }
         }

@@ -10,6 +10,10 @@ class IterableGuard implements Guard
     use ErrorMessagesBase;
     use SingleIterableInput;
 
+    /**
+     * @param mixed         $input
+     * @param iterable|null $default
+     */
     public function __construct($input, ?iterable $default = null)
     {
         $this->input = $input;
