@@ -42,7 +42,7 @@ class StringBaseTest extends TestCase
      * @param          $input
      *
      * @param int      $min
-     * @param int|null $max
+     * @param int|\null $max
      * @param string   $regex
      * @param string   $message
      *
@@ -89,7 +89,7 @@ class StringBaseTest extends TestCase
      *
      * @param mixed    $input
      * @param int      $min
-     * @param int|null $max
+     * @param int|\null $max
      * @param string   $regex
      * @param string   $message
      *

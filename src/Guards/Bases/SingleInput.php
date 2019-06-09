@@ -22,7 +22,7 @@ trait SingleInput
     /**
      * A flag that indicates the validated state the object is in.
      *
-     * @var bool|null
+     * @var bool|\null
      */
     private $validated;
 

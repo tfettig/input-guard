@@ -21,10 +21,10 @@ class InListGuard implements Guard
     /**
      * InListVal constructor.
      *
-     * @param mixed      $input
-     * @param iterable   $list
-     * @param mixed|null $defaultValue
-     * @param bool       $defaultStrict
+     * @param mixed       $input
+     * @param iterable    $list
+     * @param mixed|\null $defaultValue
+     * @param bool        $defaultStrict
      *
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */

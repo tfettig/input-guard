@@ -25,7 +25,7 @@ class IntGuardTest extends TestCase
      * @dataProvider failureProvider
      *
      * @param mixed    $input
-     * @param int|null $default
+     * @param int|\null $default
      * @param string   $message
      *
      * @throws ExpectationFailedException

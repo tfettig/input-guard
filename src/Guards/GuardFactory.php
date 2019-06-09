@@ -81,6 +81,11 @@ class GuardFactory
         return $guard;
     }
 
+    /**
+     * @param string $class
+     *
+     * @return mixed
+     */
     private function defaultValue(string $class)
     {
         return $this->configuration->defaultValue($class);

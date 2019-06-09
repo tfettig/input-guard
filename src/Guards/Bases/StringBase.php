@@ -13,7 +13,7 @@ trait StringBase
     private $minLen = 0;
 
     /**
-     * @var int|null
+     * @var int|\null
      */
     private $maxLen;
 

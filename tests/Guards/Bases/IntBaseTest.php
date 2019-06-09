@@ -25,12 +25,6 @@ class IntBaseTest extends TestCase
         {
             use IntBase;
 
-            protected function extraStringValidation($input): bool
-            {
-                /** @noinspection SuspiciousBinaryOperationInspection */
-                return $input === $input;
-            }
-
             public function runValidation($input): bool
             {
                 $value = null;
@@ -40,24 +34,28 @@ class IntBaseTest extends TestCase
     }
 
     /**
-     * @dataProvider successProvider
+     * @dataProvider inputProvider
      *
-     * @param            $input
-     *
-     * @param int|null   $min
-     * @param int|null   $max
-     * @param string     $message
+     * @param mixed  $input
+     * @param int|   $min
+     * @param int|   $max
+     * @param bool   $strict
+     * @param bool   $expect
+     * @param string $message
      *
      * @throws ExpectationFailedException
      * @throws InvalidArgumentException
      */
-    public function testSuccess($input, ?int $min, ?int $max, string $message): void
+    public function testInput($input, int $min, int $max, bool $strict, bool $expect, string $message): void
     {
         $this->guard->min($min)
                     ->max($max);
 
-        /** @noinspection PhpUndefinedMethodInspection */
-        self::assertTrue($this->guard->runValidation($input), $message);
+        if ($strict) {
+            $this->guard->strict();
+        }
+
+        self::assertSame($expect, $this->guard->runValidation($input), $message);
     }
 
     /**
@@ -65,70 +63,23 @@ class IntBaseTest extends TestCase
      *
      * @throws Exception
      */
-    public function successProvider(): array
+    public function inputProvider(): array
     {
         return [
-            [5, 1, 10, 'Right in the middle.'],
-            [1, 1, 2, 'Input and min are equal'],
-            [2, 1, 2, 'Input and max are equal'],
+            [5, 1, 10, true, true, 'Success: (Strict) Input is in the middle.'],
+            [1, 1, 2, true, true, 'Success: (Strict) Input and min are equal'],
+            [2, 1, 2, true, true, 'Success: (Strict) Input and max are equal'],
+            ['5', 1, 10, false, true, 'Success: Input is in the middle.'],
+            ['1', 1, 2, false, true, 'Success: Input and min are equal'],
+            ['2', 1, 2, false, true, 'Success: Input and max are equal'],
+            ['5', 1, 10, true, false, 'Failure: (Strict) Input is in the middle.'],
+            ['one.point.one', 0, 1, false, false, 'Failure: Input as string'],
+            [1.5, 0, 2, false, false, 'Failure: Input as float'],
+            [true, 0, 2, false, false, 'Failure: Input as boolean'],
+            ['', 0, 2, false, false, 'Failure: Input as empty string'],
+            [new stdClass(), 0, 2, false, false, 'Failure: Input as object'],
+            [0, 1, 2, false, false, 'Failure: Input less then min'],
+            [3, 1, 2, false, false, 'Failure: Input greater than max'],
         ];
-    }
-
-    /**
-     * @throws ExpectationFailedException
-     * @throws InvalidArgumentException
-     */
-    public function testBetweenSuccess(): void
-    {
-        $this->guard->min(500)
-                    ->max(5000);
-
-        /** @noinspection PhpUndefinedMethodInspection */
-        self::assertTrue($this->guard->runValidation(1000));
-    }
-
-    /**
-     * @dataProvider failureProvider
-     *
-     * @param mixed    $input
-     * @param int|null $min
-     * @param int|null $max
-     * @param string   $message
-     *
-     * @throws ExpectationFailedException
-     * @throws InvalidArgumentException
-     */
-    public function testFailure($input, ?int $min, ?int $max, string $message): void
-    {
-        $this->guard->min($min)
-                    ->max($max);
-
-        /** @noinspection PhpUndefinedMethodInspection */
-        self::assertFalse($this->guard->runValidation($input), $message);
-    }
-
-    public function failureProvider(): array
-    {
-        return [
-            ['one.point.one', 0, 1, 'Input as string'],
-            [1.5, 0, 2, 'Input as float.'],
-            [true, 0, 2, 'Input as boolean'],
-            ['', 0, 2, 'Input as empty string'],
-            [new stdClass(), 0, 2, 'Input as object'],
-            [0, 1, 2, 'Input less then min'],
-            [3, 1, 2, 'Input greater than max'],
-        ];
-    }
-
-    /**
-     * @throws ExpectationFailedException
-     * @throws InvalidArgumentException
-     */
-    public function testStrictFailure(): void
-    {
-        $this->guard->strict();
-
-        /** @noinspection PhpUndefinedMethodInspection */
-        self::assertFalse($this->guard->runValidation('5'));
     }
 }

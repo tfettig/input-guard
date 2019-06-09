@@ -16,7 +16,7 @@ trait SingleIterableInput
     private $minCount = 0;
 
     /**
-     * @var int|null;
+     * @var int|\null
      */
     private $maxCount;
 

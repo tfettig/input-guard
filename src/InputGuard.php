@@ -34,7 +34,7 @@ class InputGuard implements GuardChain
     private $guards = [];
 
     /**
-     * @var bool|null
+     * @var bool|\null
      */
     private $validated;
 
@@ -58,77 +58,144 @@ class InputGuard implements GuardChain
         $this->validated     = null;
     }
 
+    /**
+     * @param mixed $input
+     *
+     * @return BoolGuard
+     */
     public function bool($input): BoolGuard
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->createGuard(BoolGuard::class, $input);
     }
 
+    /**
+     * @param mixed $input
+     *
+     * @return IntGuard
+     */
     public function int($input): IntGuard
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->createGuard(IntGuard::class, $input);
     }
 
+    /**
+     * @param mixed $input
+     *
+     * @return FloatGuard
+     */
     public function float($input): FloatGuard
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->createGuard(FloatGuard::class, $input);
     }
 
+    /**
+     * @param mixed  $input
+     * @param string $className
+     *
+     * @return InstanceOfGuard
+     */
     public function instanceOf($input, string $className): InstanceOfGuard
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->createGuard(InstanceOfGuard::class, $input, $className);
     }
 
+    /**
+     * @param mixed $input
+     *
+     * @return StringGuard
+     */
     public function string($input): StringGuard
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->createGuard(StringGuard::class, $input);
     }
 
+    /**
+     * @param mixed $input
+     *
+     * @return StringableGuard
+     */
     public function stringable($input): StringableGuard
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->createGuard(StringableGuard::class, $input);
     }
 
+    /**
+     * @param mixed $input
+     *
+     * @return IterableGuard
+     */
     public function array($input): IterableGuard
     {
         return $this->iterable($input);
     }
 
+    /**
+     * @param mixed $input
+     *
+     * @return IterableGuard
+     */
     public function iterable($input): IterableGuard
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->createGuard(IterableGuard::class, $input);
     }
 
+    /**
+     * @param mixed $input
+     *
+     * @return IterableIntGuard
+     */
     public function iterableInt($input): IterableIntGuard
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->createGuard(IterableIntGuard::class, $input);
     }
 
+    /**
+     * @param mixed $input
+     *
+     * @return IterableFloatGuard
+     */
     public function iterableFloat($input): IterableFloatGuard
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->createGuard(IterableFloatGuard::class, $input);
     }
 
+    /**
+     * @param mixed $input
+     *
+     * @return IterableStringGuard
+     */
     public function iterableString($input): IterableStringGuard
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->createGuard(IterableStringGuard::class, $input);
     }
 
+    /**
+     * @param mixed $input
+     *
+     * @return IterableStringableGuard
+     */
     public function iterableStringable($input): IterableStringableGuard
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */
         return $this->createGuard(IterableStringableGuard::class, $input);
     }
 
+    /**
+     * @param mixed    $input
+     * @param iterable $list
+     *
+     * @return InListGuard
+     */
     public function inList($input, iterable $list): InListGuard
     {
         /** @noinspection PhpIncompatibleReturnTypeInspection */

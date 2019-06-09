@@ -65,7 +65,7 @@ class StringableGuardTest extends TestCase
      * @dataProvider failureProvider
      *
      * @param mixed    $input
-     * @param int|null $max
+     * @param int|\null $max
      * @param string   $message
      *
      * @throws ExpectationFailedException

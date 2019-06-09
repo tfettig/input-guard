@@ -8,7 +8,7 @@ class FailAlwaysGuard implements Guard
     use ErrorMessagesBase;
 
     /**
-     * @var bool|null
+     * @var bool|\null
      */
     private $value;
 
