@@ -50,7 +50,7 @@ class SingleIterableInputTest extends TestCase
 
         /** @var SingleIterableInput $guard */
         $guard = (self::$singleIterableInputFactory)($input);
-        $guard->allowNullElement();
+        $guard->elementsNullable();
 
         self::assertTrue($guard->success());
         self::assertSame($input, $guard->value());

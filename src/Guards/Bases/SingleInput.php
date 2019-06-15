@@ -6,46 +6,44 @@ namespace InputGuard\Guards\Bases;
 trait SingleInput
 {
     /**
-     * The input to be validated.
+     * The original input to be validated.
      *
      * @var mixed
      */
     private $input;
 
     /**
-     * The value to be returned after validation is complete.
+     * After validation either the original value or the default value.
      *
      * @var mixed
      */
     private $value;
 
     /**
-     * A flag that indicates the validated state the object is in.
+     * Indicates if the input has been validated and the result of the validation.
      *
      * @var bool|\null
      */
     private $validated;
 
     /**
-     * A flag that if set to true indicates that a null as the input is acceptable.
+     * Configuration for null to be valid input.
      *
      * @var bool
      */
-    private $allowNull = false;
+    private $nullable = false;
 
     /**
-     * A flag that if set to true indicates that an empty string as the input is acceptable.
+     * Configuration for empty strings to be valid input.
      *
      * @var bool
      */
-    private $allowEmptyString = false;
+    private $emptyString = false;
 
     /**
-     * The validation algorithm that determines if the input was successfully validated.
+     * Contains the input validation code.
      *
-     * If PHP allowed the behavior the method would be private.
-     *
-     * @param mixed $input
+     * @param mixed  $input
      * @param mixed &$value
      *
      * @return bool
@@ -53,40 +51,40 @@ trait SingleInput
     abstract protected function validation($input, &$value): bool;
 
     /**
-     * A switch to update the object state to allow nulls as a valid value for the input.
+     * Allow null as a valid value.
      *
      * @return $this
      */
-    public function allowNull(): self
+    public function nullable(): self
     {
-        $this->allowNull = true;
+        $this->nullable = true;
 
         return $this;
     }
 
     /**
-     * A switch to update the object state to allow empty strings as a valid value for the input.
+     * Allow empty strings as a valid value.
      *
      * @return $this
      */
-    public function allowEmptyString(): self
+    public function emptyString(): self
     {
-        $this->allowEmptyString = true;
+        $this->emptyString = true;
 
         return $this;
     }
 
     /**
-     * Execute to determine the success status of the input validation.
+     * Determine the success status of the input validation.
      *
      * @return bool
      */
     public function success(): bool
     {
         if ($this->validated === null) {
-            if ($this->allowNull && $this->input === null) {
+            if ($this->nullable && $this->input === null) {
                 $this->validated = true;
-            } elseif ($this->allowEmptyString && $this->input === '') {
+            } elseif ($this->emptyString && $this->input === '') {
                 $this->validated = true;
             } else {
                 $this->validated = $this->validation($this->input, $this->value);

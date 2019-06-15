@@ -15,9 +15,9 @@ interface GuardChain extends Guard
     /**
      * Allow for property injection of any Guard object.
      *
-     * @param Guard $val
+     * @param Guard $guard
      *
      * @return Guard
      */
-    public function add(Guard $val): Guard;
+    public function add(Guard $guard): Guard;
 }

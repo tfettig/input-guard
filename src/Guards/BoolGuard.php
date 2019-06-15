@@ -25,7 +25,7 @@ class BoolGuard implements Guard
         $this->value = $default;
     }
 
-    public function allowPseudoBools(): self
+    public function pseudoBools(): self
     {
         $this->pseudoBools = true;
 

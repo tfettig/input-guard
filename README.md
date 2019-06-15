@@ -28,9 +28,9 @@ $validation->string('A string value that needs to be validated.')
            ->maxLen(500);
 
 $validation->iterableString(['Multiple', 'strings', 'that', null, 'will', 'validate', 'successfully', ''])
-           ->allowNull()
-           ->allowNullElement()
-           ->allowEmptyString()
+           ->nullable()
+           ->elementsNullable()
+           ->emptyString()
            ->betweenCount(1, 10)
            ->betweenLen(0, 500)
            ->errorMessage('The array is invalid.')

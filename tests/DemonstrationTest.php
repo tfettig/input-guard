@@ -45,12 +45,12 @@ class DemonstrationTest extends TestCase
 
         // Nulls can be optionally allowed.
         $validation->int(null)
-                   ->allowNull()
+                   ->nullable()
                    ->errorMessage('This message will not be present on validation.');
 
         // Empty strings can be optionally allowed.
         $validation->int('')
-                   ->allowEmptyString()
+                   ->emptyString()
                    ->errorMessage('This message will not be present on validation.');
 
         self::assertTrue($validation->success());
@@ -136,7 +136,7 @@ class DemonstrationTest extends TestCase
                    ->errorMessage('This message will not be present on validation.');
 
         $validation->bool('1')
-                   ->allowPseudoBools()
+                   ->pseudoBools()
                    ->errorMessage('This message will not be present on validation.');
 
         self::assertTrue($validation->success());

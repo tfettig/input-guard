@@ -77,8 +77,7 @@ class BoolGuardTest extends TestCase
      */
     public function testSuccessWithPseudoBools($input, bool $expected, string $message): void
     {
-        $val = (new BoolGuard($input))
-            ->allowPseudoBools();
+        $val = (new BoolGuard($input))->pseudoBools();
 
         self::assertTrue($val->success(), "$message success");
         self::assertSame($expected, $val->value(), "$message value");
@@ -107,8 +106,7 @@ class BoolGuardTest extends TestCase
      */
     public function testFailureWithPseudoBools($input, string $message): void
     {
-        $val = (new BoolGuard($input))
-            ->allowPseudoBools();
+        $val = (new BoolGuard($input))->pseudoBools();
 
         self::assertFalse($val->success(), "$message success");
         self::assertNull($val->value(), "$message value");

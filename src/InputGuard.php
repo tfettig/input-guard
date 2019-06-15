@@ -249,11 +249,11 @@ class InputGuard implements GuardChain
         return $this;
     }
 
-    public function add(Guard $val): Guard
+    public function add(Guard $guard): Guard
     {
         $this->validated = null;
-        $this->guards[]  = $val;
+        $this->guards[]  = $guard;
 
-        return $val;
+        return $guard;
     }
 }

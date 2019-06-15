@@ -23,7 +23,7 @@ trait SingleIterableInput
     /**
      * @var bool
      */
-    private $allowNullElement = false;
+    private $elementsAreNullable = false;
 
     /**
      * Do validation for each for each element of an iterable.
@@ -57,9 +57,9 @@ trait SingleIterableInput
         return $this;
     }
 
-    public function allowNullElement(): self
+    public function elementsNullable(): self
     {
-        $this->allowNullElement = true;
+        $this->elementsAreNullable = true;
 
         return $this;
     }
@@ -107,7 +107,7 @@ trait SingleIterableInput
 
         foreach ($input as $key => $element) {
             if ($element === null) {
-                if ($this->allowNullElement) {
+                if ($this->elementsAreNullable) {
                     continue;
                 }
 

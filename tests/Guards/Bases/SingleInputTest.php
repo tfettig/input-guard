@@ -20,7 +20,7 @@ class SingleInputTest extends TestCase
         {
             use SingleInput {
                 // A hack for some weirdness in phpmd.
-                SingleInput::allowNull as allowNullWhat;
+                SingleInput::nullable as allowNullWhat;
                 SingleInput::success as successWhat;
             }
 
@@ -56,7 +56,7 @@ class SingleInputTest extends TestCase
         {
             use SingleInput {
                 // A hack for some weirdness in phpmd.
-                SingleInput::allowEmptyString as allowEmptyStringWhen;
+                SingleInput::emptyString as allowEmptyStringWhen;
                 SingleInput::success as successWhen;
             }
 
