@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InputGuardTests\Guards\Bases;
@@ -21,13 +22,13 @@ class FloatBaseTest extends TestCase
     {
         parent::setUp();
 
-        $this->guard = new class()
+        $this->guard = new class ()
         {
             use FloatBase;
 
             protected function extraStringValidation($input): bool
             {
-                /** @noinspection SuspiciousBinaryOperationInspection */
+                /** @noinspection PhpExpressionWithSameOperandsInspection */
                 return $input === $input;
             }
 
@@ -55,7 +56,6 @@ class FloatBaseTest extends TestCase
         $this->guard->min($min);
         $this->guard->max($max);
 
-        /** @noinspection PhpUndefinedMethodInspection */
         self::assertTrue($this->guard->runValidation($input), $message);
     }
 
@@ -84,7 +84,6 @@ class FloatBaseTest extends TestCase
         $this->guard->min(1.5)
                     ->max(9.9);
 
-        /** @noinspection PhpUndefinedMethodInspection */
         self::assertTrue($this->guard->runValidation(3.3333));
     }
 
@@ -105,7 +104,6 @@ class FloatBaseTest extends TestCase
         $this->guard->min($min)
                     ->max($max);
 
-        /** @noinspection PhpUndefinedMethodInspection */
         self::assertFalse($this->guard->runValidation($input), $message);
     }
 
@@ -128,7 +126,6 @@ class FloatBaseTest extends TestCase
     {
         $this->guard->strict();
 
-        /** @noinspection PhpUndefinedMethodInspection */
         self::assertFalse($this->guard->runValidation('5.5'));
     }
 
@@ -140,7 +137,6 @@ class FloatBaseTest extends TestCase
     {
         $this->guard->strict();
 
-        /** @noinspection PhpUndefinedMethodInspection */
         self::assertTrue($this->guard->runValidation(5.5));
     }
 }

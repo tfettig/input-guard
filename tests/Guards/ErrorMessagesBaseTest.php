@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InputGuardTests\Guards;
@@ -16,8 +17,7 @@ class ErrorMessagesBaseTest extends TestCase
      */
     public function testPullErrorMessages(): void
     {
-        $anonClass = new class()
-        {
+        $anonClass = new class () {
             use ErrorMessagesBase;
 
             public function success(): bool
@@ -47,10 +47,9 @@ class ErrorMessagesBaseTest extends TestCase
      */
     public function testThatPullingErrorMessagesUpdatesSuccessState(): void
     {
-        $anonClass = new class()
-        {
+        $anonClass = new class () {
+            // A hack for some weirdness in phpmd.
             use ErrorMessagesBase {
-                // A hack for some weirdness in phpmd.
                 ErrorMessagesBase::errorMessage as errorMessageA;
                 ErrorMessagesBase::pullErrorMessages as pullErrorMessagesA;
             }

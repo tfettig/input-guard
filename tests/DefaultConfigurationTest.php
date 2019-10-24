@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InputGuardTests;
@@ -36,7 +37,7 @@ class DefaultConfigurationTest extends TestCase
     {
         parent::setUp();
 
-        $this->configuration = new class() extends DefaultConfiguration
+        $this->configuration = new class () extends DefaultConfiguration
         {
             public function changeDefaultValue(string $class): void
             {
@@ -77,7 +78,6 @@ class DefaultConfigurationTest extends TestCase
      */
     public function testDefaultValueChanged(string $class, string $message): void
     {
-        /** @noinspection PhpUndefinedMethodInspection */
         $this->configuration->changeDefaultValue($class);
 
         self::assertTrue($this->configuration->defaultValue($class), $message);
@@ -130,7 +130,6 @@ class DefaultConfigurationTest extends TestCase
      */
     public function testDefaultStrictChanged(string $class, bool $expected_return, string $message): void
     {
-        /** @noinspection PhpUndefinedMethodInspection */
         $this->configuration->changeStrictDefault($class);
 
         self::assertSame(!$expected_return, $this->configuration->defaultStrict($class), $message);

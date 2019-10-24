@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InputGuardTests\Guards\Bases;
@@ -19,8 +20,7 @@ class StringBaseTest extends TestCase
     {
         parent::setUp();
 
-        $this->guard = new class()
-        {
+        $this->guard = new class () {
             use StringBase;
 
             protected function validationShortCircuit(/** @noinspection PhpUnusedParameterInspection */ $input): bool
@@ -42,7 +42,7 @@ class StringBaseTest extends TestCase
      * @param          $input
      *
      * @param int      $min
-     * @param int|\null $max
+     * @param int|null $max
      * @param string   $regex
      * @param string   $message
      *
@@ -55,7 +55,6 @@ class StringBaseTest extends TestCase
                     ->maxLen($max)
                     ->regex($regex);
 
-        /** @noinspection PhpUndefinedMethodInspection */
         self::assertTrue($this->guard->runValidation($input), $message);
     }
 
@@ -80,18 +79,17 @@ class StringBaseTest extends TestCase
     {
         $this->guard->betweenLen(5, 10);
 
-        /** @noinspection PhpUndefinedMethodInspection */
         self::assertTrue($this->guard->runValidation('success'));
     }
 
     /**
      * @dataProvider failureProvider
      *
-     * @param mixed    $input
-     * @param int      $min
-     * @param int|\null $max
-     * @param string   $regex
-     * @param string   $message
+     * @param mixed     $input
+     * @param int       $min
+     * @param int|null $max
+     * @param string    $regex
+     * @param string    $message
      *
      * @throws ExpectationFailedException
      * @throws InvalidArgumentException
@@ -102,7 +100,6 @@ class StringBaseTest extends TestCase
                     ->maxLen($max)
                     ->regex($regex);
 
-        /** @noinspection PhpUndefinedMethodInspection */
         self::assertFalse($this->guard->runValidation($input), $message);
     }
 
@@ -126,7 +123,6 @@ class StringBaseTest extends TestCase
     {
         $this->guard->strict();
 
-        /** @noinspection PhpUndefinedMethodInspection */
         self::assertTrue($this->guard->runValidation('success'));
     }
 }

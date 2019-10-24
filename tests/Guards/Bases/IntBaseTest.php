@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InputGuardTests\Guards\Bases;
@@ -21,7 +22,7 @@ class IntBaseTest extends TestCase
     {
         parent::setUp();
 
-        $this->guard = new class()
+        $this->guard = new class ()
         {
             use IntBase;
 

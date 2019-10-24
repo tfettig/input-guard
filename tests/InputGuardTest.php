@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InputGuardTests;
@@ -237,7 +238,7 @@ class InputGuardTest extends TestCase
      */
     public function testStringableVal(): void
     {
-        $input = new class()
+        $input = new class ()
         {
             public function __toString(): string
             {
@@ -317,7 +318,7 @@ class InputGuardTest extends TestCase
     public function testIterableStringableVal(): void
     {
         $input = [
-            new class()
+            new class ()
             {
                 public function __toString()
                 {

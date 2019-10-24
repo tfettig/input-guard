@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InputGuardTests\Guards;
@@ -67,7 +68,7 @@ class IterableStringGuardTest extends TestCase
      */
     public function failureProvider(): array
     {
-        $object = new class()
+        $object = new class ()
         {
             public function __toString()
             {

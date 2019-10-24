@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InputGuardTests\Guards\Bases;
@@ -16,7 +17,7 @@ class SingleInputTest extends TestCase
      */
     public function testAllowNulls(): void
     {
-        $object = new class()
+        $object = new class ()
         {
             use SingleInput {
                 // A hack for some weirdness in phpmd.
@@ -38,7 +39,6 @@ class SingleInputTest extends TestCase
             {
                 return false;
             }
-
         };
 
         $object->allowNullWhat();
@@ -52,7 +52,7 @@ class SingleInputTest extends TestCase
      */
     public function testAllowEmptyString(): void
     {
-        $object = new class()
+        $object = new class ()
         {
             use SingleInput {
                 // A hack for some weirdness in phpmd.

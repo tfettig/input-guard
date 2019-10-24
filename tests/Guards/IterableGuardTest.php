@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InputGuardTests\Guards;
@@ -82,7 +83,7 @@ class IterableGuardTest extends TestCase
      */
     private function iterator(): Iterator
     {
-        return new class() implements Iterator
+        return new class () implements Iterator
         {
             private $position = 0;
 

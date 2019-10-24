@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InputGuardTests\Guards\Bases;
@@ -19,7 +20,7 @@ class Test extends TestCase
     {
         parent::setUp();
 
-        $this->object = new class()
+        $this->object = new class ()
         {
             use Strict;
 
@@ -38,7 +39,6 @@ class Test extends TestCase
     {
         $sameObject = $this->object->strict();
 
-        /** @noinspection PhpUndefinedMethodInspection */
         self::assertTrue($this->object->getStrict());
         self::assertSame($this->object, $sameObject);
     }
@@ -51,7 +51,6 @@ class Test extends TestCase
     {
         $sameObject = $this->object->nonStrict();
 
-        /** @noinspection PhpUndefinedMethodInspection */
         self::assertFalse($this->object->getStrict());
         self::assertSame($this->object, $sameObject);
     }
@@ -62,7 +61,6 @@ class Test extends TestCase
      */
     public function testPropertySetToFalseByDefault(): void
     {
-        /** @noinspection PhpUndefinedMethodInspection */
         self::assertFalse($this->object->getStrict());
     }
 }

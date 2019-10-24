@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace InputGuardTests\Guards;
@@ -46,7 +47,7 @@ class StringableGuardTest extends TestCase
      */
     public function testStringableObject(): void
     {
-        $object = new class()
+        $object = new class ()
         {
             public function __toString()
             {
@@ -98,7 +99,6 @@ class StringableGuardTest extends TestCase
     {
         $guard = (new StringableGuard(1))->strict();
 
-        /** @noinspection PhpUndefinedMethodInspection */
         self::assertNull($guard->value());
     }
 
@@ -110,7 +110,6 @@ class StringableGuardTest extends TestCase
     {
         $guard = (new StringableGuard('1'))->strict();
 
-        /** @noinspection PhpUndefinedMethodInspection */
         self::assertSame('1', $guard->value());
     }
 }

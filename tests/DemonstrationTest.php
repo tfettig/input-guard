@@ -1,5 +1,7 @@
 <?php
+
 /** @noinspection PhpFullyQualifiedNameUsageInspection */
+
 declare(strict_types=1);
 
 namespace InputGuardTests;
@@ -107,7 +109,7 @@ class DemonstrationTest extends TestCase
                    ->betweenLen(1, null);
 
         $validation->stringable(
-            new class()
+            new class ()
             {
                 public function __toString()
                 {
@@ -214,7 +216,7 @@ class DemonstrationTest extends TestCase
         // Custom Guard classes can be created as long as they implement the Guard interface.
         // This allows for those more complex validations to done.
         $validation->add(
-            new class() implements \InputGuard\Guards\Guard
+            new class () implements \InputGuard\Guards\Guard
             {
                 use \InputGuard\Guards\ErrorMessagesBase;
 
@@ -227,7 +229,6 @@ class DemonstrationTest extends TestCase
                 {
                     return 'A custom validation object.';
                 }
-
             }
         )
                    ->errorMessage('The custom Guard failed validation.');
