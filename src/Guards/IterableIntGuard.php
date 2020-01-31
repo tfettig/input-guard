@@ -10,8 +10,9 @@ use InputGuard\Guards\Bases\SingleIterableInput;
 class IterableIntGuard implements Guard
 {
     use ErrorMessagesBase;
+
+    // Use the Iterable's validation as the primary validation logic and rename the Int validation method.
     use IntBase {
-        // Use the Iterable's validation as the primary validation logic and rename the Int validation method.
         SingleIterableInput::validation insteadof IntBase;
         IntBase::validation as intValidation;
     }

@@ -17,10 +17,9 @@ class SingleInputTest extends TestCase
      */
     public function testAllowNulls(): void
     {
-        $object = new class ()
-        {
+        $object = new class () {
+            // A hack for some weirdness in phpmd.
             use SingleInput {
-                // A hack for some weirdness in phpmd.
                 SingleInput::nullable as allowNullWhat;
                 SingleInput::success as successWhat;
             }
@@ -52,10 +51,9 @@ class SingleInputTest extends TestCase
      */
     public function testAllowEmptyString(): void
     {
-        $object = new class ()
-        {
+        $object = new class () {
+            // A hack for some weirdness in phpmd.
             use SingleInput {
-                // A hack for some weirdness in phpmd.
                 SingleInput::emptyString as allowEmptyStringWhen;
                 SingleInput::success as successWhen;
             }

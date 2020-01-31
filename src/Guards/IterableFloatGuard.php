@@ -10,8 +10,9 @@ use InputGuard\Guards\Bases\SingleIterableInput;
 class IterableFloatGuard implements Guard
 {
     use ErrorMessagesBase;
+
+    // Use the Iterable's validation as the primary validation logic and rename the float validation method.
     use FloatBase {
-        // Use the Iterable's validation as the primary validation logic and rename the float validation method.
         SingleIterableInput::validation insteadof FloatBase;
         FloatBase::validation as floatValidation;
     }

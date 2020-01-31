@@ -21,8 +21,9 @@ class IterableStringGuard implements Guard
 {
     use ErrorMessagesBase;
     use SingleIterableInput;
+
+    // Use the iterable's validation as the primary validation logic and rename the string validation method.
     use StringBase {
-        // Use the iterable's validation as the primary validation logic and rename the string validation method.
         SingleIterableInput::validation insteadof StringBase;
         StringBase::validation as stringValidation;
     }
